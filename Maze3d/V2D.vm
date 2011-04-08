@@ -1,0 +1,112 @@
+function V2D.empty 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+pop this 0
+push constant 0
+pop this 1
+push pointer 0
+return
+function V2D.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push pointer 0
+return
+function V2D.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function V2D.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function V2D.setX 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 0
+push constant 0
+return
+function V2D.setY 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 1
+push constant 0
+return
+function V2D.set 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 0
+push argument 2
+pop this 1
+push constant 0
+return
+function V2D.add 0
+push argument 2
+push argument 0
+call V2D.getX 1
+push argument 1
+call V2D.getX 1
+add
+call V2D.setX 2
+pop temp 0
+push argument 2
+push argument 0
+call V2D.getY 1
+push argument 1
+call V2D.getY 1
+add
+call V2D.setY 2
+pop temp 0
+push constant 0
+return
+function V2D.equals 0
+push argument 0
+call V2D.getX 1
+push argument 1
+call V2D.getX 1
+eq
+not
+push argument 0
+call V2D.getY 1
+push argument 1
+call V2D.getY 1
+eq
+not
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push constant 0
+not
+return
+function V2D.copy 1
+push argument 0
+call V2D.getX 1
+push argument 0
+call V2D.getY 1
+call V2D.new 2
+pop local 0
+push local 0
+return
+function V2D.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

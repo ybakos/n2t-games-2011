@@ -1,0 +1,270 @@
+// Lex Hubbard
+// Elements
+// Schizophrenia Game
+
+class Wizards {
+	field int wizardType, spellType, monsterType, shield, damageDoneToWizard, wizardHP;
+	field Array wizardNameArray;
+	field Array wizardHPArray;
+	field Array wizardSchizophrenia;
+
+	constructor Wizards new()
+	{
+		let wizardNameArray = Array.new(4);
+		let wizardHPArray = Array.new(4);
+		let wizardSchizophrenia = Array.new(4);
+		
+		let wizardNameArray[0] = "Sanite    ";
+		let wizardNameArray[1] = "Count Daze";
+		let wizardNameArray[2] = "Unventor  ";
+		let wizardNameArray[3] = "Poseidon    ";
+		
+		let wizardHP = Array.new(4);
+		let wizardHPArray[0] = 5;
+		let wizardHPArray[1] = 5;
+		let wizardHPArray[2] = 5;
+		let wizardHPArray[3] = 5;
+
+		let wizardSchizophrenia[0] = false;
+		let wizardSchizophrenia[1] = false;
+		let wizardSchizophrenia[2] = false;
+		let wizardSchizophrenia[3] = false;
+
+		return this;
+	}
+
+	method String getWizardName(int currentWizardType)
+	{
+		let wizardType = currentWizardType;
+		return  wizardNameArray[wizardType];
+	}
+	
+	method void setWizardHP(int currentWizardType, int currentWizardHP)
+	{
+		let wizardType = currentWizardType;
+		let wizardHP = currentWizardHP;
+		let wizardHPArray[wizardType] = wizardHP;
+		return;
+	}
+
+	method int getWizardHP(int currentWizardType)
+	{
+		let wizardType = currentWizardType;
+		return wizardHPArray[wizardType];
+	}
+
+	method void setWizardSchizophrenia(int currentWizardType)
+	{
+		let wizardType = currentWizardType;
+		let wizardSchizophrenia[wizardType] = true;
+		return;
+	}
+
+	method boolean getWizardSchizophrenia(int currentWizardType)
+	{
+		let wizardType = currentWizardType;
+		return wizardSchizophrenia[wizardType];
+	}
+
+	method int getDamageDoneToWizard(int currentWizardType, bool currentShield, int currentMonsterType)
+	{
+		var int damageDoneToWizard;
+		let wizardType = currentWizardType;
+		let shield = currentShield;
+		let monsterType = currentMonsterType;
+
+		if ( (Math.abs(wizardType - monsterType) = 2) | (Math.abs(monsterType - wizardType) = 2) )
+		{
+			let damageDoneToWizard = 3;
+			if (shield) {
+				let damageDoneToWizard = 0;
+			}
+		}
+		else
+		{
+			let damageDoneToWizard = 1;
+		}
+
+		return damageDoneToWizard;
+	}
+
+	method int getDamageDoneToMonster(int currentWizardType, int currentSpellType, int currentMonsterType)
+	{
+		var int damageDoneToMonster;
+		let damageDoneToMonster = 0;
+		let wizardType = currentWizardType;
+		let spellType = currentSpellType;
+		let monsterType = currentMonsterType;
+
+		if ( wizardType = monsterType ) {
+			let damageDoneToMonster = 0;
+		}
+		else
+		{
+			let damageDoneToMonster = 1;
+		}
+
+		if ( spellType = monsterType ) {
+			let damageDoneToMonster = damageDoneToMonster;
+		}
+		else
+		{
+			let damageDoneToMonster = (damageDoneToMonster + 1);
+		}
+
+		if ( (wizardType = spellType) & ( (Math.abs(wizardType - monsterType) = 2) | (Math.abs(monsterType - wizardType) = 2) ) ) {
+			let damageDoneToMonster = (damageDoneToMonster + 1);
+		}
+
+		if ( (Math.abs(wizardType - spellType) = 2) | (Math.abs(spellType - wizardType) = 2) ) {
+			let damageDoneToMonster = 0;
+		}
+
+		return damageDoneToMonster;
+	}
+
+	method void displayWizards(int lastWizardType)
+	{
+		let wizardType = lastWizardType;
+		
+		// Air
+		if ( ~(wizardType = 2) )
+		{
+			do Output.moveCursor(11, 27);
+			do Output.printString(wizardNameArray[0]);
+			if ( wizardSchizophrenia[0] ) {
+				do Output.moveCursor(12, 28);
+				do Output.printString("0");
+			}
+			else
+			{
+				do Output.moveCursor(12, 28);
+				do Output.printInt(wizardHPArray[0]);
+			}
+		}
+		else
+		{
+			do Output.moveCursor(11, 27);
+			do Output.printString("          ");
+			do Output.moveCursor(12, 29);
+		}
+
+		// Fire
+		if ( ~(wizardType = 3) )
+		{
+			do Output.moveCursor(16, 15);
+			do Output.printString(wizardNameArray[1]);
+			if ( wizardSchizophrenia[1] ) {
+				do Output.moveCursor(17, 16);
+				do Output.printString("0");
+			}
+			else
+			{
+				do Output.moveCursor(17, 16);
+				do Output.printInt(wizardHPArray[1]);
+			}
+		}
+		else
+		{
+			do Output.moveCursor(16, 15);
+			do Output.printString("          ");
+			do Output.moveCursor(17, 17);
+		}
+
+		// Earth
+		if ( ~(wizardType = 0) )
+		{
+			do Output.moveCursor(20, 27);
+			do Output.printString(wizardNameArray[2]);
+			if ( wizardSchizophrenia[2] ) {
+				do Output.moveCursor(21, 28);
+				do Output.printString("0");
+			}
+			else
+			{
+				do Output.moveCursor(21, 28);
+				do Output.printInt(wizardHPArray[2]);
+			}
+		}
+		else
+		{
+			do Output.moveCursor(20, 27);
+			do Output.printString("          ");
+			do Output.moveCursor(21, 29);
+		}
+
+		// Water
+		if ( ~(wizardType = 1) )
+		{
+			do Output.moveCursor(16, 36);
+			do Output.printString(wizardNameArray[3]);
+			if ( wizardSchizophrenia[3] ) {
+				do Output.moveCursor(17, 37);
+				do Output.printString("0");
+			}
+			else
+			{
+				do Output.moveCursor(17, 37);
+				do Output.printInt(wizardHPArray[3]);
+			}
+		}
+		else
+		{
+			do Output.moveCursor(16, 36);
+			do Output.printString("            ");
+			do Output.moveCursor(17, 38);
+		}
+
+		do Output.println();
+		return;
+	}
+
+	method void displayShields(boolean currentAirShield, boolean currentFireShield, boolean currentEarthShield, boolean currentWaterShield)
+	{
+		var boolean airShield, fireShield, earthShield, waterShield;
+		let airShield = currentAirShield;
+		let fireShield = currentFireShield;
+		let earthShield = currentEarthShield;
+		let waterShield = currentWaterShield;
+
+		if (airShield) {
+			do Output.moveCursor(12,29);
+			do Output.printString("+");
+		}
+		else {
+			do Output.moveCursor(12,29);
+		}
+		if (fireShield) {
+			do Output.moveCursor(17,17);
+			do Output.printString("+");
+		}
+		else {
+			do Output.moveCursor(17,17);
+		}
+		if (earthShield) {
+			do Output.moveCursor(21,29);
+			do Output.printString("+");
+		}
+		else {
+			do Output.moveCursor(21,29);
+		}
+		if (waterShield) {
+			do Output.moveCursor(17,38);
+			do Output.printString("+");
+		}
+		else {
+			do Output.moveCursor(17,38);
+		}
+
+		return;
+	}
+
+	method void dispose()
+	{
+		do wizardNameArray.dispose();
+		do wizardHPArray.dispose();
+		do wizardSchizophrenia.dispose();
+		do Memory.deAlloc(this);
+		return;
+    }
+}

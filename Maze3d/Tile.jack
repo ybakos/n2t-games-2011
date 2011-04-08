@@ -1,0 +1,41 @@
+/*
+ * This class holds each Tile in the grid of the maze.
+ *
+ * NOTE: The South-East most tile will NOT be able to specify South and East 
+ *       walls since each Tile maintains only a North and West wall.
+ */
+class Tile {
+	/*-------------------- STATIC VARIABLES --------------------*/
+
+	/*-------------------- PRIVATE VARIABLES --------------------*/
+	field boolean northWall, westWall;
+
+	/*-------------------- PRIVATE METHODS --------------------*/
+
+	/*
+	 * Create a new tile in the grid at position (x,y)
+	 */
+	constructor Tile new(boolean north, boolean west) {
+		let northWall = north;
+		let westWall = west;
+		
+		return this;
+	}
+	
+	
+	/*-------------------- GETTERS --------------------*/
+	// setters should NOT be needed
+	method boolean isNorthWall() {
+		return northWall;
+	}
+	
+	method boolean isWestWall() {
+		return westWall;
+	}
+	
+	/*-------------------- CLEANUP --------------------*/
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+}

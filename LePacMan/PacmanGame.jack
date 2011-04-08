@@ -1,0 +1,279 @@
+/**
+ * Class that runs the Pacman game
+ *
+*/
+
+class PacmanGame {
+    // Pacman!!!
+    field Pacman pacman;
+
+	// Drugz!!!
+	field Array pillArray;
+
+    // Pacman's movement direction
+    field int direction; // 0=none,1=up,2=down,3=left,4=right
+
+	static int PILL_ARRAY_SIZE;
+
+    field boolean redraw;
+    field boolean done;
+	field boolean win;
+
+    /** Constructs a new Pacman Game. */
+    constructor PacmanGame new() {
+        let pacman = Pacman.new(200, 200);
+        let direction = 0;
+		
+		let PILL_ARRAY_SIZE = 6;
+		
+		let pillArray = Array.new(PILL_ARRAY_SIZE);
+		let pillArray[0] = Pill.new(50,50);
+		let pillArray[1] = Pill.new(100,50);
+		let pillArray[2] = Pill.new(150,50);
+		let pillArray[3] = Pill.new(50,100);
+		let pillArray[4] = Pill.new(100,100);
+		let pillArray[5] = Pill.new(150,100);
+
+        let redraw = true;
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do pillArray.dispose();
+		do pacman.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Starts the game. Handles inputs from the user that controls
+     *  pacman's movement direction. */
+    method void run() {
+        var char key;
+
+        let done = false;
+		
+		do startSequence();
+		
+		do drawPills();
+		
+        while (~done) {
+            // waits for a key to be pressed.
+            while (~done & (key = 0)) {
+                let key = Keyboard.keyPressed();
+                do movePacman();
+				do pacman.drawClosed();
+            }
+
+            if (key = 81) {
+                let done = true;
+            }
+            if (key = 131) {
+                let direction = 1;
+            }
+            if (key = 133) {
+                let direction = 2;
+            }
+            if (key = 130) {
+                let direction = 3;
+            }
+            if (key = 132) {
+                let direction = 4;
+            }
+
+            // waits for the key to be released.
+            while (~done & ~(key = 0)) {
+                let key = Keyboard.keyPressed();
+                do movePacman();
+				do pacman.drawClosed();
+
+            }
+
+			if (key = 81) {
+                let done = true;
+            }
+            if (key = 131) {
+                let direction = 1;
+            }
+            if (key = 133) {
+                let direction = 2;
+            }
+            if (key = 130) {
+                let direction = 3;
+            }
+            if (key = 132) {
+                let direction = 4;
+            }
+        }
+
+		do exit();
+
+        return;
+	}
+
+    /** Moves Pacman by 2 in the current direction. */
+    method void movePacman() {
+        if (direction = 1) {
+            do pacman.moveUp();
+        }
+        if (direction = 2) {
+            do pacman.moveDown();
+        }
+        if (direction = 3) {
+            do pacman.moveLeft();
+        }
+        if (direction = 4) {
+            do pacman.moveRight();
+        }
+        do eat();
+
+        if (redraw) {
+            do drawPills();
+            let redraw = false;
+        }        
+
+        do checkEnd();
+
+        return;
+    }
+
+    method void drawPills() {
+        var int i;
+		var Pill tempPill;
+
+        let i = 0;
+		while (i < PILL_ARRAY_SIZE) {
+			let tempPill = pillArray[i];
+			do tempPill.draw();
+			let i = i + 1;
+		}
+
+        return;
+    }
+
+
+    /** Check if Pacman has eaten any of the pills */
+    method void eat() {
+        var int index;
+        var Pill pill;
+        var boolean temp;        
+
+        let index = 0;
+        
+        while (index < PILL_ARRAY_SIZE) {
+            let pill = pillArray[index];
+            let temp = overlap(pill);
+            if (overlap(pill)) {
+                do pill.erase();
+                let redraw = true;
+                // Increrase score
+            }
+            let index = index + 1;
+        }
+
+        return;
+    }
+
+    /** Checks if Pacman overlaps a pill */
+    method boolean overlap(Pill pill) {
+        if (pacman.withinX(pill.getX(), 0) & pacman.withinY(pill.getY(), 0)) {
+                return true;
+        }
+        return false;
+    }
+
+    /** Checks if all the pills have been eaten */
+    method void checkEnd() {
+        var int i;
+		var Pill tempPill;
+
+        let i = 0;
+		while (i < PILL_ARRAY_SIZE) {
+			let tempPill = pillArray[i];
+			if (~tempPill.getEaten()) {
+                return;
+            }
+			let i = i + 1;
+		}
+
+        let done = true;
+		let win = true;
+        return;
+    }
+
+	method void flashOnce() {
+		do Output.printString("Le Pacman!");
+		do Sys.wait(1000);
+		do Screen.setColor(true);
+		do Screen.drawRectangle(0,0,511,255);
+		do Screen.setColor(false);
+		do Screen.drawRectangle(0,0,511,255);
+		return;
+	}
+
+	method void flashScreen() {
+		do flashOnce();
+		do flashOnce();
+		do flashOnce();
+		do flashOnce();
+		do flashOnce();
+		do Output.printString("Le Pacman!");
+		do Sys.wait(1000);
+		return;
+	}
+
+	method void startSequence() {
+	
+		do flashScreen();
+	
+		do Screen.clearScreen();
+		do Output.moveCursor(0,0);
+		do Output.printString("Ready?");
+
+		do pacman.drawOpen();
+		do Sys.wait(2550);
+		do pacman.drawClosed();
+		
+		do Output.backSpace();
+		do Output.moveCursor(0,0);
+		do Output.printString("Set..");
+		do Sys.wait(2550);
+		
+		do Output.moveCursor(0,0);
+		do Output.printString("Gogogogogo!");
+		do pacman.drawOpen();
+		do Sys.wait(2550);
+
+		return;
+	}
+
+	method void exit() {
+		do Screen.clearScreen();
+		do Output.moveCursor(0,0);
+		
+		if (win) {
+	        do Output.printString("You Win!!!");
+			do pacman.drawOpen();
+			do Sys.wait(1000);
+			do Output.moveCursor(0,0);
+	        do Output.printString("          ");
+			do pacman.drawClosed();
+			do Sys.wait(1000);
+			do Output.moveCursor(0,0);
+	        do Output.printString("You Win!!!");
+			do pacman.drawOpen();
+			do Sys.wait(1000);
+			do Output.moveCursor(0,0);
+	        do Output.printString("          ");
+			do pacman.drawClosed();
+			do Sys.wait(1000);
+			do Output.moveCursor(0,0);
+	        do Output.printString("You Win!!!");
+			do pacman.drawOpen();			
+		} 
+		else {
+	        do Output.printString("Goodbye");
+		}
+		return;
+	}
+}

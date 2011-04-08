@@ -1,0 +1,10 @@
+class Main {
+ 	function void main() {
+		var SpaceInvaders si;
+		let si = SpaceInvaders.new();
+		do si.run();
+		do si.dispose();
+		return;
+	}
+
+}

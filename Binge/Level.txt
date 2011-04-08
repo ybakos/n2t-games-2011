@@ -1,0 +1,28 @@
+class Level{
+	
+	field int levelNum;
+	
+	constructor Level new(int number){
+		let levelNum = number;
+			
+		return this;	
+	}
+
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+	method startLevel(){
+		Screen.drawRectangle(0,0,5,5);
+	
+	
+	
+	}
+
+
+
+
+
+
+}

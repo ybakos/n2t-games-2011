@@ -1,0 +1,333 @@
+/**
+ * The CrossDance class implements the Cross Dance game.
+ * In this game you can move a black cross around the screen and
+ * change its size during the movement.
+ * In the beggining, the cross is located at the top left corner.
+ * Use the arrow keys to move the cross.
+ * Use 'q' to quit.
+ */
+class DartsGame {
+
+    // The cross
+    field Cross cross;
+	
+	// The current score for player 1
+	field int score1;
+	
+	// The current score for player 2
+	field int score2;
+	
+	// Bool for player turn
+	field boolean player1;
+	
+	// Int turn - for 10 turn game
+	field int turn;
+	
+	// Darts on a turn
+	field int darts;
+	
+	// Game state
+	field boolean exit;
+
+    // The cross's movement direction
+    field int direction; // 0=none,1=up,2=down,3=left,4=right
+
+    /** Constructs a new Darts Game. */
+    constructor DartsGame new() {
+        let cross = Cross.new(0, 0, 10);
+        let direction = 0;
+		let player1 = true;
+		
+		
+		
+		do Output.moveCursor(0,19);
+		do Output.printString("Player 1's turn: 1");
+		do Output.printString(" dart #1");
+		
+		do Screen.setColor(true);
+		do Screen.drawCircle(256, 128, 100);
+		
+		do Screen.setColor(false);
+		do Screen.drawCircle(256, 128, 98);
+		
+		do Screen.setColor(true);
+		do Screen.drawCircle(256, 128, 70);
+		
+		do Screen.setColor(false);
+		do Screen.drawCircle(256, 128, 68);
+		
+		do Screen.setColor(true);
+		do Screen.drawCircle(256, 128, 40);
+		
+		do Screen.setColor(false);
+		do Screen.drawCircle(256, 128, 38);
+		
+		do Screen.setColor(true);
+		do Screen.drawCircle(256, 128, 15);
+		
+		do Screen.setColor(false);
+		do Screen.drawCircle(256, 128, 13);
+		
+		do Screen.setColor(true);
+		do Screen.drawCircle(256, 128, 3);
+		
+		do Output.moveCursor(11,20);
+		do Output.printString("Press space bar to shoot");
+		do Output.moveCursor(12,21);
+		do Output.printString("Use arrow keys to move");
+		do Output.moveCursor(10,21);
+		do Output.printString("10 Turn 2 Player Game");
+		
+		do Output.moveCursor(22,1);
+		do Output.printString("Player 1 Score: 0");
+		do Output.moveCursor(22,44);
+		do Output.printString("Player 2 Score: 0");
+
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do cross.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Starts the game. Handles inputs from the user that controls
+     *  the cross movement direction and placement. */
+    method void run() {
+        var char key;
+		var Array dartx;
+		var Array darty;
+		
+		let dartx = Array.new(3);
+		let darty = Array.new(3);
+        let exit = false;
+		let score1 = 0;
+		let score2 = 0;
+		let turn = 1;
+		let darts = 0;
+
+        while (~exit) {
+            // waits for a key to be pressed.
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+                do moveCross();
+            }
+			
+            if (key = 81) {
+                let exit = true;
+            }
+			
+			if (key = 32) {
+				if (player1) {
+					if (darts < 3) {
+						let dartx[darts] = cross.getX();
+						let darty[darts] = cross.getY();
+						let darts = darts + 1;
+						do cross.throwDart();
+						do updateScore(dartx[darts-1]+5, darty[darts-1]+5);
+					}
+				}
+				else {
+					if (darts < 3) {
+						let dartx[darts] = cross.getX();
+						let darty[darts] = cross.getY();
+						let darts = darts + 1;
+						do cross.throwDart();
+						do updateScore(dartx[darts-1]+5, darty[darts-1]+5);
+					}
+				}
+			}
+            if (key = 131) {
+                let direction = 1;
+            }
+            if (key = 133) {
+                let direction = 2;
+            }
+            if (key = 130) {
+                let direction = 3;
+            }
+            if (key = 132) {
+                let direction = 4;
+            }
+			
+			
+			
+			do Screen.setColor(true);
+			do Screen.drawCircle(256, 128, 100);
+			
+			do Screen.setColor(false);
+			do Screen.drawCircle(256, 128, 98);
+			
+			do Screen.setColor(true);
+			do Screen.drawCircle(256, 128, 70);
+			
+			do Screen.setColor(false);
+			do Screen.drawCircle(256, 128, 68);
+			
+			do Screen.setColor(true);
+			do Screen.drawCircle(256, 128, 40);
+			
+			do Screen.setColor(false);
+			do Screen.drawCircle(256, 128, 38);
+			
+			do Screen.setColor(true);
+			do Screen.drawCircle(256, 128, 15);
+			
+			do Screen.setColor(false);
+			do Screen.drawCircle(256, 128, 13);
+			
+			do Screen.setColor(true);
+			do Screen.drawCircle(256, 128, 3);
+			
+			if (darts = 1) {
+				do cross.drawDart(dartx[0], darty[0]);
+			}
+			if (darts = 2) {
+				do cross.drawDart(dartx[0], darty[0]);
+				do cross.drawDart(dartx[1], darty[1]);
+			}
+			if (darts = 3) {
+				do cross.drawDart(dartx[0], darty[0]);
+				do cross.drawDart(dartx[1], darty[1]);
+				do cross.drawDart(dartx[2], darty[2]);
+			}
+			
+			
+            // waits for the key to be released.
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+                do moveCross();
+            }
+        }
+            
+        return;
+	}
+	
+	method void updateScore(int x, int y) {
+		var int temp, xvar, yvar, tot;
+		let xvar = x-256;
+		let xvar = xvar*xvar;
+		let yvar = y-128;
+		let yvar = yvar*yvar;
+		let tot = xvar + yvar;
+		if ( ~(tot < 0) ) {
+			let temp = Math.sqrt(tot);
+		}
+		else {
+			let temp = 101;
+		}
+		if (player1) {
+			if ( ~(temp > 3) ) {
+				let score1 = score1 + 50;
+			}		
+			else {
+				if ( ~(temp > 15)) {
+					let score1 = score1 + 25;
+				}
+				else {
+					if ( ~(temp > 40)) {
+						let score1 = score1 + 20;
+					}
+					else {
+						if ( ~(temp > 70)) {
+							let score1 = score1 + 10;
+						}
+						else {
+							if ( ~(temp > 100)) {
+								let score1 = score1 + 5;
+							}
+						}
+					}
+				}
+			}
+		}
+		else {
+			if ( ~(temp > 3) ) {
+				let score2 = score2 + 50;
+			}		
+			else {
+				if ( ~(temp > 15)) {
+					let score2 = score2 + 25;
+				}
+				else {
+					if ( ~(temp > 40)) {
+						let score2 = score2 + 20;
+					}
+					else {
+						if ( ~(temp > 70)) {
+							let score2 = score2 + 10;
+						}
+						else {
+							if ( ~(temp > 100)) {
+								let score2 = score2 + 5;
+							}
+						}
+					}
+				}
+			}
+		}
+		if (darts = 3) {
+			let darts = 0;
+			if (player1) {
+				let player1 = false;
+			}
+			else {
+				let player1 = true;
+				let turn = turn + 1;
+			}
+			if ( turn = 11 & (player1) ) {
+				let exit = true;
+			}
+		}
+		if (~(turn = 11)){
+			if(player1) {
+				do Output.moveCursor(0,19);
+				do Output.printString("Player 1's turn: ");
+				do Output.printInt(turn);
+				do Output.printString(" dart #");
+				do Output.printInt(darts+1);
+			}
+			else {
+				do Output.moveCursor(0,19);
+				do Output.printString("Player 2's turn: ");
+				do Output.printInt(turn);
+				do Output.printString(" dart #");
+				do Output.printInt(darts+1);
+			}
+		}
+		do Output.moveCursor(22,1);
+		do Output.printString("Player 1 Score: ");
+		do Output.printInt(score1);
+		do Output.moveCursor(22,44);
+		do Output.printString("Player 2 Score: ");
+		do Output.printInt(score2);
+		return;
+	}
+	
+
+    /** Moves the cross by 2 in the current direction. */
+    method void moveCross() {
+	
+	
+	
+        if (direction = 1) {
+            do cross.moveUp();
+        }
+        if (direction = 2) {
+            do cross.moveDown();
+        }
+        if (direction = 3) {
+            do cross.moveLeft();
+        }
+        if (direction = 4) {
+            do cross.moveRight();
+        }
+		
+		
+
+        do Sys.wait(10); // Delays the next movement.
+        return;
+    }
+}

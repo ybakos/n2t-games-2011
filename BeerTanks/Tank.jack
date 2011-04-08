@@ -1,0 +1,557 @@
+class Tank {
+	field int hold;
+	field int xcoord;
+	field int ycoord;
+	field int width;
+	field int height;
+
+	field int cX;
+	field int cY;
+	field int cWidth;
+	field int cHeight;
+
+	field int stepX; 
+	field int stepY; 
+	
+	field int dir;
+	field char key;
+	field boolean quit;
+
+	field int numShots;
+	field int bulletXcoord;
+	field int bulletYcoord;
+
+	field Pong cup0;
+	field Pong cup1;
+	field Pong cup2;
+	field Pong cup3;
+	field Pong cup4;
+	field Pong cup5;
+	field Pong cup6;
+	field Pong cup7;
+	field Pong cup8;
+	field Pong cup9;
+
+	constructor Tank new(int holder) {
+		let hold = holder;
+		do Screen.setColor(true);
+		let xcoord = 245;
+		let ycoord = 242;
+		let width = 28;
+		let height = 12;
+		let cX = 255;
+		let cY = 235;
+		let cWidth = 8;
+		let cHeight = 7;
+		let stepX = 1;
+		let stepY = 1;
+		do Screen.drawRectangle(xcoord, ycoord, xcoord+width, ycoord+height);
+		do Screen.drawRectangle(cX, cY, cX + cWidth, cY + cHeight);
+		do drawCups();
+		return this;
+	}
+
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method void drawCups()
+	{
+		let cup0 = Pong.new(166, 31, 20);
+		do cup0.drawCup();
+		let cup1 = Pong.new(216, 31, 20);
+		do cup1.drawCup();
+		let cup2 = Pong.new(266, 31, 20);
+		do cup2.drawCup();
+		let cup3 = Pong.new(316, 31, 20);
+		do cup3.drawCup();
+		let cup4 = Pong.new(191, 71, 20);
+		do cup4.drawCup();
+		let cup5 = Pong.new(241, 71, 20);
+		do cup5.drawCup();
+		let cup6 = Pong.new(291, 71, 20);
+		do cup6.drawCup();
+		let cup7 = Pong.new(216, 111, 20);
+		do cup7.drawCup();
+		let cup8 = Pong.new(266, 111, 20);
+		do cup8.drawCup();
+		let cup9 = Pong.new(241, 151, 20);
+		do cup9.drawCup();
+
+		return;
+	}
+
+	method void moveRight()
+	{
+		if (xcoord < 453)
+		{
+			do Screen.setColor(false);
+			do Screen.drawRectangle(xcoord, ycoord, xcoord+width, ycoord+height);
+			do Screen.drawRectangle(cX, cY, cX + cWidth, cY + cHeight);
+			do Screen.setColor(true);
+			do Screen.drawRectangle(xcoord + stepX, ycoord, xcoord+width + stepX, ycoord+height);
+			do Screen.drawRectangle(cX + stepX, cY, cX + cWidth + stepX, cY + cHeight);
+			let xcoord = xcoord + stepX;
+			let cX = cX + stepX;
+
+		}
+		return;
+	}
+	
+	method void moveLeft()
+	{
+		if (xcoord > 30)
+		{
+			do Screen.setColor(false);
+			do Screen.drawRectangle(xcoord, ycoord, xcoord+width, ycoord+height);
+			do Screen.drawRectangle(cX, cY, cX + cWidth, cY + cHeight);
+			do Screen.setColor(true);
+			do Screen.drawRectangle(xcoord - stepX, ycoord, xcoord+width - stepX, ycoord+height);
+			do Screen.drawRectangle(cX - stepX, cY, cX + cWidth - stepX, cY + cHeight);
+			let xcoord = xcoord - stepX;
+			let cX = cX - stepX;
+
+		}
+		return;
+	}
+
+	method void moveUp()
+	{
+		if (ycoord > 192)
+		{
+			do Screen.setColor(false);
+			do Screen.drawRectangle(xcoord, ycoord, xcoord+width, ycoord+height);
+			do Screen.drawRectangle(cX, cY, cX + cWidth, cY + cHeight);
+			do Screen.setColor(true);
+			do Screen.drawRectangle(xcoord, ycoord-stepY, xcoord+width, ycoord+height-stepY);
+			do Screen.drawRectangle(cX, cY-stepY, cX + cWidth, cY + cHeight - stepY);
+			let ycoord = ycoord - stepY;
+			let cY = cY - stepY;
+
+		}
+		return;
+	}
+	
+	method void moveDown()
+	{
+		if (ycoord < 242)
+		{
+			do Screen.setColor(false);
+			do Screen.drawRectangle(xcoord, ycoord, xcoord+width, ycoord+height);
+			do Screen.drawRectangle(cX, cY, cX + cWidth, cY + cHeight);
+			do Screen.setColor(true);
+			do Screen.drawRectangle(xcoord, ycoord+stepY, xcoord+width, ycoord+height+stepY);
+			do Screen.drawRectangle(cX, cY+stepY, cX + cWidth, cY + cHeight + stepY);
+			let ycoord = ycoord + stepY;
+			let cY = cY + stepY;
+
+		}
+		return;
+	}
+
+	method void run()
+	{
+		let quit = false;
+		let numShots = 200;
+		while(~quit)
+		{
+                	let key = Keyboard.keyPressed();
+
+			if (key = 81) {
+				let quit = true;
+			}
+			if (key = 131)
+			{
+				let dir = 1;
+			}
+			if (key  = 133)
+			{	
+				let dir = 2;
+			}
+			if (key = 130)
+			{
+				let dir = 3;
+			}
+			if (key = 132)
+			{
+				let dir = 4;	
+			}
+			if (key = 82)
+			{
+				let dir = 5;
+			}
+			if (~(key = 0)) {
+				do move(); 
+			}
+		}
+		return;
+
+	}
+	
+	method void move() {
+		if (dir = 1) {
+            		do moveUp();
+        	}
+        	if (dir  = 2) {
+            		do moveDown();
+       	 	}
+       	 	if (dir = 3) {
+        	    	do moveLeft();
+        	}
+        	if (dir = 4) {
+            		do moveRight();
+        	}
+		if (dir = 5) {
+			do shoot();
+		}
+
+        	do Sys.wait(15); // Delays the next movement.
+
+		return;
+	}
+
+	method void shoot()
+	{
+		let bulletXcoord = cX;
+		let bulletYcoord = cY-8;
+			
+		if (numShots = 0)
+		{
+			return;
+		}
+
+		if (numShots > 0)
+		{		
+			let numShots = numShots - 1;
+		}
+
+		if (ycoord < 200)
+		{
+			if (xcoord > 376)
+			{
+				//miss zone
+				do misfire();
+				return;
+			}
+			if (xcoord < 136)
+			{
+
+				do misfire();
+				return;
+			}
+
+		}
+		if (ycoord > 242)
+		{
+			if (xcoord > 376)
+			{
+				//miss zone
+				do misfire();
+				return;
+			}
+			if (xcoord < 136)
+			{
+
+				do misfire();
+				return;
+			}
+		}
+
+		
+		if (xcoord > 376)
+		{
+			//miss zone
+			do misfire();
+			
+			return;
+		}
+			
+		if (xcoord < 136)
+		{
+			//miss zone
+			do misfire();
+			return;
+		}
+
+		if (ycoord < 206)
+		{
+			//cup0-cup3
+			if (xcoord > 146)
+			{
+				if (xcoord < 186)
+				{
+					do madeShot(0);
+					return;
+				}
+
+			} 
+			if (xcoord > 196)
+			{
+				if (xcoord < 236)
+				{
+					do madeShot(1);
+					return;
+				}
+			}
+			if (xcoord > 246)
+			{
+				if (xcoord < 286)
+				{
+					do madeShot(2);
+					return;
+				}
+
+			} 
+			if (xcoord > 296)
+			{
+				if (xcoord < 336)
+				{
+					do madeShot(3);
+					return;
+				}
+
+			} 
+			
+			do misfire();
+		
+			return;
+		}
+
+		if (ycoord  < 218)
+		{
+			//cup4-cup6
+			if (xcoord > 171)
+			{
+				if (xcoord < 211)
+				{
+					do madeShot(4);
+					return;
+				}
+
+			} 
+			if (xcoord > 221)
+			{
+				if (xcoord < 261)
+				{
+					do madeShot(5);
+					return;
+				}
+			}
+			if (xcoord > 271)
+			{
+				if (xcoord < 311)
+				{
+					do madeShot(6);
+					return;
+				}
+
+			} 
+		
+			do misfire();
+			return;
+		}
+		if (ycoord < 229)
+		{
+			//cup7-cup8
+			if (xcoord > 196)
+			{
+				if (xcoord < 236)
+				{
+					do madeShot(7);
+					return;
+				}
+
+			} 
+			if (xcoord > 246)
+			{
+				if (xcoord < 286)
+				{
+					do madeShot(8);
+					return;
+				}
+			}
+			
+				do misfire();
+			return;
+		}
+		if (ycoord < 242)
+		{
+			//cup9
+			if (xcoord > 221)
+			{
+				if (xcoord < 261)
+				{	
+					
+					do madeShot(9);
+					return;
+
+				}
+				
+			}
+
+			return;
+			
+		}
+
+		
+		return;
+	}
+
+	//show bullet going to end of table and not making it
+	method void misfire()
+	{
+		while (bulletYcoord > 0)
+		{
+			do Screen.setColor(true);
+			do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+			do Sys.wait(5);
+			do Screen.setColor(false);
+			do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+			let bulletYcoord = bulletYcoord - 5;
+		}
+		return;
+
+	}
+
+	method void madeShot(int cupNum)
+	{
+
+		
+		if (cupNum = 0)
+		{
+			do cup0.dispose();
+			while (bulletYcoord > cup0.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		if (cupNum = 1)
+		{
+			do cup1.dispose();
+			while (bulletYcoord > cup1.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		if (cupNum = 2)
+		{
+			do cup2.dispose();
+			while (bulletYcoord > cup2.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		if (cupNum = 3)
+		{
+			do cup3.dispose();
+			while (bulletYcoord > cup3.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		if (cupNum = 4)
+		{
+			do cup4.dispose();
+			while (bulletYcoord > cup4.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		if (cupNum = 5)
+		{
+			do cup5.dispose();
+			while (bulletYcoord > cup5.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		if (cupNum = 6)
+		{
+			do cup6.dispose();
+			while (bulletYcoord > cup6.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		if (cupNum = 7)
+		{
+			do cup7.dispose();
+			while (bulletYcoord > cup7.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		if (cupNum = 8)
+		{
+			do cup8.dispose();
+			while (bulletYcoord > cup8.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		if (cupNum = 9)
+		{
+			do cup9.dispose();
+			while (bulletYcoord > cup9.getY() )
+			{
+				do Screen.setColor(true);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				do Sys.wait(5);
+				do Screen.setColor(false);
+				do Screen.drawRectangle(bulletXcoord, bulletYcoord, bulletXcoord + cWidth, bulletYcoord + cHeight);
+				let bulletYcoord = bulletYcoord - 5;
+			}
+		}
+		
+
+		return;
+
+	}
+
+}

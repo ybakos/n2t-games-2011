@@ -1,0 +1,40 @@
+class Pong {
+	field int x;
+	field int y;
+	field int r;
+
+	constructor Pong new(int a, int b, int c) {
+		let x = a;
+		let y = b;
+		let r = c;
+
+		return this;
+	}
+
+	method void dispose() {
+		do Screen.setColor(false);
+		do Screen.drawCircle(x, y, r);
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method void drawCup() {
+		do Screen.drawCircle(x, y, r);
+		return;
+	}
+
+	method int getX()
+	{
+		return x;
+	}
+	
+	method int getY()
+	{
+		return y;
+	}
+
+	method int getR()
+	{
+		return r;
+	}
+}

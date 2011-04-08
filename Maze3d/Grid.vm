@@ -1,0 +1,1752 @@
+function Grid.new 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push constant 10
+pop static 0
+push static 0
+push static 0
+call Math.multiply 2
+call Array.new 1
+pop this 0
+push constant 100
+pop static 1
+push constant 3
+pop static 2
+push static 0
+push constant 10
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 16
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 17
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 18
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 19
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 20
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 21
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 22
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 23
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 24
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 25
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 26
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 27
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 28
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 29
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 30
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 31
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 32
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 33
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 34
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 35
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 36
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 37
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 38
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 39
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 40
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 41
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 42
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 43
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 44
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 45
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 46
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 47
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 48
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 49
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 50
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 51
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 52
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 53
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 54
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 55
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 56
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 57
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 58
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 59
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 60
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 61
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 62
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 63
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 64
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 65
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 66
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 67
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 68
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 69
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 70
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 71
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 72
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 73
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 74
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 75
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 76
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 77
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 78
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 79
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 80
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 81
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 82
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 83
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 84
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 85
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 86
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 87
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 88
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 89
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 90
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 91
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 92
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 93
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 94
+push this 0
+add
+push constant 0
+not
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 95
+push this 0
+add
+push constant 0
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 96
+push this 0
+add
+push constant 0
+push constant 0
+not
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 97
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 98
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 99
+push this 0
+add
+push constant 0
+not
+push constant 0
+call Tile.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_FALSE0
+push pointer 0
+return
+function Grid.getWalls 0
+push argument 0
+pop pointer 0
+push constant 0
+push argument 1
+add
+push pointer 0
+push argument 2
+push argument 3
+call Grid.hasNorthWall 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push argument 1
+add
+push pointer 0
+push argument 2
+push argument 3
+call Grid.hasEastWall 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push argument 1
+add
+push pointer 0
+push argument 2
+push argument 3
+call Grid.hasSouthWall 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push argument 1
+add
+push pointer 0
+push argument 2
+push argument 3
+call Grid.hasWestWall 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
+function Grid.hasNorthWall 1
+push argument 0
+pop pointer 0
+push argument 2
+push static 0
+call Math.multiply 2
+push argument 1
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Tile.isNorthWall 1
+return
+function Grid.hasWestWall 1
+push argument 0
+pop pointer 0
+push argument 2
+push static 0
+call Math.multiply 2
+push argument 1
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Tile.isWestWall 1
+return
+function Grid.hasSouthWall 1
+push argument 0
+pop pointer 0
+push argument 2
+push static 0
+push constant 1
+sub
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+label IF_FALSE0
+push argument 2
+push constant 1
+add
+push static 0
+call Math.multiply 2
+push argument 1
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Tile.isNorthWall 1
+return
+function Grid.hasEastWall 1
+push argument 0
+pop pointer 0
+push argument 1
+push static 0
+push constant 1
+sub
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+label IF_FALSE0
+push argument 2
+push static 0
+call Math.multiply 2
+push argument 1
+add
+push constant 1
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Tile.isWestWall 1
+return
+function Grid.canSeeFrom 6
+push argument 0
+pop pointer 0
+push constant 4
+push static 2
+call Math.multiply 2
+push constant 1
+add
+pop local 2
+push local 2
+call Array.new 1
+pop local 0
+push constant 0
+push argument 1
+add
+push local 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push argument 1
+add
+push local 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+call V2D.empty 0
+pop local 5
+push local 5
+push argument 2
+push argument 3
+call V2D.set 3
+pop temp 0
+push constant 0
+push local 0
+add
+push local 5
+call V2D.copy 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+pop local 1
+push constant 0
+pop local 3
+push constant 0
+not
+pop local 4
+label WHILE_EXP0
+push local 4
+not
+if-goto WHILE_END0
+push pointer 0
+push argument 2
+push argument 3
+push local 3
+sub
+call Grid.hasNorthWall 3
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 5
+push argument 2
+push argument 3
+push local 3
+sub
+push constant 1
+sub
+call V2D.set 3
+pop temp 0
+push local 1
+push local 0
+add
+push local 5
+call V2D.copy 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 1
+push constant 1
+add
+pop local 1
+push local 3
+push constant 1
+add
+pop local 3
+push local 3
+push static 2
+lt
+not
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+pop local 4
+label IF_FALSE1
+goto IF_END0
+label IF_FALSE0
+push constant 0
+pop local 4
+label IF_END0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+pop local 3
+push constant 0
+not
+pop local 4
+label WHILE_EXP1
+push local 4
+not
+if-goto WHILE_END1
+push pointer 0
+push argument 2
+push argument 3
+push local 3
+add
+call Grid.hasSouthWall 3
+not
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 5
+push argument 2
+push argument 3
+push local 3
+add
+push constant 1
+add
+call V2D.set 3
+pop temp 0
+push local 1
+push local 0
+add
+push local 5
+call V2D.copy 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 1
+push constant 1
+add
+pop local 1
+push local 3
+push constant 1
+add
+pop local 3
+push local 3
+push static 2
+lt
+not
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+pop local 4
+label IF_FALSE3
+goto IF_END2
+label IF_FALSE2
+push constant 0
+pop local 4
+label IF_END2
+goto WHILE_EXP1
+label WHILE_END1
+push constant 0
+pop local 3
+push constant 0
+not
+pop local 4
+label WHILE_EXP2
+push local 4
+not
+if-goto WHILE_END2
+push pointer 0
+push argument 2
+push local 3
+add
+push argument 3
+call Grid.hasEastWall 3
+not
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 5
+push argument 2
+push local 3
+add
+push constant 1
+add
+push argument 3
+call V2D.set 3
+pop temp 0
+push local 1
+push local 0
+add
+push local 5
+call V2D.copy 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 1
+push constant 1
+add
+pop local 1
+push local 3
+push constant 1
+add
+pop local 3
+push local 3
+push static 2
+lt
+not
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push constant 0
+pop local 4
+label IF_FALSE5
+goto IF_END4
+label IF_FALSE4
+push constant 0
+pop local 4
+label IF_END4
+goto WHILE_EXP2
+label WHILE_END2
+push constant 0
+pop local 3
+push constant 0
+not
+pop local 4
+label WHILE_EXP3
+push local 4
+not
+if-goto WHILE_END3
+push pointer 0
+push argument 2
+push local 3
+sub
+push argument 3
+call Grid.hasWestWall 3
+not
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push local 5
+push argument 2
+push local 3
+sub
+push constant 1
+sub
+push argument 3
+call V2D.set 3
+pop temp 0
+push local 1
+push local 0
+add
+push local 5
+call V2D.copy 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 1
+push constant 1
+add
+pop local 1
+push local 3
+push constant 1
+add
+pop local 3
+push local 3
+push static 2
+lt
+not
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push constant 0
+pop local 4
+label IF_FALSE7
+goto IF_END6
+label IF_FALSE6
+push constant 0
+pop local 4
+label IF_END6
+goto WHILE_EXP3
+label WHILE_END3
+label WHILE_EXP4
+push local 1
+push local 2
+lt
+not
+if-goto WHILE_END4
+push local 1
+push local 0
+add
+push constant 1
+neg
+push constant 1
+neg
+call V2D.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP4
+label WHILE_END4
+push local 5
+call V2D.dispose 1
+pop temp 0
+push constant 0
+return
+function Grid.canMove 3
+push argument 0
+pop pointer 0
+push argument 3
+push argument 1
+sub
+pop local 1
+push argument 4
+push argument 2
+sub
+pop local 2
+push constant 0
+not
+pop local 0
+push local 2
+push constant 1
+neg
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push pointer 0
+push argument 1
+push argument 2
+call Grid.hasNorthWall 3
+not
+and
+pop local 0
+label IF_FALSE0
+push local 2
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 0
+push pointer 0
+push argument 1
+push argument 2
+call Grid.hasSouthWall 3
+not
+and
+pop local 0
+label IF_FALSE1
+push local 1
+push constant 1
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 0
+push pointer 0
+push argument 1
+push argument 2
+call Grid.hasEastWall 3
+not
+and
+pop local 0
+label IF_FALSE2
+push local 1
+push constant 1
+neg
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 0
+push pointer 0
+push argument 1
+push argument 2
+call Grid.hasWestWall 3
+not
+and
+pop local 0
+label IF_FALSE3
+push local 0
+return
+function Grid.coordTransform 1
+call V2D.empty 0
+pop local 0
+push local 0
+push argument 0
+call V2D.getX 1
+push static 0
+call Math.divide 2
+call V2D.setX 2
+pop temp 0
+push local 0
+push argument 0
+call V2D.getY 1
+push static 0
+call Math.divide 2
+call V2D.setY 2
+pop temp 0
+push local 0
+return
+function Grid.getSizeX 0
+push argument 0
+pop pointer 0
+push static 0
+return
+function Grid.getSizeY 0
+push argument 0
+pop pointer 0
+push static 0
+return
+function Grid.getGoalX 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Grid.getGoalY 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Grid.getGridSize 0
+push static 0
+return
+function Grid.setGoal 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 1
+push argument 2
+pop this 2
+push constant 0
+return
+function Grid.dispose 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 0
+lt
+push static 0
+call Math.multiply 2
+not
+if-goto WHILE_END0
+push local 0
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+call Tile.dispose 1
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push this 0
+call Array.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

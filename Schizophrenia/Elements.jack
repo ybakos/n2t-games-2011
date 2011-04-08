@@ -1,0 +1,251 @@
+// Lex Hubbard
+// Elements
+
+// Schizophrenia Game
+// Element Icons designed by Lex Hubbard 2011
+
+class Elements {
+	
+	field Array elementsArray;
+
+	constructor Elements new()
+	{
+		let elementsArray = Array.new(4);
+
+		let elementsArray[0] = 0;
+		let elementsArray[1] = 1;
+		let elementsArray[2] = 2;
+		let elementsArray[3] = 3;
+
+		return this;
+	}
+
+	method void drawAir()
+	{
+		var int scaleBy;
+		var int scaleByA;
+		var int scaleByB;
+		var int shiftX;
+		var int shiftY;
+
+		let scaleBy = 3;
+		let scaleByA = 3;
+		let scaleByB = 3;
+		let shiftX = 220;
+		let shiftY = 50;
+/*
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (1 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (2 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (2 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (2 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (3 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (5 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleByA) + shiftX, (3 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (6 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleByA) + shiftX, (7 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+
+		do Screen.drawRectangle( (7 * scaleByA) + shiftX, (6 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (6 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (7 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleByA) + shiftX, (7 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (7 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleByA) + shiftX, (8 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (9 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (8 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleByA) + shiftX, (8 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (9 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (10 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleByA) + shiftX, (9 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (9 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (11 * scaleByA) + shiftX, (9 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleByA) + shiftX, (10 * scaleBy) + shiftY, (2 * scaleBy) + shiftX, (10 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (10 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (10 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleByA) + shiftX, (10 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+
+		do Screen.drawRectangle( (1 * scaleByA) + shiftX, (11 * scaleBy) + shiftY, (1 * scaleBy) + shiftX, (14 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleByA) + shiftX, (11 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleByA) + shiftX, (11 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleByA) + shiftX, (12 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (14 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (12 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleByA) + shiftX, (12 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (13 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (13 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleByA) + shiftX, (13 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (13 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (14 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (14 * scaleBy) + shiftY);
+
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (14 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (14 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (2 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (19 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+*/
+
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (1 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (2 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (2 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (3 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (3 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (6 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleByA) + shiftX, (3 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (7 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleByA) + shiftX, (6 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+
+		do Screen.drawRectangle( (7 * scaleByA) + shiftX, (6 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (7 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (7 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (9 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleByA) + shiftX, (7 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleByA) + shiftX, (8 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (10 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (8 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (9 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleByA) + shiftX, (8 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (9 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (9 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleByA) + shiftX, (9 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (10 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (11 * scaleByA) + shiftX, (9 * scaleBy) + shiftY, (12 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleByA) + shiftX, (10 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (10 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleByA) + shiftX, (10 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+
+		do Screen.drawRectangle( (1 * scaleByA) + shiftX, (11 * scaleBy) + shiftY, (2 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleByA) + shiftX, (11 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleByA) + shiftX, (11 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleByA) + shiftX, (12 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (12 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (13 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleByA) + shiftX, (12 * scaleBy) + shiftY, (12 * scaleBy) + shiftX, (13 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleByA) + shiftX, (13 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (14 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleByA) + shiftX, (13 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (14 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleByA) + shiftX, (14 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (14 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (19 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (20 * scaleBy) + shiftY);
+		return;
+	}
+
+	method void drawFire()
+	{
+		var int scaleBy, shiftX, shiftY;
+		let scaleBy = 3;
+		let shiftX = 155;
+		let shiftY = 97;
+
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (1 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (2 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (3 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (4 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (4 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (5 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (5 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (7 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (5 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (6 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (6 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (7 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (8 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (9 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleBy) + shiftX, (8 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (10 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleBy) + shiftX, (9 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (10 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (10 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (10 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleBy) + shiftX, (11 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleBy) + shiftX, (12 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (13 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (12 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (13 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (1 * scaleBy) + shiftX, (13 * scaleBy) + shiftY, (2 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleBy) + shiftX, (13 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (14 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (14 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+
+		do Screen.drawRectangle( (11 * scaleBy) + shiftX, (14 * scaleBy) + shiftY, (12 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (12 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (13 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (11 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (12 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (19 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (20 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (19 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (20 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleBy) + shiftX, (20 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (21 * scaleBy) + shiftY);
+	
+		return;
+	}
+
+	method void drawWater()
+	{
+		var int scaleBy;
+		var int shiftX, shiftY;
+
+		let scaleBy = 3;
+		let shiftX = 290;
+		let shiftY = 100;
+
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (1 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (3 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (3 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (6 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (3 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (6 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (6 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleBy) + shiftX, (6 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleBy) + shiftX, (8 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (10 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (8 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (10 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleBy) + shiftX, (10 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (10 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleBy) + shiftX, (10 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (11 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (11 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (1 * scaleBy) + shiftX, (12 * scaleBy) + shiftY, (2 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleBy) + shiftX, (12 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (12 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (11 * scaleBy) + shiftX, (12 * scaleBy) + shiftY, (12 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (19 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (20 * scaleBy) + shiftY);
+
+		return;
+	}
+
+	method void drawEarth()
+	{
+		var int scaleBy, shiftX, shiftY;
+
+		let scaleBy = 3;
+		let shiftX = 220;
+		let shiftY = 150;
+
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (1 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (2 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (2 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (4 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (4 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (6 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (4 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (6 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (6 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (7 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleBy) + shiftX, (6 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (8 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (3 * scaleBy) + shiftX, (7 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (9 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (7 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (8 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (11 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleBy) + shiftX, (9 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (11 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (14 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleBy) + shiftX, (11 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (12 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (1 * scaleBy) + shiftX, (12 * scaleBy) + shiftY, (2 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (11 * scaleBy) + shiftX, (12 * scaleBy) + shiftY, (12 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (14 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (14 * scaleBy) + shiftY, (10 * scaleBy) + shiftX, (15 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (5 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (8 * scaleBy) + shiftX, (15 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (16 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (3 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+
+		do Screen.drawRectangle( (5 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (6 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (17 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (10 * scaleBy) + shiftX, (16 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (2 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (4 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (6 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (7 * scaleBy) + shiftX, (20 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (9 * scaleBy) + shiftX, (17 * scaleBy) + shiftY, (11 * scaleBy) + shiftX, (18 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (4 * scaleBy) + shiftX, (18 * scaleBy) + shiftY, (9 * scaleBy) + shiftX, (19 * scaleBy) + shiftY);
+		do Screen.drawRectangle( (7 * scaleBy) + shiftX, (20 * scaleBy) + shiftY, (8 * scaleBy) + shiftX, (21 * scaleBy) + shiftY);
+
+		return;
+	}
+
+	method void dispose()
+	{
+		do Memory.deAlloc(this);
+		return;
+    }
+}

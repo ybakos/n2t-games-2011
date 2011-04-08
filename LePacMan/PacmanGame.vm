@@ -1,0 +1,837 @@
+function PacmanGame.new 0
+push constant 6
+call Memory.alloc 1
+pop pointer 0
+push constant 200
+push constant 200
+call Pacman.new 2
+pop this 0
+push constant 0
+pop this 2
+push constant 6
+pop static 0
+push static 0
+call Array.new 1
+pop this 1
+push constant 0
+push this 1
+add
+push constant 50
+push constant 50
+call Pill.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 1
+add
+push constant 100
+push constant 50
+call Pill.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 1
+add
+push constant 150
+push constant 50
+call Pill.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 1
+add
+push constant 50
+push constant 100
+call Pill.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 1
+add
+push constant 100
+push constant 100
+call Pill.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 1
+add
+push constant 150
+push constant 100
+call Pill.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+not
+pop this 3
+push pointer 0
+return
+function PacmanGame.dispose 0
+push argument 0
+pop pointer 0
+push this 1
+call Array.dispose 1
+pop temp 0
+push this 0
+call Pacman.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function PacmanGame.run 1
+push argument 0
+pop pointer 0
+push constant 0
+pop this 4
+push pointer 0
+call PacmanGame.startSequence 1
+pop temp 0
+push pointer 0
+call PacmanGame.drawPills 1
+pop temp 0
+label WHILE_EXP0
+push this 4
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push this 4
+not
+push local 0
+push constant 0
+eq
+and
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call PacmanGame.movePacman 1
+pop temp 0
+push this 0
+call Pacman.drawClosed 1
+pop temp 0
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 81
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop this 4
+label IF_FALSE0
+push local 0
+push constant 131
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 1
+pop this 2
+label IF_FALSE1
+push local 0
+push constant 133
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 2
+pop this 2
+label IF_FALSE2
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 3
+pop this 2
+label IF_FALSE3
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 4
+pop this 2
+label IF_FALSE4
+label WHILE_EXP2
+push this 4
+not
+push local 0
+push constant 0
+eq
+not
+and
+not
+if-goto WHILE_END2
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call PacmanGame.movePacman 1
+pop temp 0
+push this 0
+call Pacman.drawClosed 1
+pop temp 0
+goto WHILE_EXP2
+label WHILE_END2
+push local 0
+push constant 81
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push constant 0
+not
+pop this 4
+label IF_FALSE5
+push local 0
+push constant 131
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 1
+pop this 2
+label IF_FALSE6
+push local 0
+push constant 133
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push constant 2
+pop this 2
+label IF_FALSE7
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push constant 3
+pop this 2
+label IF_FALSE8
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push constant 4
+pop this 2
+label IF_FALSE9
+goto WHILE_EXP0
+label WHILE_END0
+push pointer 0
+call PacmanGame.exit 1
+pop temp 0
+push constant 0
+return
+function PacmanGame.movePacman 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+call Pacman.moveUp 1
+pop temp 0
+label IF_FALSE0
+push this 2
+push constant 2
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 0
+call Pacman.moveDown 1
+pop temp 0
+label IF_FALSE1
+push this 2
+push constant 3
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 0
+call Pacman.moveLeft 1
+pop temp 0
+label IF_FALSE2
+push this 2
+push constant 4
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 0
+call Pacman.moveRight 1
+pop temp 0
+label IF_FALSE3
+push pointer 0
+call PacmanGame.eat 1
+pop temp 0
+push this 3
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push pointer 0
+call PacmanGame.drawPills 1
+pop temp 0
+push constant 0
+pop this 3
+label IF_FALSE4
+push pointer 0
+call PacmanGame.checkEnd 1
+pop temp 0
+push constant 0
+return
+function PacmanGame.drawPills 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 0
+lt
+not
+if-goto WHILE_END0
+push local 0
+push this 1
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+call Pill.draw 1
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function PacmanGame.eat 3
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 0
+lt
+not
+if-goto WHILE_END0
+push local 0
+push this 1
+add
+pop pointer 1
+push that 0
+pop local 1
+push pointer 0
+push local 1
+call PacmanGame.overlap 2
+pop local 2
+push pointer 0
+push local 1
+call PacmanGame.overlap 2
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 1
+call Pill.erase 1
+pop temp 0
+push constant 0
+not
+pop this 3
+label IF_FALSE0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function PacmanGame.overlap 0
+push argument 0
+pop pointer 0
+push this 0
+push argument 1
+call Pill.getX 1
+push constant 0
+call Pacman.withinX 3
+push this 0
+push argument 1
+call Pill.getY 1
+push constant 0
+call Pacman.withinY 3
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+label IF_FALSE0
+push constant 0
+return
+function PacmanGame.checkEnd 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 0
+lt
+not
+if-goto WHILE_END0
+push local 0
+push this 1
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+call Pill.getEaten 1
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+not
+pop this 4
+push constant 0
+not
+pop this 5
+push constant 0
+return
+function PacmanGame.flashOnce 0
+push argument 0
+pop pointer 0
+push constant 10
+call String.new 1
+push constant 76
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 80
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 109
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 1000
+call Sys.wait 1
+pop temp 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push constant 0
+push constant 0
+push constant 511
+push constant 255
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push constant 0
+push constant 0
+push constant 511
+push constant 255
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function PacmanGame.flashScreen 0
+push argument 0
+pop pointer 0
+push pointer 0
+call PacmanGame.flashOnce 1
+pop temp 0
+push pointer 0
+call PacmanGame.flashOnce 1
+pop temp 0
+push pointer 0
+call PacmanGame.flashOnce 1
+pop temp 0
+push pointer 0
+call PacmanGame.flashOnce 1
+pop temp 0
+push pointer 0
+call PacmanGame.flashOnce 1
+pop temp 0
+push constant 10
+call String.new 1
+push constant 76
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 80
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 109
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 1000
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function PacmanGame.startSequence 0
+push argument 0
+pop pointer 0
+push pointer 0
+call PacmanGame.flashScreen 1
+pop temp 0
+call Screen.clearScreen 0
+pop temp 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 6
+call String.new 1
+push constant 82
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 100
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 63
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 0
+call Pacman.drawOpen 1
+pop temp 0
+push constant 2550
+call Sys.wait 1
+pop temp 0
+push this 0
+call Pacman.drawClosed 1
+pop temp 0
+call Output.backSpace 0
+pop temp 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 5
+call String.new 1
+push constant 83
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 2550
+call Sys.wait 1
+pop temp 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 11
+call String.new 1
+push constant 71
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 103
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 103
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 103
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 103
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 0
+call Pacman.drawOpen 1
+pop temp 0
+push constant 2550
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function PacmanGame.exit 0
+push argument 0
+pop pointer 0
+call Screen.clearScreen 0
+pop temp 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push this 5
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 10
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 87
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 0
+call Pacman.drawOpen 1
+pop temp 0
+push constant 1000
+call Sys.wait 1
+pop temp 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 10
+call String.new 1
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 0
+call Pacman.drawClosed 1
+pop temp 0
+push constant 1000
+call Sys.wait 1
+pop temp 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 10
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 87
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 0
+call Pacman.drawOpen 1
+pop temp 0
+push constant 1000
+call Sys.wait 1
+pop temp 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 10
+call String.new 1
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 0
+call Pacman.drawClosed 1
+pop temp 0
+push constant 1000
+call Sys.wait 1
+pop temp 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 10
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 87
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 0
+call Pacman.drawOpen 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 7
+call String.new 1
+push constant 71
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 100
+call String.appendChar 2
+push constant 98
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+label IF_END0
+push constant 0
+return

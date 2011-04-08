@@ -1,0 +1,118 @@
+/* Pong by Levente Sipeki and Andy Niccolai
+ * For Elements of Computing Systems at the Colorado School of Mines
+ * 4/3/11
+ */
+ 
+class Paddle {
+
+    // Location on the screen
+    field int x, y;
+
+    // The size of the square
+    field int size;
+    field int xsize, ysize;
+
+    /** Constructs a new square with a given location and size. */
+    constructor Paddle new(int Ax, int Ay, int Asize) {
+        let x = Ax;
+        let y = Ay;
+        
+        let xsize = Asize;
+        let ysize = Asize * 5;
+        let size = Asize;
+
+        do draw();
+
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Draws the square on the screen. */
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + xsize, y + ysize);
+        return;
+    }
+
+    /** Erases the square from the screen. */
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + xsize, y + ysize);
+        return;
+    }
+
+    /** Increments the size by 2. */
+    method void incSize() {
+        if (((y + ysize) < 254) & ((x + xsize) < 510)) {
+            do erase();
+            let xsize = xsize + 2;
+            let ysize = ysize + 10;
+            do draw();
+        }
+        return;
+    }
+
+    /** Decrements the size by 2. */
+    method void decSize() {
+        if ((xsize > 2) & (ysize > 10)) {
+            do erase();
+            let xsize = xsize - 2;
+            let ysize = ysize - 10;
+            do draw();
+        }
+        return;
+	}
+
+    /** Moves up by 2. */
+    method void moveUp() {
+        if (y > 12) { 
+            do erase();
+            let y = y - 2;
+            do draw();
+        } 
+        return;
+    }
+
+    /** Moves down by 2. */
+    method void moveDown() {
+        if ((y + ysize) < 254) {
+            do erase();
+            let y = y + 2;
+            do draw();
+        }
+        return;
+    }
+
+    /** Moves left by 2. */
+    method void moveLeft() {
+        if (x > 1) {
+            do erase();
+            let x = x - 2;
+            do draw();
+        }
+        return;
+    }
+
+    /** Moves right by 2. */
+    method void moveRight() {
+        if ((x + xsize) < 510) {
+            do erase();
+            let x = x + 2;
+            do draw();
+        }
+        return;
+    }
+
+	method int Topx() {
+		return x+xsize;
+	}
+	
+	method int Topy() {
+		return y;
+	}
+}

@@ -1,0 +1,267 @@
+
+/**
+ * This is the maze game. It draws a maze on the screen, then gives the user a marker
+ * which starts in the bottom right corner of the screen. The user must use the arrow keys
+ * to navigate the marker to the top left corner of the screen. The game is over when the
+ * marker reaches the top left corner of the screen or when the user presses 'q'.
+ */
+class Game {
+
+    // The maze
+    field Maze maze;
+
+    // The marker
+    field Square marker;
+
+    // The square's movement direction
+    field int direction; // 0=none,1=up,2=down,3=left,4=right
+
+    //Two seeds used in the random number generator
+    field int seed1, seed2;
+
+    /** Constructs a new Square Game. */
+    constructor Game new() {
+        let marker = Square.new(233, 233, 5);
+        let direction = 0;
+        do generateMaze();
+        return this;
+    }
+
+   
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do marker.dispose();
+	do maze.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Randomly generates a maze using the seed (Maze number) that the user enters */
+    method void generateMaze(){
+	//Represents the maze number and the next direction to move
+	var int mazeNum, nextDir;
+	//The current square 
+	var int currentX, currentY;
+	//The number of squares that have been visited
+	var int squareCount;
+	//Used for counting and indicating whether a square has been visited
+	var int i, flag;
+	//Arrays to store x and y coordinates of visited squares
+	var Array xVSquares, yVSquares;
+	//Arrays to store x and y coordinates and orientation (horizontal of vertical) of lines to be removed
+	var Array xLines, yLines, vLines;
+
+	//Allocate the arrays
+	let xVSquares = Array.new(100);
+	let yVSquares = Array.new(100);
+	let xLines = Array.new(100);
+	let yLines = Array.new(100);
+	let vLines = Array.new(100);
+
+	//Get the maze number from the user and calculate the seed values
+	let mazeNum = Keyboard.readInt("Which number maze do you want to play (Enter any number)?");
+	let seed1 = mazeNum;
+	let seed2 = modulus(mazeNum * 100, 7);
+
+	//Start in the bottom right corner
+	let currentX = 9;
+	let currentY = 9;
+	let squareCount = 1;
+	let xVSquares[0] = 9;
+	let yVSquares[0] = 9;
+
+	//Keep going until all squares have been visited
+	while(squareCount < 100){
+	   //Reset the flag
+	   let flag = 0;
+
+	   //Get the next direction to move
+	   let nextDir = randomNumber();
+           let nextDir = modulus(nextDir,4);
+ 
+ 	   //Update current location based on direction
+           if(nextDir = 0){
+               let currentX = currentX + 1;
+           }
+           if(nextDir = 1){
+               let currentX = currentX - 1;
+           }
+           if(nextDir = 2){
+               let currentY = currentY + 1;
+           }
+           if(nextDir = 3){
+               let currentY = currentY - 1;
+           }
+
+           let i = 0;
+	   //Make sure the location is valid
+           if((currentX > 9) | (currentX < 0) | (currentY > 9) | (currentY < 0)){
+               let flag = 1;
+           }
+
+	   //Make sure this square has not laready been visited
+           while((i < squareCount) & (~(flag=1))){
+		if((currentX = xVSquares[i]) & (currentY = yVSquares[i])){
+		    let flag = 1;
+		}
+                let i=i+1;
+           }
+
+	   //If it has been visited, select a random square that has been visited to use as a new starting location
+           if(flag = 1){
+		let i = randomNumber();
+                let i = modulus(i,squareCount);
+                let currentX = xVSquares[i];
+                let currentY = yVSquares[i];
+           }
+           else{
+		//If it has not been visited, add the location to the visited location
+		let xVSquares[squareCount] = currentX;
+                let yVSquares[squareCount] = currentY;
+
+		//Add a line to the line to be removed based on what direction was just moved
+                if(nextDir = 0){
+		    let xLines[squareCount-1] = currentX;
+                    let yLines[squareCount-1] = currentY;
+                    let vLines[squareCount-1] = 1;
+                }
+		if(nextDir = 1){
+                    let xLines[squareCount-1] = currentX+1;
+                    let yLines[squareCount-1] = currentY;
+                    let vLines[squareCount-1] = 1;
+                }
+		if(nextDir = 2){
+                    let xLines[squareCount-1] = currentX;
+                    let yLines[squareCount-1] = currentY;
+                    let vLines[squareCount-1] = 0;
+                }
+		if(nextDir = 3){
+                    let xLines[squareCount-1] = currentX;
+                    let yLines[squareCount-1] = currentY+1;
+                    let vLines[squareCount-1] = 0;
+                }
+		//Increment the visited square count
+		let squareCount = squareCount+1;
+	    }
+	}
+
+	//Create the maze and dispose all of the arrays
+	let maze = Maze.new(xLines,yLines,vLines);
+	do xVSquares.dispose();
+	do yVSquares.dispose();
+	do xLines.dispose();
+	do yLines.dispose();
+	do vLines.dispose();
+	return;
+    }
+
+    /**Generates a pseudo-random number based on the seed values.
+     * Basis for formula credited to: http://www.javamex.com/tutorials/random_numbers/multiply_with_carry.shtml*/
+    method int randomNumber(){
+	var int t;
+	let t = 70 * seed1 + seed2;
+        let seed1 = modulus(t,255);
+	let seed2 = t/255;
+        return seed1;
+    }
+
+    /**Implement to modulus operator. This function takes a dividend 
+     * and a divisor and returns the remainder of the resulting division.*/
+    method int modulus(int dividend, int divisor){
+        var int quotient, remainder;
+        let quotient = dividend/divisor;
+        let remainder = dividend - (divisor * quotient);
+        if(remainder < 0){
+	    let remainder = remainder * (-1);
+        }
+        return remainder;
+    }
+
+    /** Starts the game. Handles inputs from the user that controls
+     *  the square movement direction and size. */
+    method void run() {
+        var char key;
+        var boolean exit, win;
+	do marker.draw();
+        let exit = false;
+	let win = false;
+        while (~exit) {
+	    //Reset direction. Movement continues as long as a key is pressed and ends as soon as it is released.
+	    let direction = 0;
+	    let key = Keyboard.keyPressed();
+            if (key = 81) {
+                let exit = true;
+            }
+            if (key = 131) {
+                let direction = 1;
+            }
+            if (key = 133) {
+                let direction = 2;
+            }
+            if (key = 130) {
+                let direction = 3;
+            }
+            if (key = 132) {
+                let direction = 4;
+            }
+	    do moveSquare();
+            let win = checkWin();
+            if(win){
+		do Output.printString("You win!");
+		let exit = true;
+	    }
+        }
+            
+        return;
+    }
+
+    /**Checks to see if the maze has been completed. Returns true if it has, false otherwise*/
+    method boolean checkWin(){
+	var int x, y;
+	let x = marker.getX();
+	let y = marker.getY();
+
+	//If the marker is the highest up it can go and in the furthest left square, the maze is complete.
+	if((x < 19) & (y = 1)){
+	    return true;
+	}
+	return false;
+    }
+
+    /** Moves the square by 1 in the current direction if the movement is valid */
+    method void moveSquare() {
+	var int x, y, size;
+	var bool valid;
+	let x = marker.getX();
+	let y = marker.getY();
+	let size = marker.getSize();
+	
+	//Checks to see if the movement in the given direction is valid. If it is, move the marker.
+        if (direction = 1) {
+	    let valid = maze.validate(x,y-1,size,1);
+	    if(valid){
+            	do marker.moveUp();
+	    }
+        }
+        if (direction = 2) {
+	    let valid = maze.validate(x,y+size,size,1);
+	    if(valid){
+            	do marker.moveDown();
+	    }
+        }
+        if (direction = 3) {
+	    let valid = maze.validate(x-1,y,1,size);
+	    if(valid){
+            	do marker.moveLeft();
+	    }
+        }
+        if (direction = 4) {
+	    let valid = maze.validate(x+size,y,1,size);
+	    if(valid){
+            	do marker.moveRight();
+	    }
+        }
+        return;
+    }
+}

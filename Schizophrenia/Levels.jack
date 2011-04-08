@@ -1,0 +1,52 @@
+// Lex Hubbard
+// Elements
+// Schizophrenia Game
+
+class Levels {
+	field Array level0Array;
+	field Array level1Array;
+	field Array level2Array;
+	field Array level3Array;
+
+	field Array levelsArray;
+	
+	constructor Levels new()
+	{
+		let level0Array = Array.new(13);
+		let level1Array = Array.new(13);
+		let level2Array = Array.new(13);
+		let level3Array = Array.new(13);
+
+		let level0Array[0] = 0; let level0Array[1] = 1; let level0Array[2] = 3; let level0Array[3] = 3; let level0Array[4] = 0; let level0Array[5] = 2; let level0Array[6] = 2;
+		let level0Array[7] = 1; let level0Array[8] = 3; let level0Array[9] = 1; let level0Array[10] = 3; let level0Array[11] = 0; let level0Array[12] = 1;
+		let level1Array[0] = 1; let level1Array[1] = 3; let level1Array[2] = 1; let level1Array[3] = 0; let level1Array[4] = 1; let level1Array[5] = 3; let level1Array[6] = 0;
+		let level1Array[7] = 2; let level1Array[8] = 1; let level1Array[9] = 0; let level1Array[10] = 2; let level1Array[11] = 1; let level1Array[12] = 3;
+		let level2Array[0] = 2; let level2Array[1] = 0; let level2Array[2] = 2; let level2Array[3] = 2; let level2Array[4] = 2; let level2Array[5] = 0; let level2Array[6] = 1;
+		let level2Array[7] = 3; let level2Array[8] = 0; let level2Array[9] = 2; let level2Array[10] = 0; let level2Array[11] = 3; let level2Array[12] = 2;
+		let level3Array[0] = 3; let level3Array[1] = 2; let level3Array[2] = 0; let level3Array[3] = 1; let level3Array[4] = 3; let level3Array[5] = 1; let level3Array[6] = 3;
+		let level3Array[7] = 0; let level3Array[8] = 2; let level3Array[9] = 3; let level3Array[10] = 1; let level3Array[11] = 2; let level3Array[12] = 0;
+
+		let levelsArray = Array.new(4);
+		let levelsArray[0] = level0Array; let levelsArray[1] = level1Array; let levelsArray[2] = level2Array; let levelsArray[3] = level3Array;
+		return this;
+	}
+
+	method Array getLevelArray(int currentLevel)
+	{
+		var int level;
+		var Array currentLevelArray;
+		let level = currentLevel;
+		let currentLevelArray = Array.new(13);
+
+		let currentLevelArray = levelsArray[level];
+
+		return currentLevelArray;
+	}
+
+	method void dispose()
+	{
+		do Memory.deAlloc(this);
+		return;
+    }
+
+}

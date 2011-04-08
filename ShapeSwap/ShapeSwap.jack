@@ -1,0 +1,125 @@
+class ShapeSwap {
+	field PlayerCursor cursor;
+	field Board theBoard;
+	field int direction;
+	field int currentpos;
+	
+	constructor ShapeSwap new() {
+        let cursor = PlayerCursor.new(0, 0, 30);
+		let theBoard = Board.new();
+        let direction = 0;
+		let currentpos = 0;
+
+        return this;
+    }
+	
+	method void dispose() {
+        do cursor.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+	
+	method void run() {
+        var char key;
+        var boolean exit;
+
+        let exit = false;
+		
+		do theBoard.drawBoard();
+		
+        while (~exit) {
+			do theBoard.drawMoveInstructions();
+            // waits for a key to be pressed.
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+            }
+			if (key = 81) {
+                let exit = true;
+            }
+            if (key = 131) {
+                let direction = 1;
+            }
+            if (key = 133) {
+                let direction = 2;
+            }
+            if (key = 130) {
+                let direction = 3;
+            }
+            if (key = 132) {
+                let direction = 4;
+            }
+			if (key = 32) {
+				do theBoard.drawSwapInstructions();
+				while(~(key = 0)) {
+					let key = Keyboard.keyPressed();
+				}
+				while (key = 0) {
+					let key = Keyboard.keyPressed();
+				}
+				if (key = 131) {
+					if ( currentpos > 7) {
+						do theBoard.swap(currentpos, (currentpos - 8)); 
+					}
+				}
+				if (key = 133) {
+					if ( currentpos < 56) {
+						do theBoard.swap(currentpos, (currentpos + 8)); 
+					}
+				}
+				if (key = 130) {
+					if ( (currentpos - (8*(currentpos / 8)) ) > 0) {
+						do theBoard.swap(currentpos, (currentpos - 1)); 
+					}
+				}
+				if (key = 132) {
+					if ( (currentpos - (8*(currentpos / 8)) ) < 7) {
+						do theBoard.swap(currentpos, (currentpos + 1)); 
+					}
+				}
+			}
+
+            // waits for the key to be released.
+            if(~(key = 0)) {
+                let key = Keyboard.keyPressed();
+                do moveCursor();
+            }
+			while(~(key = 0)) {
+				let key = Keyboard.keyPressed();
+				let direction = 0;
+			}
+        }
+            
+        return;
+	}
+
+    /** Moves the square by 2 in the current direction. */
+    method void moveCursor() {
+        if (direction = 1) {
+            do cursor.moveUp();
+			if ( currentpos > 7) {
+				let currentpos = currentpos - 8;
+			}
+        }
+        if (direction = 2) {
+            do cursor.moveDown();
+			if ( currentpos < 56) {
+				let currentpos = currentpos + 8;
+			}
+        }
+        if (direction = 3) {
+            do cursor.moveLeft();
+			if ((currentpos - (8*(currentpos / 8))) > 0) {
+				let currentpos = currentpos - 1;
+			}
+        }
+        if (direction = 4) {
+            do cursor.moveRight();
+			if ((currentpos - (8*(currentpos / 8))) < 7) {
+				let currentpos = currentpos + 1;
+			}
+        }
+
+        do Sys.wait(5); // Delays the next movement.
+        return;
+    }
+}

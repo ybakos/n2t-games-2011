@@ -1,0 +1,26 @@
+//Uses Blum Blum Shub algorithm to create a series of random numbers between 0-3
+class Prng {
+	field String nums;
+	field int loc;
+	
+	constructor Prng new(){
+		let nums = "2013321203113313323010021033002330103213313122302330133132032120";
+		let loc = 0;
+
+		return this;
+	}
+	
+	method char next(){
+		let loc = loc + 1;
+		if( loc > 63 ){
+			let loc = 0;
+		}
+		return nums.charAt(loc);
+	}
+
+	method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+}

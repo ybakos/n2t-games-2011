@@ -1,0 +1,52 @@
+class Defender{
+	field int x,y;
+	field int size;
+	field Bullet bullet;
+	
+	constructor Defender new(int sSize){
+		let size = sSize;
+		let x = 0;
+		let y=234;
+		do draw();
+		return this;
+	}	
+
+	method void moveLeft(){
+		if((x - size) >-1){
+			do Screen.setColor(false);
+			do Screen.drawRectangle(x , y, x + size, y + size);
+            		let x = x - size;
+            		do draw();
+		}
+		return;	
+	}
+	method void moveRight(){
+		if((x+size+size) < 510) {
+			do Screen.setColor(false);
+			do Screen.drawRectangle(x, y, x+size, y+size);
+			let x=x+size;
+			do draw();
+		}
+		return;
+	}
+	method void draw() {
+		do Screen.setColor(true);
+		do Screen.drawRectangle(x,y,x+size,y+size);
+		return;
+	}	
+	method int getX(){
+		return x;
+	}
+	method int getSize(){
+		return size;
+	}
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+	method void die(){
+		return;
+	}
+
+}

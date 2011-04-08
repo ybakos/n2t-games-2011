@@ -1,0 +1,86 @@
+/*
+ * This class a basic 2D vector implementation.  It used primarily for Tile and
+ * Grid.
+ */
+class V2D {
+	/*-------------------- STATIC VARIABLES --------------------*/
+
+	/*-------------------- PRIVATE VARIABLES --------------------*/
+	field int x, y;
+	
+	/*
+	 * Constructors for V2D
+	 */
+	constructor V2D empty() {
+		let x = 0;
+		let y = 0;
+		
+		return this;
+	}
+	
+	constructor V2D new(int X, int Y) {
+		let x = X;
+		let y = Y;
+		
+		return this;
+	}
+	
+	/*-------------------- GETTERS --------------------*/
+	method int getX() {
+		return x;
+	}
+	method int getY() {
+		return y;
+	}
+	
+	/*-------------------- SETTERS --------------------*/
+	method void setX(int X) {
+		let x = X;
+		return;
+	}
+	method void setY(int Y) {
+		let y = Y;
+		return;
+	}
+	method void set(int X, int Y)
+	{
+		let x = X;
+		let y = Y;
+		return;
+	}
+	
+	/*
+	 * Add two 2D vectors, put results into 3rd parameter.
+	 */
+	function void add(V2D a, V2D b, V2D res) {
+		do res.setX(a.getX() + b.getX());
+		do res.setY(a.getY() + b.getY());
+		return;
+	}
+	
+	/*
+	 * Checks to see if the two vectors are equal
+	 */
+	function boolean equals(V2D a, V2D b) {
+		if (~(a.getX() = b.getX()) | ~(a.getY() = b.getY())) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	Copy a and return a new V2D
+	*/
+	function V2D copy(V2D a)
+	{
+		var V2D n;
+		let n = V2D.new(a.getX(), a.getY());
+		return n;
+	}
+	
+	
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+}

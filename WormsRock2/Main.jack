@@ -1,0 +1,33 @@
+class Main{
+
+	function void main(){
+		do Main.test();
+		return;
+	}
+
+	function void test(){
+		var Game gameScreen;
+		var StartScreen startScreen;
+		var GameOver endScreen;
+		var int continue;
+		var int score;
+		let gameScreen = Game.new();
+		let startScreen = StartScreen.new();
+		let endScreen = GameOver.new();
+		let continue=startScreen.displayStart();
+		//loop for three screens loops while value is 1 start 
+		while(continue = 1){
+			let score = gameScreen.newGame();
+			do endScreen.display(score);
+			let continue=startScreen.displayStart();
+			//let continue=0;
+		}
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.printString("Thanks for playing!");
+		return;
+	}
+
+
+}

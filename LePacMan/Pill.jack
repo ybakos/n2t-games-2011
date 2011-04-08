@@ -1,0 +1,50 @@
+class Pill {
+	field int x, y, radius;
+	field bool eaten;
+	
+	constructor Pill new(int xIn, int yIn) {
+		let x = xIn;
+		let y = yIn;
+		let radius = 8;
+		let eaten = false;
+		return this;
+	}
+	
+	method void draw() {
+		if (~(eaten)) {
+            do Screen.setColor(true);
+			do Screen.drawCircle(x,y,radius);
+		}
+		return;
+	}
+
+    method void erase() {
+        if (~(eaten)) {
+            do Screen.setColor(false);
+            do Screen.drawCircle(x,y,radius);
+    		let eaten = true;
+        }
+        return;
+    }
+	
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+
+    method int getX() {
+        return x;
+    }
+
+    method int getY() {
+        return y;
+    }
+
+    method int getRadius() {
+        return radius;
+    }
+
+    method boolean getEaten() {
+        return eaten;
+    }
+}

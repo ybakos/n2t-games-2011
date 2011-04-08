@@ -1,0 +1,93 @@
+class DrawHangman {
+
+  field int incorrect_guess_count;
+  
+  constructor DrawHangman new() {
+    let incorrect_guess_count = 0;
+    return this;
+  }
+  
+  method void drawNextPart() {
+    if(incorrect_guess_count < 4) {
+      if(incorrect_guess_count = 0) {
+        do drawBottomLine();
+      }
+      if(incorrect_guess_count = 1) {
+        do drawTree();
+      }
+      if(incorrect_guess_count = 2) {
+        do drawNoose();
+      }
+      if(incorrect_guess_count = 3) {
+        do drawHead();
+      }
+    }
+    else {
+      if(incorrect_guess_count = 4) {
+        do drawBody();
+      }
+      if(incorrect_guess_count = 5) {
+        do drawArms();
+      }
+      if(incorrect_guess_count = 6) {
+        do drawLegs();
+      }
+    }
+    let incorrect_guess_count = incorrect_guess_count+1;
+    return;
+  }
+  
+  method void drawWholeMan() {
+    do drawBottomLine();
+    do drawTree();
+    do drawNoose();
+    do drawHead();
+    do drawBody();
+    do drawArms();
+    do drawLegs();
+    return;
+  }
+  
+  method void drawBottomLine() {
+    do Screen.drawLine(300,175,400,175);
+    return;
+  }
+  
+  method void drawTree() {
+    do Screen.drawLine(350,175,350,50);
+    return;
+  }
+  
+  method void drawNoose() {
+    do Screen.drawLine(350,50,450,50);
+    do Screen.drawLine(450,50,450,75);
+    return;
+  }
+  
+  method void drawHead() {
+    do Screen.drawCircle(450,85,10);
+    return;
+  }
+  
+  method void drawBody() {
+    do Screen.drawLine(450,95,450,150);
+    return;
+  }
+  
+  method void drawArms() {
+    do Screen.drawLine(450,110,425,120);
+    do Screen.drawLine(450,110,475,120);
+    return;
+  }
+  
+  method void drawLegs() {
+    do Screen.drawLine(450,150,425,160);
+    do Screen.drawLine(450,150,475,160);
+    return;
+  }
+  
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+}

@@ -1,0 +1,369 @@
+// Lex Hubbard
+// Elements
+// Schizophrenia Game
+
+/**
+ * The Main class plays Schizophrenia.
+ */
+class Main {
+
+    /** Initializes a new Schizophrenia game. */    
+    function void main() {
+
+		var int wizardType, lastWizard, wizardHP, totalWizardHP, spellType, monsterType, monsterHP, monsterHPMax;
+		var boolean currentShield, airShield, fireShield, earthShield, waterShield;
+		var boolean gameOver;
+
+		var char key;
+		var boolean exit, gotKey;
+
+		var int i, j;
+
+		var String monsterName;
+
+		var int currentLevel, totalLevels, battles;
+		var Array currentLevelArray;
+
+		var Intro intro;
+		var Wizards wizards;
+		var Spells spells;
+		var Levels levels;
+		var Monsters monsters;
+		var Elements elements;
+
+		do intro.displayIntro();
+
+		let gameOver = false;
+
+		let intro = Intro.new();
+		let wizards = Wizards.new();
+		let spells = Spells.new();
+		let levels = Levels.new();
+		let monsters = Monsters.new();
+		let elements = Elements.new();
+		
+		let key = 0;
+		let gotKey = false;
+		let exit = false;
+
+		let wizardType = 0;
+		let lastWizard = 4;
+		let airShield = false;
+		let fireShield = false;
+		let earthShield = false;
+		let waterShield = false;
+
+		let monsterHPMax = 3;
+		let battles = 13;
+
+		let currentLevel = 0;
+		let totalLevels = 4;
+		let currentLevelArray = Array.new(13);
+
+		let i = 0;
+		let currentLevelArray = levels.getLevelArray(currentLevel);
+		
+		do Output.moveCursor(20, 3);
+		do Output.printString("(Space to Continue)");
+		do Output.moveCursor(20, 39);
+		do Output.printString("(Arrow Keys to Select)");
+
+		while ( ~(gotKey) ) {
+
+			while (key = 0) {
+				let key = Keyboard.keyPressed();
+			}
+			if (key = 32) {
+				do Screen.clearScreen();
+				do Output.moveCursor(0, 0);
+				let gotKey = true;
+			}
+		}
+
+		let gotKey = false;
+		let key = 0;
+		
+		do Output.moveCursor(2, 24);
+		do Output.printString("Schizophrenia");
+
+		do elements.drawAir();
+		do elements.drawFire();
+		do elements.drawWater();
+		do elements.drawEarth();
+		
+		do intro.dispose();
+		do elements.dispose();
+
+		while ( ~(gotKey) ) {
+
+			while (key = 0) {
+				let key = Keyboard.keyPressed();
+			}
+			if (key = 32) {
+				let gotKey = true;
+			}
+		}
+
+		let gotKey = false;
+		let key = 0;
+		
+		while ( (currentLevel < totalLevels) & (~(gameOver)) ) {
+		
+			while ( (i < battles) & (~(gameOver)) ) {
+
+				//let monsters = Monsters.new();
+				let monsterType = currentLevelArray[i];
+				let monsterName = monsters.getMonsterName(i, monsterType);
+				let monsterHP = monsterHPMax;
+				//do monsters.dispose();
+
+				let j = 22;
+				while (j < 52) {
+					do Output.moveCursor(2, j);
+					let j = j + 1;
+				}
+				do Output.moveCursor(2, 3);
+				do Output.printString("You are attacked by ");
+				do Output.printString(monsterName);
+				
+				while ( (monsterHP > 0) & (~(gameOver)) ) {
+
+					do wizards.displayShields(airShield, fireShield, earthShield, waterShield);
+					do wizards.displayWizards(lastWizard);
+					
+					let key = 0;
+
+					while ( (~(gotKey)) & (~(gameOver)) ) { // waits for a key to be pressed.
+						
+						while (key = 0){
+							let key = Keyboard.keyPressed();
+						}
+
+						if (key = 81) { let exit = true; let gotKey = true; }
+						
+						if ( (~(lastWizard = 2)) & (~(wizards.getWizardSchizophrenia(0))) ) {
+							if (key = 131) { let wizardType = 0; let currentShield = airShield; let gotKey = true; }
+						}
+
+						if ( (~(lastWizard = 3)) & (~(wizards.getWizardSchizophrenia(1))) ) {
+							if (key = 130) { let wizardType = 1; let currentShield = fireShield; let gotKey = true; }
+						}
+						
+						if ( (~(lastWizard = 0)) & (~(wizards.getWizardSchizophrenia(2))) ) {
+							if (key = 133) { let wizardType = 2; let currentShield = earthShield; let gotKey = true; }
+						}
+
+						if ( (~(lastWizard = 1)) & (~(wizards.getWizardSchizophrenia(3))) ) {
+							if (key = 132) { let wizardType = 3; let currentShield = waterShield; let gotKey = true; }
+						}
+
+						// waits for the key to be released.
+						while (~(key = 0) ) { let key = Keyboard.keyPressed(); }
+					}
+					
+					let key = 0;
+					let gotKey = false;
+					
+					do monsterName.dispose();
+					let monsterName = String.new(30);
+					do spells.displaySpells(wizardType);
+				
+					while ( (~(gotKey)) & (~(gameOver)) ) { // waits for a key to be pressed.
+						
+						while (key = 0){
+							let key = Keyboard.keyPressed();
+						}
+
+						if (key = 81) { let exit = true; let gotKey = true; }
+						
+						
+						if (key = 131) { 
+							let spellType = 0; let gotKey = true;
+							if ( (wizardType = 2) & (~(currentShield)) ) {
+								if (wizardType = 2) {
+									let airShield = true; let earthShield = true;
+									let currentShield = true;
+								}
+							}
+						}
+						
+						if (key = 130) {
+							let spellType = 1; let gotKey = true;
+							if ( (wizardType = 3) & (~(currentShield)) ) {
+								if (wizardType = 3) {
+									let fireShield = true; let waterShield = true;
+									let currentShield = true;
+								}
+							}
+						}
+
+						if (key = 133) {
+							let spellType = 2; let gotKey = true;
+							if ( (wizardType = 0) & (~(currentShield)) ) {
+								if (wizardType = 0) {
+									let airShield = true; let earthShield = true;
+									let currentShield = true;
+								}
+							}
+						}
+						
+						if (key = 132) {
+							let spellType = 3; let gotKey = true;
+							if ( (wizardType = 1) & (~(currentShield)) ) {
+								if (wizardType = 1) {
+									let fireShield = true; let waterShield = true;
+									let currentShield = true;
+								}
+							}
+						}
+
+						// waits for the key to be released.
+						while ( ~(key = 0) ) { let key = Keyboard.keyPressed(); }
+					}
+
+					let key = 0;
+					let gotKey = false;
+					
+					let monsterHP = monsterHP - (wizards.getDamageDoneToMonster(wizardType, spellType, monsterType) );
+					
+					if ( monsterHP > 0 ) {
+						let wizardHP = (wizards.getWizardHP(wizardType) - wizards.getDamageDoneToWizard(wizardType, currentShield, monsterType) );
+						if (currentShield) {
+							if ( (wizardHP = 0) | (wizardHP < 0) ) {
+								if ( (wizardType = 0) | (wizardType = 2) ) {
+									let wizardHP = 1;
+									let airShield = false;
+									let earthShield = false;
+									let currentShield = false;
+								}
+								if ( (wizardType = 1) | (wizardType = 3) ) {
+									let wizardHP = 1;
+									let fireShield = false;
+									let waterShield = false;
+									let currentShield = false;
+								}
+							}
+						}
+						if ( (wizardHP < 0) | (wizardHP = 0) ) {
+							do wizards.setWizardSchizophrenia(wizardType);
+						}
+						do wizards.setWizardHP(wizardType, wizardHP);
+						if ( (wizardHP < 0) | (wizardHP = 0) ) {
+							do wizards.setWizardHP(wizardType, 0);
+						}
+						
+						
+						
+						if (wizardType = 0) {
+							let totalWizardHP = (wizards.getWizardHP(0) + wizards.getWizardHP(1) + wizards.getWizardHP(3));
+							if ( ~(totalWizardHP > 0 ) ) {
+								let gameOver = true;
+								let currentLevel = 4;
+							}
+						}
+						if (wizardType = 1) {
+							let totalWizardHP = (wizards.getWizardHP(0) + wizards.getWizardHP(1) + wizards.getWizardHP(2));
+							if ( ~(totalWizardHP > 0 ) ) {
+								let gameOver = true;
+								let currentLevel = 4;
+							}
+						}
+						if (wizardType = 2) {
+							let totalWizardHP = (wizards.getWizardHP(1) + wizards.getWizardHP(2) + wizards.getWizardHP(3));
+							if ( ~(totalWizardHP > 0 ) ) {
+								let gameOver = true;
+								let currentLevel = 4;
+							}
+						}
+						if (wizardType = 3) {
+							let totalWizardHP = (wizards.getWizardHP(0) + wizards.getWizardHP(2) + wizards.getWizardHP(3));
+							if ( ~(totalWizardHP > 0 ) ) {
+								let gameOver = true;
+								let currentLevel = 4;
+							}
+						}
+
+						if ( (currentShield & (wizards.getDamageDoneToWizard(wizardType, currentShield, monsterType) = 0)) & ( ((Math.abs(wizardType - monsterType) = 2) | (Math.abs(monsterType - wizardType) = 2)) ) ) {
+							if ( wizardType = 0 ) {
+								let airShield = false;
+								let earthShield = false;
+							}
+							if ( wizardType = 1 ) {
+								let fireShield = false;
+								let waterShield = false;
+							}
+							if ( wizardType = 2 ) {
+								let airShield = false;
+								let earthShield = false;
+							}
+							if ( wizardType = 3 ) {
+								let fireShield = false;
+								let waterShield = false;
+							}
+						}
+					}
+
+					do Output.moveCursor(0,0);
+					let lastWizard = wizardType;
+				}
+
+				let i = i + 1;
+			}
+		
+			let i = 0;
+			
+			let currentLevel = currentLevel + 1;
+
+			if (currentLevel < totalLevels) {
+
+				let j = 22;
+				while (j < 52) {
+					do Output.moveCursor(2, j);
+					let j = j + 1;
+				}
+				do Output.moveCursor(2, 3);
+				do Output.printString("Your mind is still with you. On the next night...");
+
+				do wizards.dispose();
+				do monsters.dispose();
+				
+				let lastWizard = 4;
+				let monsterHPMax = 4;
+
+				let airShield = false; let fireShield = false; let earthShield = false; let waterShield = false;
+
+				let wizards = Wizards.new();
+				let monsters = Monsters.new();
+
+				let currentLevelArray = levels.getLevelArray(currentLevel);
+
+				let gotKey = false;
+				let key = 0;
+			}
+		
+		}
+
+		if (gameOver) {
+			do Screen.clearScreen();
+			do Output.moveCursor(2, 3);
+			do Output.printString("Your mind is lost.");
+			do Output.moveCursor(20, 3);
+			do Output.printString("Game Over. Thanks for playing Schizophrenia.");
+		}
+		else
+		{
+			do Screen.clearScreen();
+			do Output.moveCursor(2, 3);
+			do Output.printString("You win. The gods tremble, you scary bastard.");
+			do Output.moveCursor(20, 3);
+			do Output.printString("Game Over. Thanks for playing Schizophrenia.");
+		}
+
+		do wizards.dispose();
+		do spells.dispose();
+		do monsters.dispose();
+		do levels.dispose();
+		do currentLevelArray.dispose();
+        return;
+    }
+}

@@ -1,0 +1,33 @@
+class Main {
+
+	function void main() {
+
+		
+		var Background tab;
+		var boolean quit;
+		var Tank tnk;
+
+		//draw main screen
+		do Output.printString("BEER TANKS!");
+		do Output.println();
+		do Output.printString("Made by Chin and Andrew S.");
+		do Output.println();
+		do Output.printString("*sigh, almost there");
+		let tab = Background.new(0);
+		do tab.drawTable();
+
+		//set the game up
+		let quit = false;
+		let tnk = Tank.new(0);
+		
+		//start game
+		do tnk.run();
+
+		//post game destruction
+		do tab.dispose();
+		do tnk.dispose();
+
+	return;
+	}
+
+}

@@ -1,0 +1,76 @@
+class SchizophreniaLabels {
+	field int index, type;
+
+	//field Array wizardNameArray, wizardSpellArray, monsterNameArray;
+	field Array monsterLevel0;
+	field Array monsterLevel1;
+	field Array monsterLevel2;
+	field Array monsterLevel3;
+	field Array monsterLevel4;
+	field Array monsterLevel5;
+	field Array monsterLevel6;
+	field Array monsterLevel7;
+	field Array monsterLevel8;
+	field Array monsterLevel9;
+	field Array monsterLevel10;
+	field Array monsterLevel11;
+	field Array monsterLevel12;
+	field Array monsterNameArray;
+	
+	constructor SchizophreniaLabels new()
+	{
+		let monsterLevel0 = Array.new(4);
+		let monsterLevel1 = Array.new(4);
+		let monsterLevel2 = Array.new(4);
+		let monsterLevel3 = Array.new(4);
+		let monsterLevel4 = Array.new(4);
+		let monsterLevel5 = Array.new(4);
+		let monsterLevel6 = Array.new(4);
+		let monsterLevel7 = Array.new(4);
+		let monsterLevel8 = Array.new(4);
+		let monsterLevel9 = Array.new(4);
+		let monsterLevel10 = Array.new(4);
+		let monsterLevel11 = Array.new(4);
+		let monsterLevel12 = Array.new(4);
+		let monsterNameArray = Array.new(13);
+
+		let monsterLevel0[0] = "a Violent Breeze"; let monsterLevel0[1] = "a Trick Candle"; let monsterLevel0[2] = "Malicious Pebbles"; let monsterLevel0[3] = "Sharpened Raindrops";
+		let monsterLevel1[0] = "a Swarm of Floating Seeds"; let monsterLevel1[1] = "a Firefly"; let monsterLevel1[2] = "Tumbleweeds"; let monsterLevel1[3] = "Plankton";
+		let monsterLevel2[0] = "a Whirlwind"; let monsterLevel2[1] = "Fire Imps"; let monsterLevel2[2] = "a Sand Devil"; let monsterLevel2[3] = "Frost Slime";
+		let monsterLevel3[0] = "an Air Elemental"; let monsterLevel3[1] = "a Fire Elemental"; let monsterLevel3[2] = "an Earth Elemental"; let monsterLevel3[3] = "a Water Elemental";
+		let monsterLevel4[0] = "the Twins"; let monsterLevel4[1] = "the Ram"; let monsterLevel4[2] = "the Bull"; let monsterLevel4[3] = "the Crab";
+		let monsterLevel5[0] = "Libra"; let monsterLevel5[1] = "the Lion"; let monsterLevel5[2] = "the Virgin"; let monsterLevel5[3] = "the Scorpion";
+		let monsterLevel6[0] = "Aquarius"; let monsterLevel6[1] = "Sagittarius"; let monsterLevel6[2] = "the Sea-Goat"; let monsterLevel6[3] = "Pisces";
+		let monsterLevel7[0] = "the Queen of Swords"; let monsterLevel7[1] = "the King of Wands"; let monsterLevel7[2] = "the Princess of Disks"; let monsterLevel7[3] = "the Prince of Cups";
+		let monsterLevel8[0] = "Zeus"; let monsterLevel8[1] = "Hephaestus"; let monsterLevel8[2] = "a Golem"; let monsterLevel8[3] = "Leviathan";
+		let monsterLevel9[0] = "the Sylphs"; let monsterLevel9[1] = "the Salamander"; let monsterLevel9[2] = "Daphne"; let monsterLevel9[3] = "Ondine";
+		let monsterLevel10[0] = "the Faeries"; let monsterLevel10[1] = "the Faeries"; let monsterLevel10[2] = "the Faeries"; let monsterLevel10[3] = "the Faeries";
+		let monsterLevel11[0] = "Barbariccia"; let monsterLevel11[1] = "Rubicante"; let monsterLevel11[2] = "Scarmiglione"; let monsterLevel11[3] = "Cagnazzo";
+		let monsterLevel12[0] = "Boreas"; let monsterLevel12[1] = "Ra"; let monsterLevel12[2] = "Hel"; let monsterLevel12[3] = "Susanoo";
+
+		let monsterNameArray[0] = monsterLevel0; let monsterNameArray[1] = monsterLevel1; let monsterNameArray[2] = monsterLevel2; let monsterNameArray[3] = monsterLevel3;
+		let monsterNameArray[4] = monsterLevel4; let monsterNameArray[5] = monsterLevel5; let monsterNameArray[6] = monsterLevel6; let monsterNameArray[7] = monsterLevel7;
+		let monsterNameArray[8] = monsterLevel8; let monsterNameArray[9] = monsterLevel9; let monsterNameArray[10] = monsterLevel10; let monsterNameArray[11] = monsterLevel11;
+		let monsterNameArray[12] = monsterLevel12;
+
+		return this;
+	}
+
+	method String getMonsterName(int currentIndex, int currentType)
+	{
+		var String currentMonsterName;
+		var Array currentMonsterNameArray;
+		let currentMonsterNameArray = Array.new(4);
+		let index = currentIndex;
+		let type = currentType;
+		let currentMonsterNameArray = monsterNameArray[index];
+		let currentMonsterName = currentMonsterNameArray[type];
+		return currentMonsterName;
+	}
+	 
+	method void dispose()
+	{
+		do Memory.deAlloc(this);
+		return;
+    }
+}

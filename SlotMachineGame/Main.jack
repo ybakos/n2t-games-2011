@@ -1,0 +1,132 @@
+/** 
+*	Slot Machine Program
+*	Written by: Matt Voget
+**/
+
+class Main{
+	function void main(){
+			
+		// Declare variables, including a player and slot machine object	
+		var SlotMachine slotMachine;
+		var Player gambler;
+		var int number_of_lines, win_amount;
+		var String response, b, s, q; 
+		
+		let b = "B";
+		let s = "S";
+		let q = "Q";
+		
+		// Initialize a new instance of a player and slot machine
+		let slotMachine = SlotMachine.new();
+		let gambler = Player.new(); // initialize money and boolean flags
+			
+		// Print the header to the screen
+		do Output.printString("Hello and Welcome to the Slot Machine Game!");
+		do Output.println();
+		do Output.printString("----Written by: Matt Voget----");
+		do Output.println();
+		do Output.println();
+		do Output.printString("Let's get this shit started!");
+		do Output.println();
+		do Output.printString("First things first, you need to place your bet...");
+		do Output.println();
+		do Output.printString("You: Let's see how much paper I got... *looks in wallet*");
+		do Output.println();
+		do Output.printString("You: AWWWW YEEAAAHHH! I've got a Benjamin!! (You have $100)");
+		do Output.println();
+		
+		let number_of_lines = 7;
+	
+		while(~(gambler.getQuitFlag()) & (gambler.getMoney() > 0))
+		{
+					
+			/** If the player has no money, quit the program */
+			if (~(gambler.getMoney() > 0))
+			{
+				do Output.println();
+				do Output.printString("Sorry, you have no more money!");
+				do Output.println();
+				do Output.printString("Thanks for playing!");
+				do Output.println();
+				
+				// Deallocate the memory of the objects
+				do slotMachine.dispose();
+				do gambler.dispose();
+				do Sys.halt();
+			}
+			
+			
+			/** Change the bet */
+			while (gambler.getChangeBetFlag() = true)
+			{
+				do Output.printString("Your current bet is $");
+				do Output.printInt(gambler.getBet());
+				do Output.println();
+				let number_of_lines = gambler.placeBet(number_of_lines+1);
+				let number_of_lines = Main.checkLines(number_of_lines);
+			}
+
+			/** Prompt gambler to spin reel, change bet or quit */
+			let response = Keyboard.readLine("Choose Action('B': change bet, 'S': spin reels, 'Q':quit): ");
+			let number_of_lines = Main.checkLines(number_of_lines+1);
+			
+			if (~(response.length() = 0)){
+				if (response.charAt(0) = b.charAt(0))
+				{
+					do gambler.setChangeBetFlag(true);
+					do gambler.setReadyToSpinFlag(false);
+					do gambler.setQuitFlag(false);
+					do Output.printString("You chose Change Bet!");
+					do Output.println();
+					let number_of_lines = Main.checkLines(number_of_lines+1);
+				}
+				if (response.charAt(0) = s.charAt(0))
+				{
+					do gambler.setReadyToSpinFlag(true);
+					do gambler.setChangeBetFlag(false);
+					do gambler.setQuitFlag(false);
+					
+					// Spin the Reels and collect the winnings
+					let win_amount = slotMachine.spinReels(gambler.getBet());
+					do gambler.setMoney(gambler.getMoney()+win_amount);
+					do Output.printString("Your current money is $");
+					do Output.printInt(gambler.getMoney());
+					do Output.println();
+					
+					// If the current bet is higher than the money, go to the change bet screen
+					if (gambler.getMoney() < gambler.getBet()){
+						do gambler.setChangeBetFlag(true);
+					}
+				}
+				if (response.charAt(0) = q.charAt(0))
+				{
+					do Output.printString("You chose to Quit!");
+					do Output.println();
+					do gambler.setQuitFlag(true);
+				}
+			}		
+		}
+		
+		// Deallocate the memory of the objects
+		do slotMachine.dispose();
+		do gambler.dispose();
+		
+		do Output.printString("Thanks for Playing!!");
+		do Output.println();
+		
+		return;
+	}
+	
+	/** If the screen accumulates 20 lines, clear it and start at the top, otherwise return the number of lines */
+	function int checkLines(int lines){
+		if (lines > 19){
+			do Screen.clearScreen();
+			do Output.moveCursor(0,0);
+			let lines = 0;
+		}
+		return lines;
+	}
+	
+	
+	
+}

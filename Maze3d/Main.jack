@@ -1,0 +1,421 @@
+//Main
+class Main{
+	static boolean b0, b1, b2;
+	static int i, j, k, addr, x, y, z, col, start, stop, arrLen, arrSeeLen;
+	static Array arrRender, arrWalls, arrSee, arrTemp;
+	static LineBuffer buffer;
+	static Float A, B, C, D, rot, pos, tilt, fl0, fl1, fl2, unitLength;
+	static V3D u, v, w;
+	static V3D v0, v1, v2, v3, v4, v5, v6, v7;
+	static M4D global;
+	static Cam3D cam;
+	static Point p, q;
+	static Display disp;
+	static Grid grid;
+	static V2D v2d0;
+	static boolean renderGoal, areal;
+	static int goalX, goalY;
+	
+	function void toggleCam(){
+		if(areal){// PERSPECTIVE
+			do B.set(Float.getPos(),3,0);
+			do cam.setPosY(B);
+			do B.set(Float.getPos(),12,1);// 8E1, OVERHEAD: 1E2
+			do C.set(Float.getPos(),2,1);// 1E1, OVERHEAD: 3E0
+			do cam.setLens(B);
+			do cam.setScale(C);
+			let tilt = Float.new(Float.getNeg(),1,-2);// rotX tilt, default: +5E-1, OVERHEAD: 1570E0
+			let areal = false;
+		}else{// AREAL
+			do B.set(Float.getPos(),0,0);
+			do cam.setPosY(B);
+			do B.set(Float.getPos(),2,2);// 8E1, OVERHEAD: 1E2
+			do C.set(Float.getPos(),4,0);// 1E1, OVERHEAD: 3E0
+			do cam.setLens(B);
+			do cam.setScale(C);
+			let tilt = Float.new(Float.getNeg(),1570,0);// rotX tilt, default: +5E-1, OVERHEAD: 1570E0
+			let areal = true;
+		}
+		return;
+	}
+	function void main(){
+		/*----------------- DECLARE VARS ----------------*/
+			//ALL STATIC
+		/*----------------- INIT CLASSES ----------------*/
+		do Display.init();
+		do Float.init();
+		do V3D.init();
+		do M4D.init();
+		do Cam3D.init();
+		do Point.init();
+		/*----------------- PROGRAM START ----------------*/
+		let buffer = LineBuffer.new(30);
+		let renderGoal = false;
+		
+		let arrTemp = Array.new(2);
+		let v2d0 = V2D.new(0,0);
+		
+		let A = Float.new(Float.getPos(),0,0);
+		let B = Float.new(Float.getPos(),0,0);
+		let C = Float.new(Float.getPos(),0,0);
+		let D = Float.new(Float.getPos(),0,0);
+		let fl0 = Float.new(Float.getPos(),0,0);
+		let fl1 = Float.new(Float.getPos(),0,0);
+		let fl2 = Float.new(Float.getPos(),0,0);
+		let u = V3D.new(A, B, C);
+		let v = V3D.new(A, B, C);
+		let w = V3D.new(A, B, C);
+		let v0 = V3D.new(A, B, C);
+		let v1 = V3D.new(A, B, C);
+		let v2 = V3D.new(A, B, C);
+		let v3 = V3D.new(A, B, C);
+		let v4 = V3D.new(A, B, C);
+		let v5 = V3D.new(A, B, C);
+		let v6 = V3D.new(A, B, C);
+		let v7 = V3D.new(A, B, C);
+		// temporary square array = 8 points * x,y = 16
+		let arrLen = 16;
+		let arrRender = Array.new(arrLen);
+		let arrWalls = Array.new(4);
+		// global matrix
+		let global = M4D.new();
+		//let disp = Display.new(512/2,256/2,150,100);
+		let disp = Display.new(512/2,256/2,300,200);//256,150
+		//
+		let rot = Float.new(Float.getPos(),3,-1);//increment rotation
+		let pos = Float.new(Float.getPos(),3,0);//increment position
+		let p = Point.new(0,0);// temp screen point
+		let q = Point.new(0,0);// temp screen point
+		//CAMERA:
+		let cam = Cam3D.new();
+		do A.set(Float.getPos(),5,0);//5E0
+		do B.set(Float.getPos(),0,1);//0
+		do C.set(Float.getPos(),5,0);//5E0
+		do cam.setPosX(A);
+		do cam.setPosY(B);
+		do cam.setPosZ(C);
+		do A.set(Float.getPos(),0,0);// 0=+z
+		do cam.setRotY(A);
+		let areal = true;
+		do Main.toggleCam();
+		//GRID:
+		let grid = Grid.new();
+		do grid.setGoal(1,2);
+		let unitLength = Float.new(Float.getPos(),1,1);//10x10x10 cubes
+		//INTRO MESSAGE:
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.printString("               M     M     A     ZZZZZZ  EEEEEE   ");
+		do Output.println();
+		do Output.printString("               MM   MM    A A        Z   E");
+		do Output.println();
+		do Output.printString("               M M M M   A   A      Z    E");
+		do Output.println();
+		do Output.printString("               M  M  M  AAAAAAA    Z     EEEE");
+		do Output.println();
+		do Output.printString("               M     M  A     A   Z      E");
+		do Output.println();
+		do Output.printString("               M     M  A     A  ZZZZZZ  EEEEEE ");
+		do Output.println();
+		do Output.println();
+		do Output.printString("   Find the magic floor X, then we'll have a party and cake");
+		do Output.println();
+		do Output.println();
+		do Output.printString("      A GAME PROGRAMMED IN THE JACK PROGRAMMING LANGUAGE");
+		do Output.println();
+		do Output.println();
+		do Output.printString("                         CREATED BY:");
+		do Output.println();
+		do Output.println();
+		do Output.printString("                    RICHIE, ERIC & JOSH");
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.printString("                  (UP/DOWN/LEFT/RIGHT / Z)");
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		//do Output.printString(" X");
+		//MAIN LOOP:------------
+		let b0 = true;
+		while(b0){
+			// USER INPUT:
+			let i = Keyboard.keyPressed();
+			//do Output.printString("i: ");
+			//do Output.printInt(i);
+			if( (i=131) | (i=133) ){//up / down
+				do cam.getNorm(u);
+				do Float.copy(A,cam.getPosX());// X
+				do Float.copy(C,u.getX());
+				do Float.mul(C,C,pos);
+				do Float.copy(B,cam.getPosZ());// Z
+				do Float.copy(D,u.getZ());
+				do Float.mul(D,D,pos);
+				if(i=131){//up
+					do Float.add(C,A,C);
+					do Float.add(D,B,D);
+				}else{//down
+					do Float.sub(C,A,C);
+					do Float.sub(D,B,D);
+				}
+				// GET CURRENT TILE:
+				do Float.div(A,A,unitLength);
+				let x = Float.toInt(A,false);
+				do Float.div(B,B,unitLength);
+				let z = Float.toInt(B,false);
+				// GET NEXT TILE
+				if(C.getSign()=Float.getNeg()){//negative values
+					let j = -1;
+				}else{
+					do Float.div(A,C,unitLength);
+					let j = Float.toInt(A,false);
+				}
+				if(D.getSign()=Float.getNeg()){//negative values
+					let k = -1;
+				}else{
+					do Float.div(B,D,unitLength);
+					let k = Float.toInt(B,false);
+				}
+				let b1 = grid.canMove(x,z,j,k);
+				if( b1 ){
+					do cam.setPosX(C);
+					do cam.setPosZ(D);
+				}
+			}
+			if(i=130){//left
+				do Float.add(A,cam.getRotY(),rot);
+				do Float.radianAlias(A,A);
+				do cam.setRotY(A);
+			}
+			if(i=132){//right
+				do Float.sub(A,cam.getRotY(),rot);
+				do Float.radianAlias(A,A);
+				do cam.setRotY(A);
+			}
+			if(i=90){// z
+				do Main.toggleCam();
+			}
+			if(~(i=0)){
+				
+				// ROTATE / TRANSLATE MATRIX TO CAMERA POSITION
+				do M4D.identity(global);
+				do Float.negate(A,cam.getPosX());
+				do Float.negate(B,cam.getPosY());
+				do Float.negate(C,cam.getPosZ());
+				do M4D.translate(global,global,A,B,C);
+				do Float.negate(A,cam.getRotY());
+				do M4D.rotateY(global,global,A);
+				do M4D.rotateX(global,global,tilt);
+				
+				// RENDER TILES:
+				do Float.copy(A,cam.getPosX());
+				do Float.div(A,A,unitLength);
+				let x = Float.toInt(A,false);
+				do Float.copy(B,cam.getPosZ());
+				do Float.div(B,B,unitLength);
+				let z = Float.toInt(B,false);
+				if( (x=grid.getGoalX()) & (z=grid.getGoalY()) ){
+					let b0 = false;
+				}
+				do grid.canSeeFrom(arrTemp, x, z);
+				let arrSeeLen = arrTemp[0];
+				let arrSee = arrTemp[1];
+				//do Main.renderCube();//render first cube
+				do buffer.begin();//INIT BUFFER
+				let renderGoal = false;
+				let i = 0;
+				while(i<arrSeeLen){
+					let v2d0 = arrSee[i];
+					if( (~(v2d0.getX()=-1)) ){
+						let x = v2d0.getX();
+						let z = v2d0.getY();
+						do Main.renderCube();
+					}
+					do v2d0.dispose();
+					let i = i + 1;
+				}
+				do arrSee.dispose();
+				//buffer has been fulled 
+				do buffer.end();//END BUFFER
+				// SCREEN DRAWLING
+				do disp.clearScreen(0);
+				do disp.drawBounding(1);
+				do buffer.drawLines(1);
+				if(renderGoal & disp.inRange(goalX,goalY) ){
+					do Screen.drawCircle(goalX,goalY,4);
+				}
+			}
+		}
+		//MUST HAVE FOUND GOAL
+		let i = 0;
+		while(i<21){
+			do Output.printString("THE CAKE IS A LIE");
+			do Output.println();
+			let i = i + 1;
+		}
+		/*
+		CLEANUP
+		static boolean b0, b1, b2;
+		static int i, j, k, addr, x, y, z, col, start, stop, arrLen, arrSeeLen;
+		static Array arrRender, arrWalls, arrSee, arrTemp;
+		static LineBuffer buffer;
+		static Float A, B, C, D, rot, pos, tilt, fl0, fl1, fl2, unitLength;
+		static V3D u, v, w;
+		static V3D v0, v1, v2, v3, v4, v5, v6, v7;
+		static M4D global;
+		static Cam3D cam;
+		static Point p, q;
+		static Display disp;
+		static Grid grid;
+		static V2D v2d0;
+		static boolean renderGoal;
+		static int goalX, goalY;
+		do disp.dispose();
+		*/
+		//do Output.printString(" done ");
+		do Output.printString("BY: RICHIE, ERIC, & JOSH");
+		do Output.println();
+		return;
+	}
+	function void renderCube(){//x & z previously set
+		var bool tempB;
+		let tempB = false;
+		// CUBE POINTS v0-v7
+		do Float.toFloat(v0.getX(),x);// v0
+		do Float.mul(v0.getX(),v0.getX(),unitLength);
+		do Float.toFloat(v0.getZ(),z);
+		do Float.mul(v0.getZ(),v0.getZ(),unitLength);
+		do Float.getZero(v0.getY());
+		do V3D.copy(v1,v0);// v1
+		do Float.add(v1.getZ(),v1.getZ(),unitLength);
+		do V3D.copy(v2,v1);// v2
+		do Float.add(v2.getX(),v2.getX(),unitLength);
+		do V3D.copy(v3,v0);// v3
+		do Float.add(v3.getX(),v3.getX(),unitLength);
+		do V3D.copy(v4,v0);// v4
+		do Float.add(v4.getY(),v4.getY(),unitLength);
+		do V3D.copy(v5,v1);// v5
+		do Float.add(v5.getY(),v5.getY(),unitLength);
+		do V3D.copy(v6,v2);// v6
+		do Float.add(v6.getY(),v6.getY(),unitLength);
+		do V3D.copy(v7,v3);// v7
+		do Float.add(v7.getY(),v7.getY(),unitLength);
+		if( (x=grid.getGoalX()) & (z=grid.getGoalY()) ){
+			let tempB = true;
+			do A.set(Float.getPos(),5,-1);// half
+			do Float.mul(A,A,unitLength);
+			do V3D.copy(v,v0);
+			do Float.add(v.getX(),v.getX(),A);
+			do Float.add(v.getZ(),v.getZ(),A);
+			do A.set(Float.getPos(),25,-1);// small
+			do Float.mul(A,A,unitLength);
+			do Float.add(v.getY(),v.getY(),A);
+			do Display.V3Dto2D(v, global, v, cam);
+			do disp.getRender2DPoint(p, v, cam);
+			let goalX = p.getX();
+			let goalY = p.getY();
+		}
+		// CONVERT TO 2D
+		do Display.V3Dto2D(v0, global, v0, cam);
+		do disp.getRender2DPoint(p, v0, cam);
+		let arrRender[0] = p.getX();
+		let arrRender[1] = p.getY();
+		do Display.V3Dto2D(v1, global, v1, cam);
+		do disp.getRender2DPoint(p, v1, cam);
+		let arrRender[2] = p.getX();
+		let arrRender[3] = p.getY();
+		do Display.V3Dto2D(v2, global, v2, cam);
+		do disp.getRender2DPoint(p, v2, cam);
+		let arrRender[4] = p.getX();
+		let arrRender[5] = p.getY();
+		do Display.V3Dto2D(v3, global, v3, cam);
+		do disp.getRender2DPoint(p, v3, cam);
+		let arrRender[6] = p.getX();
+		let arrRender[7] = p.getY();
+		do Display.V3Dto2D(v4, global, v4, cam);
+		do disp.getRender2DPoint(p, v4, cam);
+		let arrRender[8] = p.getX();
+		let arrRender[9] = p.getY();
+		do Display.V3Dto2D(v5, global, v5, cam);
+		do disp.getRender2DPoint(p, v5, cam);
+		let arrRender[10] = p.getX();
+		let arrRender[11] = p.getY();
+		do Display.V3Dto2D(v6, global, v6, cam);
+		do disp.getRender2DPoint(p, v6, cam);
+		let arrRender[12] = p.getX();
+		let arrRender[13] = p.getY();
+		do Display.V3Dto2D(v7, global, v7, cam);
+		do disp.getRender2DPoint(p, v7, cam);
+		let arrRender[14] = p.getX();
+		let arrRender[15] = p.getY();
+		// RENDER 12 LINES FOR CUBE
+		do grid.getWalls(arrWalls, x, z);
+		if( tempB ){// GOAL
+			let renderGoal = true;
+			do p.set(arrRender[0],arrRender[1]);
+			do q.set(arrRender[4],arrRender[5]);
+			do disp.renderLine(buffer, p, q);
+			do p.set(arrRender[2],arrRender[3]);
+			do q.set(arrRender[6],arrRender[7]);
+			do disp.renderLine(buffer, p, q);
+		}
+		if(arrWalls[0]){// EXCLUSIVE NORTH
+			do p.set(arrRender[0],arrRender[1]);
+			do q.set(arrRender[6],arrRender[7]);
+			do disp.renderLine(buffer, p, q);// BOTTOM
+			do p.set(arrRender[8],arrRender[9]);
+			do q.set(arrRender[14],arrRender[15]);
+			do disp.renderLine(buffer, p, q);// TOP
+		}
+		if(arrWalls[1]){// EXCLUSIVE EAST
+			do p.set(arrRender[6],arrRender[7]);
+			do q.set(arrRender[4],arrRender[5]);
+			do disp.renderLine(buffer, p, q);// BOTTOM
+			do p.set(arrRender[14],arrRender[15]);
+			do q.set(arrRender[12],arrRender[13]);
+			do disp.renderLine(buffer, p, q);// TOP
+		}
+		if(arrWalls[2]){// EXCLUSIVE SOUTH
+			do p.set(arrRender[4],arrRender[5]);
+			do q.set(arrRender[2],arrRender[3]);
+			do disp.renderLine(buffer, p, q);// BOTTOM
+			do p.set(arrRender[12],arrRender[13]);
+			do q.set(arrRender[10],arrRender[11]);
+			do disp.renderLine(buffer, p, q);// TOP
+		}
+		if(arrWalls[3]){// EXCLUSIVE WEST
+			do p.set(arrRender[2],arrRender[3]);
+			do q.set(arrRender[0],arrRender[1]);
+			do disp.renderLine(buffer, p, q);// BOTTOM
+			do p.set(arrRender[10],arrRender[11]);
+			do q.set(arrRender[8],arrRender[9]);
+			do disp.renderLine(buffer, p, q);// TOP
+		}
+		if(arrWalls[0] | arrWalls[1]){// NORTH | EAST
+			do p.set(arrRender[6],arrRender[7]);
+			do q.set(arrRender[14],arrRender[15]);
+			do disp.renderLine(buffer, p, q);
+		}
+		if(arrWalls[1] | arrWalls[2]){// EAST | SOUTH
+			do p.set(arrRender[4],arrRender[5]);
+			do q.set(arrRender[12],arrRender[13]);
+			do disp.renderLine(buffer, p, q);
+		}
+		if(arrWalls[2] | arrWalls[3]){// SOUTH | WEST
+			do p.set(arrRender[2],arrRender[3]);
+			do q.set(arrRender[10],arrRender[11]);
+			do disp.renderLine(buffer, p, q);
+		}
+		if(arrWalls[3] | arrWalls[0]){// WEST | NORTH
+			do p.set(arrRender[0],arrRender[1]);
+			do q.set(arrRender[8],arrRender[9]);
+			do disp.renderLine(buffer, p, q);
+		}
+		return;
+	}
+	
+}
+
+
+

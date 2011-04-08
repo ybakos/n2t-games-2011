@@ -1,0 +1,56 @@
+// Lex Hubbard
+// Elements
+// 2011
+
+class Intro {
+	field int i;
+	constructor Intro new()
+	{
+		let i = 0;
+		return this;
+	}
+
+	method void displayIntro()
+	{
+		do Output.moveCursor(2, 3);
+		do Output.printString("There are four of us. I am one of you.");
+		
+		do Output.moveCursor(4, 3);
+		do Output.printString("We are on the cusp of becoming one of the greatest wizards");
+		do Output.moveCursor(5, 3);
+		do Output.printString("who has ever lived.");
+
+		do Output.moveCursor(7, 3);
+		do Output.printString("However, in our studies of the arcane arts, your mind has");
+		do Output.moveCursor(8, 3);
+		do Output.printString("been, at times, unreliable, fractured, at war with itself.");
+
+		do Output.moveCursor(10, 3);
+		do Output.printString("And now there are demons who would make those schisms");
+		do Output.moveCursor(11, 3);
+		do Output.printString("permanent fixtures on our psyche.");
+
+		do Output.moveCursor(13, 3);
+		do Output.printString("Will we defeat the demons who threaten to thwart our even");
+		do Output.moveCursor(14, 3);
+		do Output.printString("more nefarious plans or forever plummet into the depths of");
+		do Output.moveCursor(15, 3);
+		do Output.printString("schizophrenia?");
+		
+		//do Sys.wait(500);
+
+		do Output.moveCursor(20, 3);
+		do Output.printString("(Space to Continue)");
+		do Output.moveCursor(20, 39);
+		do Output.printString("(Arrow Keys to Select)");
+
+		return;
+	}
+
+	method void dispose()
+	{
+		do Memory.deAlloc(this);
+		return;
+    }
+
+}

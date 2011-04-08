@@ -1,0 +1,178 @@
+/**
+*	SlotMachine.jack
+*	Written by: Matt Voget
+**/
+
+class SlotMachine{
+
+	field int win_amount;
+
+	/** Constructs a new SlotMachine object */
+	constructor SlotMachine new(){
+		let win_amount = 0;
+		return this;
+	}
+	
+	/** Spins the reels of the slot machine.
+	* Returns the amount of money won off of a particular bet */
+	method int spinReels(int bet){
+		var int i,k,bar,yong,computer,seven,cherry,jackpot;
+	
+		let win_amount = 0;
+	
+		// Initialize incrementors that determine wins
+		let bar = 0;
+		let yong = 0;
+		let computer = 0;
+		let seven = 0;
+		let cherry = 0;
+		let jackpot = 0;
+	
+		// Reset the screen for the spin animation
+		do Screen.clearScreen();
+		do Output.moveCursor(1,0);
+		
+		do Output.printString("Press any key to stop a reel!");
+		do Output.println();
+		
+		do Output.moveCursor(0,0);
+		
+		// Loop 3 times, one for each reel
+		let k = 0;
+		while(k<3){
+				
+			// Calculate a random number
+			let i = 0;
+			while(Keyboard.keyPressed() = 0){
+				let i = i+1;	
+			}
+			if (i < 0)
+			{
+				let i = -i;
+			}
+			while (i>10){
+				let i = Math.divide(i,10);
+			}	// 'i' is now a random number between 1 and 10 
+			
+			// Move the cursor to the right for each reel
+			do Output.moveCursor(0,(13*k));
+		
+			/** Determine reel outputs and print them to the screen */
+			// Bar
+			if (i<3){
+			
+				do Output.printString("*****BAR*****");
+				let bar = bar + 1;
+			
+			}
+			// Yong
+			if ((i>2) & (i<5)){
+				
+				do Output.printString("*****YONG****");
+				let yong = yong + 1;
+			
+			
+			}
+			// Computer
+			if ((i>4) & (i<7)){
+
+				do Output.printString("***COMPUTER**");
+				let computer = computer + 1;
+			
+			}
+			// Seven
+			if (i=7){
+			
+				do Output.printString("****SEVEN****");
+				let seven = seven + 1;
+			
+			}
+			// Wild Cherry
+			if ((i=8) | (i=9)){
+			
+				do Output.printString("****CHERRY***");
+				let cherry = cherry + 1;
+			
+			}
+			// Jackpot
+			if (i=10){
+			
+				do Output.printString("***JACKPOT***");
+				let jackpot = jackpot + 1;
+			
+			}
+			let k = k + 1;
+			do Sys.wait(1000);
+		}
+		
+		// Reset the cursor position
+		do Output.moveCursor(2,0);
+
+		// Determine if there is a win by checking the reel incrementors
+		if ((bar = 3) | ((bar = 2) & (cherry = 1)) | ((bar = 1) & (cherry = 2))){
+			
+			let win_amount = bet*2;
+			
+		}
+			
+		if ((yong = 3) | ((yong = 2) & (cherry = 1)) | ((yong = 1) & (cherry = 2))){
+		
+			let win_amount = bet*5;
+		}
+		
+		if ((computer = 3) | ((computer = 2) & (cherry = 1)) | ((computer = 1) & (cherry = 2))){
+			
+			let win_amount = bet*10;
+		}
+		
+		if ((seven = 3) | ((seven = 2) & (cherry = 1)) | ((seven = 1) & (cherry = 2))){
+		
+			let win_amount = bet*100;
+		
+		}
+		
+		if ((jackpot = 3) | ((jackpot = 2) & (cherry = 1)) | ((jackpot = 1) & (cherry = 2))){
+		
+			let win_amount = bet*10000;
+			do Output.printString("OMFG!!! YOU JUST WON THE JACKPOT!!!");
+			do Output.println();
+		
+		}
+		
+		if (cherry = 3){
+		
+			let win_amount = bet*1000;
+		
+		}
+	
+		// If we have a losing combo, subtract the bet and inform the user, otherwise congradulate
+		if (win_amount = 0){
+		
+			// Subtract the bet from the winnings
+			let win_amount = -bet;
+			
+			do Output.printString("Sorry bro, you didn't win!!");
+			do Output.println();
+			
+		}
+		else {
+		
+			do Output.printString("CONGRATS! You won $");
+			do Output.printInt(win_amount);
+			do Output.println();
+			
+			// Subtract the bet from the winnings
+			let win_amount = win_amount - bet;
+		}
+		
+		
+		return win_amount;
+	}
+	
+	/** Deallocates memory for a SlotMachine object */
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+
+}

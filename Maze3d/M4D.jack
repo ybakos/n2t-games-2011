@@ -1,0 +1,348 @@
+//Floating Point - 9 decimal accuracy
+//fix phantom error in file
+
+class M4D{//doesn't store bottom row - assumed to be [0 0 0 1]
+/*------------------STATIC VARIABLES--------------*/
+	static int length;
+/*------------------PRIVATE VARIABLES--------------*/
+	field Array a;
+/*------------------PRIVATE METHODS--------------*/
+	constructor M4D new(){
+		var int i;
+		let a = Array.new(length);
+		let i = 0;
+		while(i<length){
+			let a[i] = Float.new(0,0,0);
+			let i = i + 1;
+		}
+		do M4D.identity(this);
+		return this;
+	}
+	method void set(Float a_, Float b, Float c, Float d,
+					Float e, Float f, Float g, Float h, 
+					Float i, Float j, Float k, Float l ){
+		do setI(0,a_); do setI(1,b); do setI(2,c); do setI(3,d);
+		do setI(4,e); do setI(5,f); do setI(6,g); do setI(7,h);
+		do setI(8,i); do setI(9,j); do setI(10,k); do setI(11,l);
+		return;
+	}
+	method void setI(int i, Float n){
+		do Float.copy(a[i],n);
+		return;
+	}
+	method Float getI(int i){
+		return a[i];
+	}
+	method void print(){
+		do M4D.printM4D(this);
+		return;
+	}
+	method void dispose(){
+		var int i;
+		var Float f;
+		while(i<length){
+			let f = a[i];
+			do f.dispose();
+			let i = i + 1;
+		}
+		do a.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+/*------------------STATIC FUNCTIONS--------------*/
+/*------------------INIT--------------*/
+	function void init(){
+		let length = 12;//only top 3 rows of 4x4 matrix
+		return;
+	}
+/*------------------OPS--------------*/
+	function void identity(M4D m){// 1 0 0 0, 0 1 0 0 , 0 0 1 0
+		var Float f0, f1;
+		let f0 = Float.new(Float.getPos(),0,0);
+		let f1 = Float.new(Float.getPos(),1,0);
+		do m.setI(0,f1); do m.setI(1,f0); do m.setI(2,f0); do m.setI(3,f0);
+		do m.setI(4,f0); do m.setI(5,f1); do m.setI(6,f0); do m.setI(7,f0);
+		do m.setI(8,f0); do m.setI(9,f0); do m.setI(10,f1); do m.setI(11,f0);
+		do f0.dispose();
+		do f1.dispose();
+		return;
+	}
+	function void copy(M4D res, M4D src){// res = src
+		var int i;
+		while(i<length){
+			do res.setI(i,src.getI(i));
+			let i = i + 1;
+		}
+		return;
+	}
+/*------------------MATH--------------*/
+	function void mul(M4D res, M4D a, M4D b){// res = a*b
+		var Float f1, f2, f3, f4, one, zero;
+		var M4D m;
+		let m = M4D.new();
+		let one = Float.new(Float.getPos(),1,0);
+		let zero = Float.new(Float.getPos(),0,0);
+		let f1 = Float.new(0,0,0);
+		let f2 = Float.new(0,0,0);
+		let f3 = Float.new(0,0,0);
+		let f4 = Float.new(0,0,0);
+		//0:-------------------------------
+		do Float.mul(f1,a.getI(0),b.getI(0));
+		do Float.mul(f2,a.getI(1),b.getI(4));
+		do Float.mul(f3,a.getI(2),b.getI(8));
+		do Float.mul(f4,a.getI(3),zero);
+		do Float.add(f1,f1,f2);
+		do Float.add(f3,f3,f4);
+		do Float.add(f1,f1,f3);
+		do m.setI(0, f1 );
+		//1:
+		do Float.mul(f1,a.getI(0),b.getI(1));
+		do Float.mul(f2,a.getI(1),b.getI(5));
+		do Float.mul(f3,a.getI(2),b.getI(9));
+		//do Float.mul(f4,a.getI(3),zero);
+		do Float.add(f1,f1,f2);
+		//do Float.add(f3,f3,f4);
+		do Float.add(f1,f1,f3);
+		do m.setI(1, f1 );
+		//2:
+		do Float.mul(f1,a.getI(0),b.getI(2));
+		do Float.mul(f2,a.getI(1),b.getI(6));
+		do Float.mul(f3,a.getI(2),b.getI(10));
+		//do Float.mul(f4,a.getI(3),zero);
+		do Float.add(f1,f1,f2);
+		//do Float.add(f3,f3,f4);
+		do Float.add(f1,f1,f3);
+		do m.setI(2, f1 );
+		//3:
+		do Float.mul(f1,a.getI(0),b.getI(3));
+		do Float.mul(f2,a.getI(1),b.getI(7));
+		do Float.mul(f3,a.getI(2),b.getI(11));
+		//do Float.mul(f4,a.getI(3),one);
+		do Float.add(f1,f1,f2);
+		do Float.add(f3,f3,a.getI(3));
+		do Float.add(f1,f1,f3);
+		do m.setI(3, f1 );
+		//4:-------------------------------
+		do Float.mul(f1,a.getI(4),b.getI(0));
+		do Float.mul(f2,a.getI(5),b.getI(4));
+		do Float.mul(f3,a.getI(6),b.getI(8));
+		//do Float.mul(f4,a.getI(7),zero);
+		do Float.add(f1,f1,f2);
+		//do Float.add(f3,f3,f4);
+		do Float.add(f1,f1,f3);
+		do m.setI(4, f1 );
+		//5:
+		do Float.mul(f1,a.getI(4),b.getI(1));
+		do Float.mul(f2,a.getI(5),b.getI(5));
+		do Float.mul(f3,a.getI(6),b.getI(9));
+		//do Float.mul(f4,a.getI(7),zero);
+		do Float.add(f1,f1,f2);
+		//do Float.add(f3,f3,f4);
+		do Float.add(f1,f1,f3);
+		do m.setI(5, f1 );
+		//6:
+		do Float.mul(f1,a.getI(4),b.getI(2));
+		do Float.mul(f2,a.getI(5),b.getI(6));
+		do Float.mul(f3,a.getI(6),b.getI(10));
+		//do Float.mul(f4,a.getI(7),zero);
+		do Float.add(f1,f1,f2);
+		//do Float.add(f3,f3,f4);
+		do Float.add(f1,f1,f3);
+		do m.setI(6, f1 );
+		//7:
+		do Float.mul(f1,a.getI(4),b.getI(3));
+		do Float.mul(f2,a.getI(5),b.getI(7));
+		do Float.mul(f3,a.getI(6),b.getI(11));
+		//do Float.mul(f4,a.getI(7),one);
+		do Float.add(f1,f1,f2);
+		do Float.add(f3,f3,a.getI(7));
+		do Float.add(f1,f1,f3);
+		do m.setI(7, f1 );
+		//8:-------------------------------
+		do Float.mul(f1,a.getI(8),b.getI(0));
+		do Float.mul(f2,a.getI(9),b.getI(4));
+		do Float.mul(f3,a.getI(10),b.getI(8));
+		//do Float.mul(f4,a.getI(11),zero);
+		do Float.add(f1,f1,f2);
+		//do Float.add(f3,f3,f4);
+		do Float.add(f1,f1,f3);
+		do m.setI(8, f1 );
+		//9:
+		do Float.mul(f1,a.getI(8),b.getI(1));
+		do Float.mul(f2,a.getI(9),b.getI(5));
+		do Float.mul(f3,a.getI(10),b.getI(9));
+		//do Float.mul(f4,a.getI(11),zero);
+		do Float.add(f1,f1,f2);
+		//do Float.add(f3,f3,f4);
+		do Float.add(f1,f1,f3);
+		do m.setI(9, f1 );
+		//10:
+		do Float.mul(f1,a.getI(8),b.getI(2));
+		do Float.mul(f2,a.getI(9),b.getI(6));
+		do Float.mul(f3,a.getI(10),b.getI(10));
+		//do Float.mul(f4,a.getI(11),zero);
+		do Float.add(f1,f1,f2);
+		//do Float.add(f3,f3,f4);
+		do Float.add(f1,f1,f3);
+		do m.setI(10, f1 );
+		//11:
+		do Float.mul(f1,a.getI(8),b.getI(3));
+		do Float.mul(f2,a.getI(9),b.getI(7));
+		do Float.mul(f3,a.getI(10),b.getI(11));
+		//do Float.mul(f4,a.getI(11),one);
+		do Float.add(f1,f1,f2);
+		do Float.add(f3,f3,a.getI(11));
+		do Float.add(f1,f1,f3);
+		do m.setI(11, f1 );
+		//COPY:
+		do M4D.copy(res,m);
+		do f1.dispose();
+		do f2.dispose();
+		do f3.dispose();
+		do f4.dispose();
+		do one.dispose();
+		do zero.dispose();
+		do m.dispose();
+		return;
+	}
+	function void mulV3D(V3D res, M4D m, V3D a){// res = m*a - [x, y, z, 1]
+		var Float f0, f1, f2;
+		var V3D v;
+		let f0 = Float.new(0,0,0);
+		let f1 = Float.new(0,0,0);
+		let f2 = Float.new(0,0,0);
+		let v = V3D.new(f0,f0,f0);
+		//X:
+		do Float.mul(f0,a.getX(),m.getI(0));
+		do Float.mul(f1,a.getY(),m.getI(1));
+		do Float.mul(f2,a.getZ(),m.getI(2));
+		do Float.add(f2,f2,m.getI(3));
+		do Float.add(f0,f0,f1);
+		do Float.add(f0,f0,f2);
+		do v.setX(f0);
+		//Y:
+		do Float.mul(f0,a.getX(),m.getI(4));
+		do Float.mul(f1,a.getY(),m.getI(5));
+		do Float.mul(f2,a.getZ(),m.getI(6));
+		do Float.add(f2,f2,m.getI(7));
+		do Float.add(f0,f0,f1);
+		do Float.add(f0,f0,f2);
+		do v.setY(f0);
+		//Z:
+		do Float.mul(f0,a.getX(),m.getI(8));
+		do Float.mul(f1,a.getY(),m.getI(9));
+		do Float.mul(f2,a.getZ(),m.getI(10));
+		do Float.add(f2,f2,m.getI(11));
+		do Float.add(f0,f0,f1);
+		do Float.add(f0,f0,f2);
+		do v.setZ(f0);
+		//COPY:
+		do V3D.copy(res,v);
+		do f0.dispose();
+		do f1.dispose();
+		do f2.dispose();
+		do v.dispose();
+		return;
+	}
+/*------------------TRANSFORMATIONS--------------*/// res = transform, a
+	function void translate(M4D res, M4D a, Float x, Float y, Float z){// res = a.translate(x,y,z)
+		var M4D tra;
+		let tra = M4D.new();
+		do tra.setI(3,x);
+		do tra.setI(7,y);
+		do tra.setI(11,z);
+		do M4D.mul(res,tra,a);
+		do tra.dispose();
+		return;
+	}
+	function void scale(M4D res, M4D a, Float x, Float y, Float z){// res = a.scale(x,y,z)
+		var M4D tra;
+		let tra = M4D.new();
+		do tra.setI(0,x);
+		do tra.setI(5,y);
+		do tra.setI(10,z);
+		do M4D.mul(res,tra,a);
+		do tra.dispose();
+		return;
+	}
+	function void rotateX(M4D res, M4D a, Float rad){// res = a.rotateX(rad)
+		var Float f0;
+		var M4D tra;
+		let f0 = Float.new(0,0,0);
+		let tra = M4D.new();
+		do Float.cos(f0,rad);
+		do tra.setI(5,f0);
+		do tra.setI(10,f0);
+		do Float.sin(f0,rad);
+		do tra.setI(9,f0);
+		do Float.negate(f0,f0);
+		do tra.setI(6,f0);
+		do M4D.mul(res,tra,a);
+		do f0.dispose();
+		do tra.dispose();
+		return;
+	}
+	function void rotateY(M4D res, M4D a, Float rad){// res = a.rotateY(rad)
+		var Float f0;
+		var M4D tra;
+		let f0 = Float.new(0,0,0);
+		let tra = M4D.new();
+		do Float.cos(f0,rad);
+		do tra.setI(0,f0);
+		do tra.setI(10,f0);
+		do Float.sin(f0,rad);
+		do tra.setI(2,f0);
+		do Float.negate(f0,f0);
+		do tra.setI(8,f0);
+		do M4D.mul(res,tra,a);
+		do f0.dispose();
+		do tra.dispose();
+		return;
+	}
+	function void rotateZ(M4D res, M4D a, Float rad){// res = a.rotateZ(rad)
+		var Float f0;
+		var M4D tra;
+		let f0 = Float.new(0,0,0);
+		let tra = M4D.new();
+		do Float.cos(f0,rad);
+		do tra.setI(0,f0);
+		do tra.setI(5,f0);
+		do Float.sin(f0,rad);
+		do tra.setI(4,f0);
+		do Float.negate(f0,f0);
+		do tra.setI(1,f0);
+		do M4D.mul(res,tra,a);
+		do f0.dispose();
+		do tra.dispose();
+		return;
+	}
+/*------------------PRINT--------------*/
+	function void printM4D(M4D m){// sign|mant|E|expo
+		var int i,j;
+		var Float f;
+		let i = 0;
+		let j = 4;
+		while(i<length){
+			if(j=0){
+				do Output.println();
+				let j = 4;
+			}
+			let j = j - 1;
+			let f = m.getI(i);
+			do f.print();
+			do Output.printString(" ");
+			let i = i + 1;
+		}
+		do Output.println();//last, made-up row
+		do Output.printString("+0.000E0 +0.000E0 +0.000E0 +1.000E0 ");
+		return;
+	}
+
+}
+
+
+
+
+
+
+

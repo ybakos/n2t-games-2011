@@ -1,0 +1,195 @@
+/**
+ * The Lander class implements a graphic lander. A graphic lander 
+ * has a location on the screen and a size. It also has methods 
+ * for drawing, erasing, moving on the screen.
+ */
+class Lander {
+
+    // Location on the screen
+    field int x, y;
+
+   	field int xVelocity, yVelocity, uVelocityLimit, lVelocityLimit;
+	field int thrust, fuel, timeSlice;
+	field int size1, size2, size3, size4, size5, size6;
+	field int hScreenLimit, vScreenLimit;
+	field boolean highRes;
+	
+    /** Constructs a new lander with a given location and size. */
+    constructor Lander new(int Ax, int Ay, boolean isHighRes) {
+		let highRes = isHighRes;
+        let x = Ax;
+        let y = Ay;
+		let size3 = 12;
+		let size1 = size3 / 4;
+		let size2 = size3 - size1;
+		let size4 = size3 / 2;
+		let size5 = size3 / 3;
+		let size6 = size3 - size5;
+		let hScreenLimit = 510 - size3;
+		let vScreenLimit = 254 - size3;
+		let xVelocity = 6;
+		let yVelocity = 4;
+		let fuel = 750;
+		let thrust = 0;
+		let timeSlice = 10;
+		let uVelocityLimit = timeSlice + 1;
+		let lVelocityLimit = -1 - timeSlice;
+		do Output.printString("FU: ");
+		do Output.printInt(fuel);
+		do Output.println();
+		do Output.printString("TH: ");
+		do Output.println();
+		do Output.printString("HV: ");
+		do Output.println();
+		do Output.printString("VV: ");
+
+        do drawLander();
+
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+	method void mainThruster() {
+		if (thrust < 10) {
+			let thrust = thrust + 1;
+			let fuel = fuel - thrust;
+		}
+		do moveLander(0, 0 - thrust);
+		return;
+	}
+
+	method void rightThruster() {
+		let fuel = fuel - 1;		
+		do moveLander(-1, 0 - thrust);
+		return;
+	}
+
+	method void leftThruster() {
+		let fuel = fuel - 1;
+		do moveLander(1, 0 - thrust);
+		return;
+	}
+
+	method void negThruster() {
+		if (thrust > 0) { let thrust = thrust - 1;}
+		let fuel = fuel - thrust;
+		do moveLander(0, 0 - thrust);
+		return;
+	}
+	
+	method void noThruster() {
+		let fuel = fuel - thrust;
+		do moveLander(0, 0 - thrust);
+		return;
+	}
+
+	method void moveLander(int xAcc, int yAcc) {
+		
+		var int i, yStep, yIncrement, yMagnitude, yMove, xStep, xIncrement, xMagnitude, xMove;
+		let yAcc = yAcc + 2; // gravity
+		
+		if ((yVelocity + yAcc < uVelocityLimit) & (yVelocity + yAcc > lVelocityLimit)) {
+			let yVelocity = yVelocity + yAcc;
+		}
+		if ((xVelocity + xAcc < uVelocityLimit) & (xVelocity + xAcc > lVelocityLimit)) {
+			let xVelocity = xVelocity + xAcc;
+		}
+		
+		if (yVelocity < 0) { let yMagnitude = 0 - yVelocity; let yIncrement = -1;}
+		else { let yMagnitude = yVelocity; let yIncrement = 1;}
+		if (yMagnitude = 0) { let yStep = timeSlice;}
+		else {let yStep = timeSlice / yMagnitude;}
+
+		if (xVelocity < 0) { let xMagnitude = 0 - xVelocity; let xIncrement = -1;}
+		else { let xMagnitude = xVelocity; let xIncrement = 1;}
+		if (xMagnitude = 0) { let xStep = timeSlice;}
+		else {let xStep = timeSlice / xMagnitude;}
+
+		let i = 0;		
+		while (i < timeSlice) {
+			let yMove = 0;
+			let xMove = 0;
+			if (i = yStep) {let yMove = yIncrement; let yStep = yStep + yStep;}
+			if (i = xStep) {let xMove = xIncrement; let xStep = xStep + xStep;}
+			do move(xMove, yMove);
+			let i = i + 1;
+		}
+			
+		
+		return;
+	}
+
+	method void move(int xDisp, int yDisp) {
+		if ((x + xDisp < 1) | (x + xDisp > hScreenLimit)) { let xDisp = 0; }
+		if ((y + yDisp < 1) | (y + yDisp > vScreenLimit)) { let yDisp = 0; }
+		do eraseLander();
+		let x = x + xDisp;
+		let y = y + yDisp;
+		do drawLander();
+		// if collision then end game 
+		return;
+	}
+	
+	method void eraseLander() {
+		do Screen.setColor(true);
+		if (highRes) {
+			if ((y + size2 + thrust + thrust) < vScreenLimit) {
+				do Screen.drawRectangle(x, y, x + size3, y + size2 + thrust + thrust);
+			}
+			else {
+				do Screen.drawRectangle(x, y, x + size3, y + size3);
+			}
+		}
+		else {
+			do Screen.drawPixel(x, y);			
+		}
+		return;
+	}
+
+
+
+   	method void drawLander() {
+		do Screen.setColor(false);		
+		do Output.moveCursor(0,6);
+		do Output.moveCursor(0,5);
+		do Output.moveCursor(0,4);
+		do Output.printInt(fuel);
+		do Output.moveCursor(1,6);
+		do Output.moveCursor(1,5);
+		do Output.moveCursor(1,4);
+		do Output.printInt(thrust);
+		do Output.moveCursor(2,6);
+		do Output.moveCursor(2,5);
+		do Output.moveCursor(2,4);
+		do Output.printInt(xVelocity);
+		do Output.moveCursor(3,6);
+		do Output.moveCursor(3,5);
+		do Output.moveCursor(3,4);
+		do Output.printInt(yVelocity);
+		
+		if (highRes) {
+			do Screen.drawLine(x + size1, y, x + size2, y);
+			do Screen.drawLine(x + size2, y, x + size3, y + size1);
+			do Screen.drawLine(x + size3, y + size1, x + size3, y + size2);
+			do Screen.drawLine(x + size3, y + size2, x, y + size2);
+			do Screen.drawLine(x, y + size2, x, y + size1);
+			do Screen.drawLine(x, y + size1, x + size1, y);
+			do Screen.drawLine(x + size5, y + size2, x, y + size3);
+			do Screen.drawLine(x + size6, y + size2, x + size3, y + size3);
+			if ((y + size2 + thrust + thrust) < vScreenLimit) {
+				do Screen.drawLine(x + size5, y + size2, x + size4, y + size2 + thrust + thrust);
+				do Screen.drawLine(x + size6, y + size2, x + size4, y + size2 + thrust + thrust);
+			}
+		}
+		else {		
+			do Screen.drawPixel(x, y);			
+		}
+				
+		return;
+	}
+}

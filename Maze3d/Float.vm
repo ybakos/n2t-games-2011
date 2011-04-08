@@ -1,0 +1,1717 @@
+function Float.new 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push pointer 0
+push argument 0
+push argument 1
+push argument 2
+call Float.set 4
+pop temp 0
+push pointer 0
+return
+function Float.set 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 0
+push argument 2
+pop this 1
+push argument 3
+pop this 2
+push pointer 0
+push constant 0
+call Float.setToHighestMant 2
+pop temp 0
+push constant 0
+return
+function Float.getSign 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Float.getMant 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Float.getExpo 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Float.setSign 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 0
+push constant 0
+return
+function Float.setMant 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 1
+push constant 0
+return
+function Float.setExpo 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 2
+push constant 0
+return
+function Float.print 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Float.printF 1
+pop temp 0
+push constant 0
+return
+function Float.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Float.init 0
+push constant 4
+pop static 0
+push constant 9999
+pop static 1
+push constant 1
+pop static 2
+push constant 0
+pop static 3
+push constant 0
+return
+function Float.getPos 0
+push static 3
+return
+function Float.getNeg 0
+push static 2
+return
+function Float.getMaxInt 0
+push static 1
+return
+function Float.getSigDig 0
+push static 0
+return
+function Float.getPi 0
+push argument 0
+call Float.getPos 0
+push constant 3141
+push constant 0
+call Float.set 4
+pop temp 0
+push constant 0
+return
+function Float.get2Pi 0
+push argument 0
+call Float.getPos 0
+push constant 6283
+push constant 0
+call Float.set 4
+pop temp 0
+push constant 0
+return
+function Float.getOne 0
+push argument 0
+call Float.getPos 0
+push constant 1
+push constant 0
+call Float.set 4
+pop temp 0
+push constant 0
+return
+function Float.getZero 0
+push argument 0
+call Float.getPos 0
+push constant 0
+push constant 0
+call Float.set 4
+pop temp 0
+push constant 0
+return
+function Float.sin 5
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 0
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 2
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 3
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 4
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 1
+push local 0
+push argument 1
+call Float.copy 2
+pop temp 0
+push local 2
+push argument 1
+push argument 1
+call Float.mul 3
+pop temp 0
+push local 3
+push local 2
+push local 2
+call Float.mul 3
+pop temp 0
+push local 4
+push local 3
+push local 2
+call Float.mul 3
+pop temp 0
+push local 2
+push local 2
+push argument 1
+call Float.mul 3
+pop temp 0
+push local 3
+push local 3
+push argument 1
+call Float.mul 3
+pop temp 0
+push local 4
+push local 4
+push argument 1
+call Float.mul 3
+pop temp 0
+push local 1
+call Float.getPos 0
+push constant 6000
+push constant 0
+call Float.set 4
+pop temp 0
+push local 1
+push local 2
+push local 1
+call Float.div 3
+pop temp 0
+push local 0
+push local 0
+push local 1
+call Float.sub 3
+pop temp 0
+push local 1
+call Float.getPos 0
+push constant 1200
+push constant 2
+call Float.set 4
+pop temp 0
+push local 1
+push local 3
+push local 1
+call Float.div 3
+pop temp 0
+push local 0
+push local 0
+push local 1
+call Float.add 3
+pop temp 0
+push local 1
+call Float.getPos 0
+push constant 5040
+push constant 3
+call Float.set 4
+pop temp 0
+push local 1
+push local 4
+push local 1
+call Float.div 3
+pop temp 0
+push local 0
+push local 0
+push local 1
+call Float.sub 3
+pop temp 0
+push argument 0
+push local 0
+call Float.copy 2
+pop temp 0
+push local 0
+call Float.dispose 1
+pop temp 0
+push local 1
+call Float.dispose 1
+pop temp 0
+push local 2
+call Float.dispose 1
+pop temp 0
+push local 3
+call Float.dispose 1
+pop temp 0
+push local 4
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.cos 5
+call Float.getPos 0
+push constant 1
+push constant 0
+call Float.new 3
+pop local 0
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 1
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 2
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 3
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 4
+push local 2
+push argument 1
+push argument 1
+call Float.mul 3
+pop temp 0
+push local 3
+push local 2
+push local 2
+call Float.mul 3
+pop temp 0
+push local 4
+push local 3
+push local 2
+call Float.mul 3
+pop temp 0
+push local 1
+call Float.getPos 0
+push constant 2000
+push constant 0
+call Float.set 4
+pop temp 0
+push local 1
+push local 2
+push local 1
+call Float.div 3
+pop temp 0
+push local 0
+push local 0
+push local 1
+call Float.sub 3
+pop temp 0
+push local 1
+call Float.getPos 0
+push constant 2400
+push constant 1
+call Float.set 4
+pop temp 0
+push local 1
+push local 3
+push local 1
+call Float.div 3
+pop temp 0
+push local 0
+push local 0
+push local 1
+call Float.add 3
+pop temp 0
+push local 1
+call Float.getPos 0
+push constant 720
+push constant 2
+call Float.set 4
+pop temp 0
+push local 1
+push local 4
+push local 1
+call Float.div 3
+pop temp 0
+push local 0
+push local 0
+push local 1
+call Float.sub 3
+pop temp 0
+push argument 0
+push local 0
+call Float.copy 2
+pop temp 0
+push local 0
+call Float.dispose 1
+pop temp 0
+push local 1
+call Float.dispose 1
+pop temp 0
+push local 2
+call Float.dispose 1
+pop temp 0
+push local 3
+call Float.dispose 1
+pop temp 0
+push local 4
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.tan 0
+push constant 19
+call String.new 1
+push constant 116
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 109
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 109
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 100
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+call Output.println 0
+pop temp 0
+push constant 0
+return
+function Float.radianAlias 4
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 3
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 1
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 0
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 2
+push local 0
+call Float.getPi 1
+pop temp 0
+push local 1
+call Float.get2Pi 1
+pop temp 0
+push local 2
+push local 0
+call Float.negate 2
+pop temp 0
+push local 3
+push argument 1
+call Float.copy 2
+pop temp 0
+label WHILE_EXP0
+push local 3
+push local 0
+call Float.gt 2
+not
+if-goto WHILE_END0
+push local 3
+push local 3
+push local 1
+call Float.sub 3
+pop temp 0
+goto WHILE_EXP0
+label WHILE_END0
+label WHILE_EXP1
+push local 3
+push local 2
+call Float.lt 2
+not
+if-goto WHILE_END1
+push local 3
+push local 3
+push local 1
+call Float.add 3
+pop temp 0
+goto WHILE_EXP1
+label WHILE_END1
+push argument 0
+push local 3
+call Float.copy 2
+pop temp 0
+push local 0
+call Float.dispose 1
+pop temp 0
+push local 1
+call Float.dispose 1
+pop temp 0
+push local 2
+call Float.dispose 1
+pop temp 0
+push local 3
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.sqrt 5
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 1
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 2
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 4
+call Float.getPos 0
+push constant 5
+push constant 1
+neg
+call Float.new 3
+pop local 3
+push local 2
+call Float.getPos 0
+push argument 1
+call Float.getMant 1
+push argument 1
+call Float.getExpo 1
+call Float.set 4
+pop temp 0
+push local 1
+push local 2
+call Float.copy 2
+pop temp 0
+push local 1
+push local 1
+push local 3
+call Float.mul 3
+pop temp 0
+push constant 5
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 0
+gt
+not
+if-goto WHILE_END0
+push local 4
+push local 2
+push local 1
+call Float.div 3
+pop temp 0
+push local 4
+push local 4
+push local 1
+call Float.add 3
+pop temp 0
+push local 1
+push local 4
+push local 3
+call Float.mul 3
+pop temp 0
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push argument 0
+push local 1
+call Float.copy 2
+pop temp 0
+push local 1
+call Float.dispose 1
+pop temp 0
+push local 2
+call Float.dispose 1
+pop temp 0
+push local 3
+call Float.dispose 1
+pop temp 0
+push local 4
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.pow 2
+call Float.getPos 0
+push constant 1
+push constant 0
+call Float.new 3
+pop local 1
+push argument 2
+push constant 0
+call Float.toInt 2
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 0
+gt
+not
+if-goto WHILE_END0
+push local 1
+push argument 1
+push local 1
+call Float.mul 3
+pop temp 0
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push argument 0
+push local 1
+call Float.copy 2
+pop temp 0
+push local 1
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.exc 5
+call Float.getPos 0
+push constant 1
+push constant 0
+call Float.new 3
+pop local 4
+call Float.getPos 0
+push constant 1
+push constant 0
+call Float.new 3
+pop local 1
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 2
+push argument 1
+push local 4
+call Float.gt 2
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 2
+push local 4
+call Float.copy 2
+pop temp 0
+push argument 1
+push constant 0
+not
+call Float.toInt 2
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 0
+gt
+not
+if-goto WHILE_END0
+push local 1
+push local 2
+push local 1
+call Float.mul 3
+pop temp 0
+push local 2
+push local 2
+push local 4
+call Float.add 3
+pop temp 0
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+label IF_FALSE0
+push argument 0
+push local 1
+call Float.copy 2
+pop temp 0
+push local 1
+call Float.dispose 1
+pop temp 0
+push local 2
+call Float.dispose 1
+pop temp 0
+push local 3
+call Float.dispose 1
+pop temp 0
+push local 4
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.min 0
+push argument 1
+push argument 2
+call Float.gt 2
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+push argument 2
+call Float.copy 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push argument 0
+push argument 1
+call Float.copy 2
+pop temp 0
+label IF_END0
+push constant 0
+return
+function Float.max 0
+push argument 1
+push argument 2
+call Float.gt 2
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+push argument 1
+call Float.copy 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push argument 0
+push argument 2
+call Float.copy 2
+pop temp 0
+label IF_END0
+push constant 0
+return
+function Float.gt 0
+push argument 0
+call Float.getSign 1
+push argument 1
+call Float.getSign 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+call Float.getSign 1
+call Float.getPos 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push argument 0
+call Float.getMant 1
+push constant 0
+eq
+push argument 1
+call Float.getMant 1
+push constant 0
+eq
+or
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push argument 0
+call Float.getMant 1
+push constant 0
+eq
+push argument 1
+call Float.getMant 1
+push constant 0
+eq
+and
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+return
+label IF_FALSE3
+push argument 0
+call Float.getMant 1
+push constant 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+return
+goto IF_END4
+label IF_FALSE4
+push constant 0
+not
+return
+label IF_END4
+goto IF_END2
+label IF_FALSE2
+push argument 0
+call Float.getExpo 1
+push argument 1
+call Float.getExpo 1
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push argument 0
+call Float.getMant 1
+push argument 1
+call Float.getMant 1
+gt
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 0
+not
+return
+goto IF_END6
+label IF_FALSE6
+push constant 0
+return
+label IF_END6
+goto IF_END5
+label IF_FALSE5
+push argument 0
+call Float.getExpo 1
+push argument 1
+call Float.getExpo 1
+gt
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push constant 0
+not
+return
+goto IF_END7
+label IF_FALSE7
+push constant 0
+return
+label IF_END7
+label IF_END5
+label IF_END2
+goto IF_END1
+label IF_FALSE1
+push argument 0
+call Float.getExpo 1
+push argument 1
+call Float.getExpo 1
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push argument 0
+call Float.getMant 1
+push argument 1
+call Float.getMant 1
+lt
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push constant 0
+not
+return
+goto IF_END9
+label IF_FALSE9
+push constant 0
+return
+label IF_END9
+goto IF_END8
+label IF_FALSE8
+push argument 0
+call Float.getExpo 1
+push argument 1
+call Float.getExpo 1
+lt
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push constant 0
+not
+return
+goto IF_END10
+label IF_FALSE10
+push constant 0
+return
+label IF_END10
+label IF_END8
+label IF_END1
+goto IF_END0
+label IF_FALSE0
+push argument 0
+call Float.getSign 1
+call Float.getPos 0
+eq
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push constant 0
+not
+return
+goto IF_END11
+label IF_FALSE11
+push constant 0
+return
+label IF_END11
+label IF_END0
+function Float.lt 0
+push argument 0
+push argument 1
+call Float.gt 2
+not
+push argument 0
+push argument 1
+call Float.eq 2
+not
+and
+return
+function Float.eq 0
+push argument 0
+call Float.getSign 1
+push argument 1
+call Float.getSign 1
+eq
+push argument 0
+call Float.getMant 1
+push argument 1
+call Float.getMant 1
+eq
+and
+push argument 0
+call Float.getExpo 1
+push argument 1
+call Float.getExpo 1
+eq
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+label IF_FALSE0
+push constant 0
+return
+function Float.ge 0
+push argument 0
+push argument 1
+call Float.gt 2
+push argument 0
+push argument 1
+call Float.eq 2
+or
+return
+function Float.le 0
+push argument 0
+push argument 1
+call Float.gt 2
+not
+return
+function Float.abs 0
+push argument 0
+push argument 1
+call Float.copy 2
+pop temp 0
+push argument 0
+call Float.getPos 0
+call Float.setSign 2
+pop temp 0
+push constant 0
+return
+function Float.negate 0
+push argument 0
+push argument 1
+call Float.copy 2
+pop temp 0
+push argument 0
+call Float.getSign 1
+call Float.getPos 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+call Float.getNeg 0
+call Float.setSign 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push argument 0
+call Float.getPos 0
+call Float.setSign 2
+pop temp 0
+label IF_END0
+push constant 0
+return
+function Float.copy 0
+push argument 0
+push argument 1
+call Float.getSign 1
+call Float.setSign 2
+pop temp 0
+push argument 0
+push argument 1
+call Float.getMant 1
+call Float.setMant 2
+pop temp 0
+push argument 0
+push argument 1
+call Float.getExpo 1
+call Float.setExpo 2
+pop temp 0
+push constant 0
+return
+function Float.add 4
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 0
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 1
+push local 0
+push argument 1
+call Float.abs 2
+pop temp 0
+push local 1
+push argument 2
+call Float.abs 2
+pop temp 0
+push local 0
+push local 1
+call Float.gt 2
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push argument 1
+call Float.copy 2
+pop temp 0
+push local 1
+push argument 2
+call Float.copy 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 0
+push argument 2
+call Float.copy 2
+pop temp 0
+push local 1
+push argument 1
+call Float.copy 2
+pop temp 0
+label IF_END0
+label WHILE_EXP0
+push local 1
+call Float.getExpo 1
+push local 0
+call Float.getExpo 1
+lt
+push local 1
+call Float.getMant 1
+and
+push constant 0
+gt
+not
+if-goto WHILE_END0
+push local 1
+push local 1
+call Float.getMant 1
+push constant 10
+call Math.divide 2
+call Float.setMant 2
+pop temp 0
+push local 1
+push local 1
+call Float.getExpo 1
+push constant 1
+add
+call Float.setExpo 2
+pop temp 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+call Float.getMant 1
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 1
+push local 0
+call Float.getSign 1
+push local 0
+call Float.getMant 1
+push local 0
+call Float.getExpo 1
+call Float.set 4
+pop temp 0
+goto IF_END1
+label IF_FALSE1
+push local 1
+call Float.getSign 1
+push local 0
+call Float.getSign 1
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 1
+call Float.getMant 1
+push local 0
+call Float.getMant 1
+add
+pop local 2
+push local 2
+push local 0
+call Float.getMant 1
+lt
+push local 2
+or
+call Float.getMaxInt 0
+gt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 1
+call Float.getMant 1
+push constant 10
+call Math.divide 2
+pop local 2
+push local 0
+call Float.getMant 1
+push constant 10
+call Math.divide 2
+pop local 3
+push local 2
+push local 3
+add
+pop local 2
+push local 1
+push local 1
+call Float.getExpo 1
+push constant 1
+add
+call Float.setExpo 2
+pop temp 0
+label IF_FALSE3
+push local 1
+push local 2
+call Float.setMant 2
+pop temp 0
+goto IF_END2
+label IF_FALSE2
+push local 1
+call Float.getSign 1
+call Float.getNeg 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+pop local 2
+push local 1
+push local 0
+call Float.getMant 1
+push local 1
+call Float.getMant 1
+sub
+call Float.setMant 2
+pop temp 0
+goto IF_END4
+label IF_FALSE4
+push constant 1
+pop local 2
+push local 1
+push local 1
+call Float.getMant 1
+push local 0
+call Float.getMant 1
+sub
+call Float.setMant 2
+pop temp 0
+label IF_END4
+push local 1
+push local 0
+call Float.getSign 1
+call Float.setSign 2
+pop temp 0
+push local 1
+call Float.getMant 1
+push constant 0
+lt
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push local 1
+push local 1
+call Float.getMant 1
+call Math.abs 1
+call Float.setMant 2
+pop temp 0
+label IF_FALSE5
+label IF_END2
+push local 1
+push constant 0
+not
+call Float.setToHighestMant 2
+pop temp 0
+label IF_END1
+push argument 0
+push local 1
+call Float.copy 2
+pop temp 0
+push local 0
+call Float.dispose 1
+pop temp 0
+push local 1
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.sub 1
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 0
+push local 0
+push argument 2
+call Float.negate 2
+pop temp 0
+push argument 0
+push argument 1
+push local 0
+call Float.add 3
+pop temp 0
+push local 0
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.mul 3
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 0
+push argument 1
+call Float.getSign 1
+push argument 2
+call Float.getSign 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+call Float.getPos 0
+call Float.setSign 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 0
+call Float.getNeg 0
+call Float.setSign 2
+pop temp 0
+label IF_END0
+push argument 1
+call Float.getMant 1
+push constant 100
+call Math.divide 2
+pop local 1
+push argument 2
+call Float.getMant 1
+push constant 100
+call Math.divide 2
+pop local 2
+push local 1
+push local 2
+call Math.multiply 2
+pop local 1
+push local 0
+push local 1
+call Float.setMant 2
+pop temp 0
+push argument 1
+call Float.getExpo 1
+push argument 2
+call Float.getExpo 1
+add
+pop local 1
+push local 1
+push constant 1
+add
+pop local 1
+push local 0
+push local 1
+call Float.setExpo 2
+pop temp 0
+push local 0
+push constant 0
+not
+call Float.setToHighestMant 2
+pop temp 0
+push argument 0
+push local 0
+call Float.copy 2
+pop temp 0
+push local 0
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.div 1
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 0
+push argument 1
+call Float.getSign 1
+push argument 2
+call Float.getSign 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+call Float.getPos 0
+call Float.setSign 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 0
+call Float.getNeg 0
+call Float.setSign 2
+pop temp 0
+label IF_END0
+push local 0
+push argument 1
+call Float.getMant 1
+push argument 2
+call Float.getMant 1
+push constant 100
+call Math.divide 2
+call Math.divide 2
+call Float.setMant 2
+pop temp 0
+push local 0
+push argument 1
+call Float.getExpo 1
+push argument 2
+call Float.getExpo 1
+sub
+push constant 1
+add
+call Float.setExpo 2
+pop temp 0
+push local 0
+push constant 0
+not
+call Float.setToHighestMant 2
+pop temp 0
+push argument 0
+push local 0
+call Float.copy 2
+pop temp 0
+push local 0
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Float.toFloat 2
+push argument 1
+pop local 0
+push local 0
+push constant 0
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+call Float.getNeg 0
+call Float.setSign 2
+pop temp 0
+push local 0
+neg
+pop local 0
+goto IF_END0
+label IF_FALSE0
+push argument 0
+call Float.getPos 0
+call Float.setSign 2
+pop temp 0
+label IF_END0
+push constant 1
+neg
+pop local 1
+label WHILE_EXP0
+push local 0
+push constant 0
+gt
+not
+if-goto WHILE_END0
+push local 1
+push constant 1
+add
+pop local 1
+push local 0
+push constant 10
+call Math.divide 2
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push argument 1
+call Math.abs 1
+pop argument 1
+push argument 1
+call Float.getMaxInt 0
+gt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+call Float.getMaxInt 0
+pop argument 1
+label IF_FALSE1
+push argument 0
+push argument 1
+call Float.setMant 2
+pop temp 0
+push argument 0
+push constant 0
+call Float.setToHighestMant 2
+pop temp 0
+push argument 0
+push local 1
+call Float.setExpo 2
+pop temp 0
+push constant 0
+return
+function Float.toInt 4
+push constant 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 2
+push argument 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+call Float.getPos 0
+push constant 5
+push constant 1
+neg
+call Float.new 3
+pop local 3
+push argument 0
+call Float.getSign 1
+call Float.getPos 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 2
+push argument 0
+push local 3
+call Float.add 3
+pop temp 0
+goto IF_END1
+label IF_FALSE1
+push local 2
+push argument 0
+push local 3
+call Float.sub 3
+pop temp 0
+label IF_END1
+push local 3
+call Float.dispose 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 2
+push argument 0
+call Float.copy 2
+pop temp 0
+label IF_END0
+push local 2
+call Float.getExpo 1
+call Float.getSigDig 0
+gt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+call Float.getMaxInt 0
+pop local 0
+goto IF_END2
+label IF_FALSE2
+push local 2
+call Float.getExpo 1
+push constant 0
+lt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+pop local 0
+goto IF_END3
+label IF_FALSE3
+call Float.getSigDig 0
+push local 2
+call Float.getExpo 1
+sub
+pop local 1
+push constant 1
+pop local 0
+label WHILE_EXP0
+push local 1
+push constant 1
+gt
+not
+if-goto WHILE_END0
+push local 1
+push constant 1
+sub
+pop local 1
+push local 0
+push constant 10
+call Math.multiply 2
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 2
+call Float.getMant 1
+push local 0
+call Math.divide 2
+pop local 0
+push local 2
+call Float.getSign 1
+call Float.getNeg 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 0
+neg
+pop local 0
+label IF_FALSE4
+label IF_END3
+label IF_END2
+push local 2
+call Float.dispose 1
+pop temp 0
+push local 0
+return
+function Float.setToHighestMant 3
+push argument 0
+call Float.getMant 1
+pop local 1
+push local 1
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+call Float.getPos 0
+call Float.setSign 2
+pop temp 0
+push argument 0
+push constant 0
+call Float.setExpo 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE0
+push local 1
+push constant 10
+call Math.multiply 2
+pop local 0
+push local 0
+push constant 10
+call Math.divide 2
+pop local 2
+label WHILE_EXP0
+push local 0
+push local 1
+gt
+push local 0
+call Float.getMaxInt 0
+lt
+and
+push local 2
+push local 1
+eq
+and
+not
+if-goto WHILE_END0
+push local 0
+pop local 1
+push argument 0
+push local 0
+call Float.setMant 2
+pop temp 0
+push argument 1
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push argument 0
+push argument 0
+call Float.getExpo 1
+push constant 1
+sub
+call Float.setExpo 2
+pop temp 0
+label IF_FALSE1
+push local 0
+push constant 10
+call Math.multiply 2
+pop local 0
+push local 0
+push constant 10
+call Math.divide 2
+pop local 2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Float.printF 2
+push argument 0
+call Float.getSign 1
+push static 3
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 1
+call String.new 1
+push constant 43
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 1
+call String.new 1
+push constant 45
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+label IF_END0
+push argument 0
+call Float.getMant 1
+pop local 0
+push local 0
+push constant 1000
+call Math.divide 2
+pop local 1
+push local 1
+call Output.printInt 1
+pop temp 0
+push constant 1
+call String.new 1
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push local 1
+push constant 1000
+call Math.multiply 2
+pop local 1
+push local 0
+push local 1
+sub
+pop local 0
+push local 0
+push constant 100
+lt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 1
+call String.new 1
+push constant 48
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push local 0
+push constant 10
+lt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 1
+call String.new 1
+push constant 48
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+label IF_FALSE2
+label IF_FALSE1
+push local 0
+call Output.printInt 1
+pop temp 0
+push constant 1
+call String.new 1
+push constant 69
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push argument 0
+call Float.getExpo 1
+call Output.printInt 1
+pop temp 0
+push constant 0
+return

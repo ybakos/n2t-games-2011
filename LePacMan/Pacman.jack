@@ -1,0 +1,139 @@
+class Pacman {
+	field int x, y, radius, mouthRadius;
+	
+	constructor Pacman new(int xIn, int yIn) {
+		let x = xIn;
+		let y = yIn;
+		let radius = 16; // I'm not sure where to declare constants, I'll just use this for now.
+		let mouthRadius = 8;
+		return this;
+	}
+	
+	/* Draw(x + mouthRadius +radius)
+	 *	The Pacman grapic is 18 x 16 pixels. (The extra 2 pixels in the x dimension represent the
+	 *		white mouth portion.)
+	 */
+	method void draw() {
+		do drawOpen();
+		do drawClosed();
+		return;
+	}
+	
+	method void drawOpen() {
+		do Screen.setColor(true);
+		do Screen.drawCircle(x, y, radius);
+		do Screen.setColor(false);
+		do Screen.drawCircle(x - 10, y, mouthRadius);
+        return;
+    }
+
+    method void drawClosed() {
+		do Screen.setColor(true);
+		do Screen.drawCircle(x, y, radius);
+		return;
+	}
+
+    method void erase() {
+        do Screen.setColor(false);
+		do Screen.drawCircle(x, y, radius);
+		return;
+    }
+
+	// All the move commands have an extra 2 pixels of "safety" built into
+	//		the screen border check.
+    /** Moves up by 10. */
+    method void moveUp() {
+        if ( (y - radius) > 12) {
+            do erase();
+            let y = y - 10;
+        }
+        return;
+    }
+
+    /** Moves down by 10. */
+    method void moveDown() {
+        if ( (y + radius) < 244) {
+            do erase();
+            let y = y + 10;
+        }
+        return;
+    }
+
+    /** Moves left by 10. */
+    method void moveLeft() {
+        if ( (x - radius - 2) > 12) {
+            do erase();
+            let x = x - 10;
+        }
+        return;
+    }
+
+    /** Moves right by 10. */
+    method void moveRight() {
+        if ((x + radius) < 500) {
+            do erase();
+            let x = x + 10;
+        }
+        return;
+    }
+
+    method boolean withinX(int inX, int inRadius) {
+        var int testX;
+        var int testX2;
+        let testX = inX - inRadius;
+        let testX2 = inX + inRadius;
+
+        if (testX > (x - radius)) {
+            if (testX < (x + radius)) {
+                return true;
+            }
+        } 
+        if (testX2 > (x - radius)) {
+            if (testX2 < (x + radius)) {
+                return true;
+            }
+        } 
+        return false;
+    }
+
+    method boolean withinY(int inY, int inRadius) {
+        var int testY;
+        var int testY2;
+        let testY = inY - inRadius;
+        let testY2 = inY + inRadius;
+
+        if (testY > (y - radius)) {
+            if (testY < (y + radius)) {
+                return true;
+            }
+        }
+        if (testY2 > (y - radius)) {
+            if (testY2 < (y + radius)) {
+                return true;
+            }
+        }
+        return false;
+    }
+	
+	method void debug() {
+		do Output.printInt(x);
+		return;
+	}
+	
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+
+    method int getX() {
+        return x;
+    }
+
+    method int getY() {
+        return y;
+    }
+
+    method int getRadius() {
+        return radius;
+    }
+}

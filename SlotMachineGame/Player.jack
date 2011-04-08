@@ -1,0 +1,122 @@
+/**
+*	Player.jack
+*	Written by: Matt Voget
+**/
+
+class Player{
+
+	field int money, bet;
+	field boolean changeBetFlag, readyToSpinFlag, quitFlag;
+
+	/** Constructs a new Player object */
+	constructor Player new(){
+		let money = 100;
+		let bet = 0;
+		let changeBetFlag = true;
+		let readyToSpinFlag = false;
+		let quitFlag = false;
+		return this;
+	}
+	
+	/** Place a bet */
+	method void setBet(int bet_amount){
+		let bet = bet_amount;
+		return;
+	}
+	
+	/** Get the value of a bet */
+	method int getBet(){
+		return bet;
+	}
+	
+	/** Place a bet by reading user input, making sure it is valid. Takes input of lines already printed.
+	* 	Returns the number of lines used on the screen */
+	method int placeBet(int lines){
+		var boolean validBet;
+		let validBet = false;
+		
+		// Loop until we get a valid bet
+		while(~validBet){
+			let bet = Keyboard.readInt("Enter the amount you wish to bet: ");
+			
+			// Prevent bets over your money amount
+			if (bet > money){
+				do Output.printString("Brah, you only have $");
+				do Output.printInt(money);
+				do Output.println();
+				do Output.printString("Make a bet that you can afford!!");
+				do Output.println();
+				let lines = Main.checkLines(lines + 3);
+			}
+			else {
+				let validBet = true;
+			}
+		}
+		let lines = Main.checkLines(lines);
+		do Output.printString("Your bet is now $");
+		do Output.printInt(bet);
+		do Output.println();
+		let changeBetFlag = false;
+		let lines = Main.checkLines(lines + 1);
+		return lines;
+	}
+	
+	/** Set the amount of money the player has */
+	method void setMoney(int money_amount){
+		let money = money_amount;
+		return;
+	}
+	
+	/** Get the value of the player's money */
+	method int getMoney(){
+		return money;
+	}
+	
+	/** Set the flag that determines whether the player wants to bet or not */
+	method void setChangeBetFlag(boolean flag){
+		let changeBetFlag = flag;
+		return;
+	}
+	
+	/** Get the flag that determines whether the player wants to bet or not */
+	method boolean getChangeBetFlag(){
+		return changeBetFlag;
+	}
+	
+	/** Set the flag that determines when the player wants to spin */
+	method void setReadyToSpinFlag(boolean flag){
+		let readyToSpinFlag = flag;
+		return;
+	}
+	
+	/** Get the flag that determines when the player wants to spin */
+	method boolean getReadyToSpinFlag(){
+		return readyToSpinFlag;
+	}
+	
+	/** Collect the results of a win */
+	method void collectWinnings(int win_amount){
+		let money = money + win_amount;
+		return;
+	}
+	
+	/** Set the flag to quit the game */
+	method void setQuitFlag(boolean flag){
+		let quitFlag = flag;
+		return;
+	}
+	
+	
+	/** Get the flag to quit the game */
+	method boolean getQuitFlag(){
+		return quitFlag;
+	}
+	
+	
+	/** Deallocates memory for a Player object */
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+
+}

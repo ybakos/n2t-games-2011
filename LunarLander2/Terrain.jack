@@ -1,0 +1,79 @@
+/**
+ * The Terrain class implements the lunar terrain. 
+ * There are two landing pads and mountains.
+ */
+
+class Terrain {
+	field Array x, y, landing;
+	field int length;
+
+	constructor Terrain new() {
+		let length = 9;
+		let x = Array.new(length);
+		let y = Array.new(length);
+		let landing = Array.new(length);
+		
+		let x[0] = 0;
+		let x[1] = 100;
+		let x[2] = 150;
+		let x[3] = 175;
+		let x[4] = 250;
+		let x[5] = 350;
+		let x[6] = 450;
+		let x[7] = 470;
+		let x[8] = 510;
+		let y[0] = 254;
+		let y[1] = 150;
+		let y[2] = 200;
+		let y[3] = 200;
+		let y[4] = 240;
+		let y[5] = 180;
+		let y[6] = 240;
+		let y[7] = 240;
+		let y[8] = 190;
+		let landing[0] = -1;
+		let landing[1] = -1;
+		let landing[2] = 0;
+		let landing[3] = -1;
+		let landing[4] = -1;
+		let landing[5] = -1;
+		let landing[6] = 0;
+		let landing[7] = -1;
+		let landing[8] = -1;
+	
+		do draw();	
+		
+		return this;
+	}
+		
+	method void dispose() {
+		do x.dispose();
+		do y.dispose();
+		do landing.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+	method boolean crash(int x1, int y1, int x2, int y2, int xV, int yV){
+		var int i;
+		let i = 1;
+		while (i < length) {
+			// compare to see collision
+			// if collision then see if landing area
+			// if landing area then see if velocities ok
+			let i = i + 1;
+		}
+		return false;
+	}
+
+	method void draw() {
+		var int i;
+		let i = 1;
+		while (i < length) {
+			do Screen.drawLine(x[i - 1], y[i - 1], x[i], y[i]);
+			let i = i + 1;
+		}
+		return;
+	}
+	
+}

@@ -1,0 +1,186 @@
+//Floating Point - 9 decimal accuracy
+class V3D{
+/*------------------STATIC VARIABLES--------------*/
+	//
+/*------------------PRIVATE VARIABLES--------------*/
+	field Float x,y,z;
+/*------------------PRIVATE METHODS--------------*/
+	constructor V3D new(Float a, Float b, Float c){
+		let x = Float.new(0,0,0);
+		let y = Float.new(0,0,0);
+		let z = Float.new(0,0,0);
+		do Float.copy(x,a);
+		do Float.copy(y,b);
+		do Float.copy(z,c);
+		return this;
+	}
+	method void set(Float a, Float b, Float c){
+		do Float.copy(x,a);
+		do Float.copy(y,b);
+		do Float.copy(z,c);
+		return;
+	}
+	method Float getX(){
+		return x;
+	}
+	method Float getY(){
+		return y;
+	}
+	method Float getZ(){
+		return z;
+	}
+	method void setX(Float f){
+		do Float.copy(x,f);
+		return;
+	}
+	method void setY(Float f){
+		do Float.copy(y,f);
+		return;
+	}
+	method void setZ(Float f){
+		do Float.copy(z,f);
+		return;
+	}
+	method void print(){
+		do V3D.printV3D(this);
+		return;
+	}
+	method void dispose(){
+		do x.dispose();
+		do y.dispose();
+		do z.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+/*------------------INIT--------------*/
+	function void init(){
+		return;
+	}
+/*------------------STATIC FUNCTIONS--------------*/
+	function void copy(V3D res, V3D src){// res = src
+		do res.set(src.getX(),src.getY(),src.getZ());
+		return;
+	}
+	function void dot(Float c, V3D a, V3D b){// c = a dot b
+		var Float f0, f1;
+		let f0 = Float.new(0,0,0);
+		let f1 = Float.new(0,0,0);
+		do Float.mul(f0,a.getX(),b.getX());//f0 = a.x*b.x
+		do Float.mul(f1,a.getY(),b.getY());//f1 = a.y*b.y
+		do Float.add(f0,f0,f1);
+		do Float.mul(f1,a.getZ(),b.getZ());//f2 = a.z*b.z
+		do Float.add(f0,f0,f1);
+		do Float.copy(c,f0);
+		do f0.dispose();
+		do f1.dispose();
+		return;
+	}
+	function void cross(V3D c, V3D a, V3D b){// c = a cross b
+		var Float t, f0, f1, f2;
+		let t = Float.new(0,0,0);
+		let f0 = Float.new(0,0,0);
+		let f1 = Float.new(0,0,0);
+		let f2 = Float.new(0,0,0);
+		do Float.mul(f0,a.getY(),b.getZ());
+		do Float.mul(t,a.getZ(),b.getY());
+		do Float.sub(f0,f0,t);//f0 = a.y*b.z-a.z*b.y
+		do Float.mul(f1,a.getZ(),b.getX());
+		do Float.mul(t,a.getX(),b.getZ());
+		do Float.sub(f1,f1,t);//f1 = a.z*b.x-a.x*b.z
+		do Float.mul(f2,a.getX(),b.getY());
+		do Float.mul(t,a.getY(),b.getX());
+		do Float.sub(f2,f2,t);//f2 = a.x*b.y-a.y*b.x
+		do c.set(f0,f1,f2);
+		do t.dispose();
+		do f0.dispose();
+		do f1.dispose();
+		do f2.dispose();
+		return;
+	}
+	function void len(Float l, V3D vec){// l = vec.length()
+		var Float f0, f1, f2;
+		let f0 = Float.new(0,0,0);
+		let f1 = Float.new(0,0,0);
+		let f2 = Float.new(0,0,0);
+		do Float.mul(f0,vec.getX(),vec.getX());
+		do Float.mul(f1,vec.getY(),vec.getY());
+		do Float.mul(f2,vec.getZ(),vec.getZ());
+		do Float.add(f0,f0,f1);
+		do Float.add(f0,f0,f2);
+		do Float.sqrt(f0,f0);//f0 = sqrt(x*x + y*y + z*z)
+		do Float.copy(l,f0);
+		do f0.dispose();
+		do f1.dispose();
+		do f2.dispose();
+		return;
+	}
+	function void norm(V3D ref, V3D vec){// ref = vec.norm()
+		var Float l, f0, f1, f2;
+		let l = Float.new(0,0,0);
+		let f0 = Float.new(Float.getPos(),0,0);
+		let f1 = Float.new(0,0,0);
+		let f2 = Float.new(0,0,0);
+		do V3D.len(l,vec);
+		if( Float.gt(l,f0) ){
+			do Float.div(f0,vec.getX(),l);
+			do Float.div(f1,vec.getY(),l);
+			do Float.div(f2,vec.getZ(),l);
+			do ref.set(f0,f1,f2);
+		}else{
+			do ref.set(f0,f0,f0);// 0,0,0
+		}
+		
+		do l.dispose();
+		do f0.dispose();
+		do f1.dispose();
+		do f2.dispose();
+		return;
+	}
+	function void reflect(V3D ref, V3D vec, V3D nrm){// ref = vec reflected-around nrm
+		var Float d, f0, f1, f2;
+		let d = Float.new(0,0,0);
+		let f0 = Float.new(Float.getPos(),2,0);// 2
+		let f1 = Float.new(0,0,0);
+		let f2 = Float.new(0,0,0);
+		do V3D.dot(d, vec, nrm);
+		do Float.mul(d,d,f0);// d = 2*abs( dot(vec,nrm)) 
+		do Float.abs(d,d);
+		do Float.mul(f0,nrm.getX(),d);
+		do Float.add(f0,vec.getX(),f0);//f0 = vec.x - d*nrm.x
+		do Float.mul(f1,nrm.getY(),d);
+		do Float.add(f1,vec.getY(),f1);//f1 = vec.y - d*nrm.y
+		do Float.mul(f2,nrm.getZ(),d);
+		do Float.add(f2,vec.getZ(),f2);//f2 = vec.z - d*nrm.z
+		do ref.set(f0,f1,f2);
+		do d.dispose();
+		do f0.dispose();
+		do f1.dispose();
+		do f2.dispose();
+		return;
+	}
+/*------------------MATH--------------*/
+
+/*------------------PRINT--------------*/
+	function void printV3D(V3D v){// sign|mant|E|expo
+		var Float t;
+		do Output.printString("<");
+		let t = v.getX();
+		do t.print();
+		do Output.printString(", ");
+		let t = v.getY();
+		do t.print();
+		do Output.printString(", ");
+		let t = v.getZ();
+		do t.print();
+		do Output.printString(">");
+		return;
+	}
+
+}
+
+
+
+
+
+
+

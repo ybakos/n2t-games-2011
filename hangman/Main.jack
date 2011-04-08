@@ -1,0 +1,84 @@
+class Main {
+
+  /** This will print out something ridiculous to the screen */
+  function void main() {
+    // Variable declarations
+    var boolean got_it_right_or_failed;
+    var char current_guess;
+    var Array correct_letters_guessed;
+    var int incorrect_guesses;
+    var boolean correct_guess_flag;
+    var int i;
+    var String current_word;
+    var DrawHangman hangman;
+    var Dictionary words;
+    var boolean word_complete;
+    var int current_word_length;
+
+    let words = Dictionary.new();
+    let hangman = DrawHangman.new();
+    let got_it_right_or_failed=false;
+    let word_complete = true;
+    let correct_guess_flag = false;
+    let incorrect_guesses = 0;
+    let current_word = words.getWord(Keyboard.readInt("Enter a number between 0 and 9 inclusive: "));
+    let current_word_length = current_word.length();
+    let correct_letters_guessed = Array.new(current_word_length);
+    
+    let i = 0;
+    while(i < current_word_length) {
+      let correct_letters_guessed[i] = 0;
+      let i = i + 1;
+    }
+    do Output.printString("Please enter a character to guess followed by the enter key until you get the word correct: ");
+    while(~got_it_right_or_failed) {
+      let current_guess = Keyboard.readChar();
+      do Output.println();
+      let i = 0;
+
+      while(i < current_word_length) {
+        if(current_guess = current_word.charAt(i)) {
+          let correct_letters_guessed[i] = current_guess;
+          let correct_guess_flag = true;
+        }
+        let i = i+1;
+      }
+      let i=0;
+      let word_complete = true;
+      while(i < current_word_length) {
+        do Output.printChar(correct_letters_guessed[i]);
+        if(correct_letters_guessed[i] < 64) {
+          let word_complete = false;
+        }
+        if(correct_letters_guessed[i] > 91) {
+          let word_complete = false;
+        }  
+        let i = i + 1;
+      }
+      if(~correct_guess_flag) {
+        let incorrect_guesses = incorrect_guesses+1;
+        do hangman.drawNextPart();
+        if(incorrect_guesses = 7) {
+          do Screen.clearScreen();
+          do hangman.drawWholeMan();
+          do Output.printString("Uh oh! You guessed incorrectly too many times.");
+          do Output.println();
+          let got_it_right_or_failed = true;
+        }
+      }
+      if(word_complete) {
+        do Screen.clearScreen();
+        do Output.printString("You got the word correct! Game will now end!");
+        do Output.println();
+        let got_it_right_or_failed = true;
+      }
+      let correct_guess_flag = false;
+      do Output.println();
+    }
+    
+    do correct_letters_guessed.dispose();
+    do current_word.dispose();
+    
+    return;
+  }
+}

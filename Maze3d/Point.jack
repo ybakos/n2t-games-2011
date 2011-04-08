@@ -1,0 +1,44 @@
+//Point
+class Point{
+/*------------------STATIC VARIABLES--------------*/
+	//
+/*------------------PRIVATE VARIABLES--------------*/
+	field int x, y;
+/*------------------PRIVATE METHODS--------------*/
+	constructor Point new(int myX, int myY){
+		let x = myX;
+		let y = myY;
+		return this;
+	}
+	method void set(int myX, int myY){
+		let x = myX;
+		let y = myY;
+		return;
+	}
+	method int getX(){
+		return x;
+	}
+	method int getY(){
+		return y;
+	}
+	method void setX(int sX){
+		let x = sX;
+		return;
+	}
+	method void setY(int sY){
+		let y = sY;
+		return;
+	}
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+/*------------------INIT--------------*/
+	function void init(){
+		//
+		return;
+	}
+/*------------------STATIC FUNCTIONS--------------*/
+	//
+}
+

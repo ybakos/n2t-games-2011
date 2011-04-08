@@ -1,0 +1,261 @@
+function Cam3D.new 0
+push constant 7
+call Memory.alloc 1
+pop pointer 0
+call Float.getPos 0
+push constant 0
+push constant 0
+call Float.new 3
+pop this 0
+call Float.getPos 0
+push constant 0
+push constant 0
+call Float.new 3
+pop this 1
+call Float.getPos 0
+push constant 0
+push constant 0
+call Float.new 3
+pop this 2
+call Float.getPos 0
+push constant 0
+push constant 0
+call Float.new 3
+pop this 3
+call Float.getPos 0
+push constant 1
+push constant 2
+call Float.new 3
+pop this 5
+call Float.getPos 0
+push constant 1
+push constant 1
+call Float.new 3
+pop this 4
+call Float.getNeg 0
+push constant 20
+push constant 1
+call Float.new 3
+pop this 6
+push pointer 0
+return
+function Cam3D.set 0
+push argument 0
+pop pointer 0
+push this 0
+push argument 1
+call Float.copy 2
+pop temp 0
+push this 1
+push argument 2
+call Float.copy 2
+pop temp 0
+push this 2
+push argument 3
+call Float.copy 2
+pop temp 0
+push this 3
+push argument 4
+call Float.copy 2
+pop temp 0
+push this 5
+push argument 5
+call Float.copy 2
+pop temp 0
+push this 4
+push argument 6
+call Float.copy 2
+pop temp 0
+push this 6
+push argument 7
+call Float.copy 2
+pop temp 0
+push constant 0
+return
+function Cam3D.getNorm 1
+push argument 0
+pop pointer 0
+call Float.getPos 0
+push constant 0
+push constant 0
+call Float.new 3
+pop local 0
+push argument 1
+push local 0
+call V3D.setY 2
+pop temp 0
+push local 0
+push this 3
+call Float.sin 2
+pop temp 0
+push argument 1
+push local 0
+call V3D.setX 2
+pop temp 0
+push local 0
+push this 3
+call Float.cos 2
+pop temp 0
+push argument 1
+push local 0
+call V3D.setZ 2
+pop temp 0
+push local 0
+call Float.dispose 1
+pop temp 0
+push constant 0
+return
+function Cam3D.getPosXInt 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 0
+not
+call Float.toInt 2
+return
+function Cam3D.getPosYInt 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 0
+not
+call Float.toInt 2
+return
+function Cam3D.getPosZInt 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 0
+not
+call Float.toInt 2
+return
+function Cam3D.getPosX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Cam3D.getPosY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Cam3D.getPosZ 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Cam3D.getRotY 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Cam3D.getScale 0
+push argument 0
+pop pointer 0
+push this 4
+return
+function Cam3D.getLens 0
+push argument 0
+pop pointer 0
+push this 5
+return
+function Cam3D.getCut 0
+push argument 0
+pop pointer 0
+push this 6
+return
+function Cam3D.setPosX 0
+push argument 0
+pop pointer 0
+push this 0
+push argument 1
+call Float.copy 2
+pop temp 0
+push constant 0
+return
+function Cam3D.setPosY 0
+push argument 0
+pop pointer 0
+push this 1
+push argument 1
+call Float.copy 2
+pop temp 0
+push constant 0
+return
+function Cam3D.setPosZ 0
+push argument 0
+pop pointer 0
+push this 2
+push argument 1
+call Float.copy 2
+pop temp 0
+push constant 0
+return
+function Cam3D.setRotY 0
+push argument 0
+pop pointer 0
+push this 3
+push argument 1
+call Float.copy 2
+pop temp 0
+push constant 0
+return
+function Cam3D.setLens 0
+push argument 0
+pop pointer 0
+push this 5
+push argument 1
+call Float.copy 2
+pop temp 0
+push constant 0
+return
+function Cam3D.setScale 0
+push argument 0
+pop pointer 0
+push this 4
+push argument 1
+call Float.copy 2
+pop temp 0
+push constant 0
+return
+function Cam3D.setCut 0
+push argument 0
+pop pointer 0
+push this 6
+push argument 1
+call Float.copy 2
+pop temp 0
+push constant 0
+return
+function Cam3D.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Float.dispose 1
+pop temp 0
+push this 1
+call Float.dispose 1
+pop temp 0
+push this 2
+call Float.dispose 1
+pop temp 0
+push this 3
+call Float.dispose 1
+pop temp 0
+push this 5
+call Float.dispose 1
+pop temp 0
+push this 4
+call Float.dispose 1
+pop temp 0
+push this 6
+call Float.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Cam3D.init 0
+push constant 0
+return

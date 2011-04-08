@@ -1,0 +1,1536 @@
+class Game {
+	field List worm;
+	field int currentDirection; //0=up,1=left,2=down,3=right
+	field int score;
+	field int mode; //0=normal, 1=reverse, 2=fast
+	field int timeElapsed;
+	field int index;
+	field int xfood,yfood;
+	field int xspec,yspec,typespec,countdown,timeremaining; //1 reverse, 2 fast
+	field int numberCollected; 	//0 after a mode change 
+					//when reaches 10 special food appears 
+					//not incremented unless mode=0
+
+	constructor Game new(){
+		let index=0;
+		let worm= null;
+		let score = 0;
+		let mode = 0;
+		let timeElapsed = 0;
+		let numberCollected = 0;
+		return this;
+	}
+
+	//resets paramaters and calls main loop
+	method int newGame(){
+		let countdown=0;
+		let score=0;
+		let worm = List.new(10,15,List.new(9,15,List.new(8,15,null)));	
+		do getNextCoords(0);
+		do getNextCoords(1);
+		let currentDirection=3;
+		do init();
+		do mainLoop();
+		do worm.dispose();	
+		return score;
+	}
+
+	//handles basic display/calls appropriate functions based on mode
+	method void mainLoop(){
+		var int ret;
+		var int max;
+		var char keypress;
+		let ret=0;
+		while(ret = 0){
+			let ret=0;
+			let max=10000;
+			if(mode=2){
+				let max=5000;
+			}
+			while(ret<max){
+				let ret=ret +1;
+
+			}
+			let keypress=Keyboard.keyPressed();
+			if(keypress=130 & ~(currentDirection=3)){
+				let currentDirection=1;
+			}
+			if(keypress=131 & ~(currentDirection=2)){
+				let currentDirection=2;
+			}
+			if(keypress=132 & ~(currentDirection=1)){
+				let currentDirection=3;
+			}
+			if(keypress=133 & ~(currentDirection=0)){
+				let currentDirection=0;
+			}
+			if (mode=1) {
+				if(keypress=130 & ~(currentDirection=3)){
+					let currentDirection=3;
+				}
+				if(keypress=131 & ~(currentDirection=0)){
+					let currentDirection=0;
+				}
+				if(keypress=132 & ~(currentDirection=1)){
+					let currentDirection=1;
+				}
+				if(keypress=133 & ~(currentDirection=2)){
+					let currentDirection=2;
+				}
+			}
+
+			if(mode = 0){
+				let ret = moveNormal();
+			}
+			if(mode = 1){
+				let ret = moveReverse();
+			}
+			if(mode = 2){
+				let ret = moveFast();
+			}
+
+
+			do draw(mode);
+			let timeremaining = timeremaining-1;
+			if (timeremaining<0&~(mode=0)){
+				let mode=0;
+				do Screen.setColor(false);
+				do Screen.drawRectangle(5,5,505,250);
+				let countdown=2;
+				let timeremaining=100;
+			}
+			if (timeremaining<0){
+				let countdown=countdown-1;
+				let timeremaining=100;
+			}
+			
+		}
+		return;
+		
+	}
+
+	//move normally returns 0 if alive 1 if dead also increments score and worm length
+	method int moveNormal(){
+		var int tempvar;
+		var int newx,newy;
+		let newx=worm.getX();
+		let newy=worm.getY();
+		if(currentDirection = 0){
+			let newy=newy+1;
+		}
+		if(currentDirection = 1){
+			let newx=newx-1;
+		}
+		if(currentDirection = 2){
+			let newy=newy-1;
+		}
+		if(currentDirection = 3){
+			let newx=newx+1;
+		}
+		if(~((newx=xfood) & (newy=yfood))){
+			do worm.deleteTail();
+			//do Output.printString("1");
+		}
+		if((newx<0)|(newy<0)|(newx>100)|(newy>49)){
+			return 1;
+		}
+		if(((newx=xspec) & (newy=yspec))){
+			if(countdown<1){
+				let mode=typespec;
+				if (mode=1) {
+					do Screen.setColor(true);
+					do Screen.drawRectangle(0,0,510,255);
+				}
+				let timeremaining=100;
+				let countdown=2;
+			}
+			do getNextCoords(1);
+		}
+		//do Output.printInt(newx);
+		//do Output.printString("2");
+		//do Output.println();
+		let tempvar=worm.isCollision(newx,newy);
+		if(tempvar=1){
+			return 1;
+		}
+		let worm=List.new(newx,newy,worm);
+		if(newx=xfood & newy=yfood){
+			let score=score +1;
+			do getNextCoords(0);
+			//let countdown=countdown-1;
+		}
+		if(countdown<0){
+			do getNextCoords(1);
+			let countdown=2;
+		}
+		return 0;
+	}
+
+	//movement reversed returns 0 if alive 1 if dead also increments score and worm length
+	method int moveReverse(){
+		var int tempvar;
+		var int newx,newy;
+		let newx=worm.getX();
+		let newy=worm.getY();
+		if(currentDirection = 0){
+			let newy=newy+1;
+		}
+		if(currentDirection = 1){
+			let newx=newx-1;
+		}
+		if(currentDirection = 2){
+			let newy=newy-1;
+		}
+		if(currentDirection = 3){
+			let newx=newx+1;
+		}
+		if(~((newx=xfood) & (newy=yfood))){
+			do worm.deleteTail();
+			//do Output.printString("1");
+		}
+		if((newx<0)|(newy<0)|(newx>100)|(newy>49)){
+			return 1;
+		}
+		let tempvar=worm.isCollision(newx,newy);
+		if(tempvar=1){
+			return 1;
+		}
+		let worm=List.new(newx,newy,worm);
+		if(newx=xfood & newy=yfood){
+			do worm.deleteTail();
+			if (~(worm.getNext()=null)){
+				do worm.deleteTail();
+			}
+			let score=score +1;
+			do getNextCoords(0);
+			//let countdown=countdown-1;
+		}
+		return 0;
+	}
+
+
+	//movement Fast returns 0 if alive 1 if dead also increments score and worm length
+	method int moveFast(){
+		var int tempvar;
+		var int newx,newy;
+		let newx=worm.getX();
+		let newy=worm.getY();
+		if(currentDirection = 0){
+			let newy=newy+2;
+		}
+		if(currentDirection = 1){
+			let newx=newx-2;
+		}
+		if(currentDirection = 2){
+			let newy=newy-2;
+		}
+		if(currentDirection = 3){
+			let newx=newx+2;
+		}
+		if(~((newx=xfood) & (newy=yfood))){
+			do worm.deleteTail();
+			//do Output.printString("1");
+		}
+		if((newx<0)|(newy<0)|(newx>100)|(newy>49)){
+			return 1;
+		}
+		let tempvar=worm.isCollision(newx,newy);
+		if(tempvar=1){
+			return 1;
+		}
+		let worm=List.new(newx,newy,worm);
+		if(newx=xfood & newy=yfood){
+			let score=score +2;
+			do getNextCoords(0);
+			//let countdown=countdown-1;
+		}
+		return 0;
+		
+	}
+
+	// draws the outside box once to speed up game
+	method void init() {
+		do Screen.setColor(true);
+		do Screen.drawRectangle(0,0,510,5);
+		do Screen.drawRectangle(0,0,5,255);
+		do Screen.drawRectangle(505,0,510,255);
+		do Screen.drawRectangle(0,250,510,255);
+		return;
+	}
+	method void draw(int mode){
+		var int mtrue, mfalse;
+		var List curElement;
+		var List wormTail;
+		if (mode=1){
+			let mtrue=0;
+			let mfalse=1;
+		}
+		else{
+			let mtrue=1;
+			let mfalse=0;
+		}
+		do Screen.setColor(mfalse);
+		let wormTail = worm.getTail();
+		do Screen.drawRectangle(wormTail.getX()*5-5,wormTail.getY()*5-5,wormTail.getX()*5+20,wormTail.getY()*5+20);
+		//do Screen.drawRectangle(5,5,505,250);
+		//do Screen.drawRectangle(0,0,510,255);
+		//do Screen.drawRectangle(0,0,510,5);
+		//do Screen.drawRectangle(0,0,5,255);
+		//do Screen.drawRectangle(505,0,510,255);
+		//do Screen.drawRectangle(0,250,510,255);
+		let curElement=worm;
+		while (~(curElement=null)){
+			do Screen.setColor(mtrue);
+			do Screen.drawRectangle(curElement.getX()*5+5,curElement.getY()*5+5,curElement.getX()*5+10,curElement.getY()*5+10);
+			let curElement=curElement.getNext();
+		}
+		if((typespec = 1)&(countdown<1) ){
+			do Screen.setColor(mtrue);
+			do Screen.drawRectangle(xspec*5+5,yspec*5+5,xspec*5+9,yspec*5+9);
+			do Screen.setColor(mfalse);
+			do Screen.drawRectangle(xspec*5+6,yspec*5+6,xspec*5+8,yspec*5+8);
+			do Screen.setColor(mtrue);
+			do Screen.drawRectangle(xspec*5+8,yspec*5+8,xspec*5+8,yspec*5+8);
+			do Screen.drawRectangle(xspec*5+6,yspec*5+8,xspec*5+6,yspec*5+8);
+			do Screen.drawRectangle(xspec*5+8,yspec*5+6,xspec*5+8,yspec*5+6);
+			do Screen.drawRectangle(xspec*5+6,yspec*5+6,xspec*5+6,yspec*5+6);
+		}
+		if((typespec=2)&(countdown<1)){
+			do Screen.setColor(mtrue);
+			do Screen.drawRectangle(xspec*5+5,yspec*5+5,xspec*5+9,yspec*5+9);
+			do Screen.setColor(mfalse);
+			do Screen.drawRectangle(xspec*5+6,yspec*5+6,xspec*5+8,yspec*5+8);
+
+		}
+		do Screen.setColor(mtrue);
+		do Screen.drawRectangle(xfood*5+5,yfood*5+5,xfood*5+10,yfood*5+10);
+		return;
+	}
+
+
+	method void getNextCoords(int selection){
+		var int newtype,newx,newy,passtest;
+		let passtest=1;
+		while(passtest=1){
+			if(index = 0){
+			let newx=40;
+			let newy=42;
+			let newtype=1;}
+			if(index = 1){
+			let newx=27;
+			let newy=10;
+			let newtype=1;}
+			if(index = 2){
+			let newx=39;
+			let newy=5;
+			let newtype=1;}
+			if(index = 3){
+			let newx=12;
+			let newy=45;
+			let newtype=1;}
+			if(index = 4){
+			let newx=79;
+			let newy=29;
+			let newtype=2;}
+			if(index = 5){
+			let newx=73;
+			let newy=31;
+			let newtype=1;}
+			if(index = 6){
+			let newx=64;
+			let newy=26;
+			let newtype=1;}
+			if(index = 7){
+			let newx=53;
+			let newy=21;
+			let newtype=1;}
+			if(index = 8){
+			let newx=28;
+			let newy=37;
+			let newtype=2;}
+			if(index = 9){
+			let newx=62;
+			let newy=35;
+			let newtype=1;}
+			if(index = 10){
+			let newx=61;
+			let newy=4;
+			let newtype=1;}
+			if(index = 11){
+			let newx=13;
+			let newy=36;
+			let newtype=1;}
+			if(index = 12){
+			let newx=82;
+			let newy=27;
+			let newtype=2;}
+			if(index = 13){
+			let newx=52;
+			let newy=40;
+			let newtype=1;}
+			if(index = 14){
+			let newx=38;
+			let newy=4;
+			let newtype=1;}
+			if(index = 15){
+			let newx=85;
+			let newy=36;
+			let newtype=1;}
+			if(index = 16){
+			let newx=86;
+			let newy=47;
+			let newtype=2;}
+			if(index = 17){
+			let newx=6;
+			let newy=3;
+			let newtype=1;}
+			if(index = 18){
+			let newx=56;
+			let newy=5;
+			let newtype=1;}
+			if(index = 19){
+			let newx=65;
+			let newy=16;
+			let newtype=1;}
+			if(index = 20){
+			let newx=88;
+			let newy=33;
+			let newtype=1;}
+			if(index = 21){
+			let newx=35;
+			let newy=42;
+			let newtype=1;}
+			if(index = 22){
+			let newx=58;
+			let newy=13;
+			let newtype=1;}
+			if(index = 23){
+			let newx=47;
+			let newy=1;
+			let newtype=1;}
+			if(index = 24){
+			let newx=7;
+			let newy=46;
+			let newtype=1;}
+			if(index = 25){
+			let newx=94;
+			let newy=28;
+			let newtype=1;}
+			if(index = 26){
+			let newx=6;
+			let newy=4;
+			let newtype=1;}
+			if(index = 27){
+			let newx=60;
+			let newy=32;
+			let newtype=1;}
+			if(index = 28){
+			let newx=42;
+			let newy=13;
+			let newtype=1;}
+			if(index = 29){
+			let newx=2;
+			let newy=8;
+			let newtype=1;}
+			if(index = 30){
+			let newx=65;
+			let newy=43;
+			let newtype=1;}
+			if(index = 31){
+			let newx=54;
+			let newy=46;
+			let newtype=1;}
+			if(index = 32){
+			let newx=98;
+			let newy=45;
+			let newtype=1;}
+			if(index = 33){
+			let newx=73;
+			let newy=24;
+			let newtype=1;}
+			if(index = 34){
+			let newx=15;
+			let newy=36;
+			let newtype=1;}
+			if(index = 35){
+			let newx=97;
+			let newy=7;
+			let newtype=1;}
+			if(index = 36){
+			let newx=41;
+			let newy=47;
+			let newtype=1;}
+			if(index = 37){
+			let newx=0;
+			let newy=3;
+			let newtype=1;}
+			if(index = 38){
+			let newx=46;
+			let newy=42;
+			let newtype=1;}
+			if(index = 39){
+			let newx=86;
+			let newy=25;
+			let newtype=1;}
+			if(index = 40){
+			let newx=40;
+			let newy=32;
+			let newtype=1;}
+			if(index = 41){
+			let newx=86;
+			let newy=23;
+			let newtype=1;}
+			if(index = 42){
+			let newx=50;
+			let newy=25;
+			let newtype=1;}
+			if(index = 43){
+			let newx=81;
+			let newy=15;
+			let newtype=1;}
+			if(index = 44){
+			let newx=16;
+			let newy=24;
+			let newtype=1;}
+			if(index = 45){
+			let newx=5;
+			let newy=17;
+			let newtype=1;}
+			if(index = 46){
+			let newx=0;
+			let newy=27;
+			let newtype=1;}
+			if(index = 47){
+			let newx=28;
+			let newy=45;
+			let newtype=1;}
+			if(index = 48){
+			let newx=77;
+			let newy=31;
+			let newtype=1;}
+			if(index = 49){
+			let newx=49;
+			let newy=10;
+			let newtype=1;}
+			if(index = 50){
+			let newx=49;
+			let newy=2;
+			let newtype=1;}
+			if(index = 51){
+			let newx=80;
+			let newy=47;
+			let newtype=1;}
+			if(index = 52){
+			let newx=31;
+			let newy=12;
+			let newtype=1;}
+			if(index = 53){
+			let newx=43;
+			let newy=0;
+			let newtype=1;}
+			if(index = 54){
+			let newx=12;
+			let newy=10;
+			let newtype=1;}
+			if(index = 55){
+			let newx=79;
+			let newy=1;
+			let newtype=1;}
+			if(index = 56){
+			let newx=71;
+			let newy=32;
+			let newtype=1;}
+			if(index = 57){
+			let newx=97;
+			let newy=4;
+			let newtype=1;}
+			if(index = 58){
+			let newx=96;
+			let newy=45;
+			let newtype=1;}
+			if(index = 59){
+			let newx=74;
+			let newy=38;
+			let newtype=1;}
+			if(index = 60){
+			let newx=72;
+			let newy=48;
+			let newtype=1;}
+			if(index = 61){
+			let newx=45;
+			let newy=38;
+			let newtype=1;}
+			if(index = 62){
+			let newx=32;
+			let newy=30;
+			let newtype=1;}
+			if(index = 63){
+			let newx=13;
+			let newy=20;
+			let newtype=1;}
+			if(index = 64){
+			let newx=2;
+			let newy=37;
+			let newtype=1;}
+			if(index = 65){
+			let newx=93;
+			let newy=21;
+			let newtype=1;}
+			if(index = 66){
+			let newx=62;
+			let newy=10;
+			let newtype=1;}
+			if(index = 67){
+			let newx=79;
+			let newy=17;
+			let newtype=1;}
+			if(index = 68){
+			let newx=93;
+			let newy=16;
+			let newtype=1;}
+			if(index = 69){
+			let newx=41;
+			let newy=46;
+			let newtype=1;}
+			if(index = 70){
+			let newx=51;
+			let newy=13;
+			let newtype=1;}
+			if(index = 71){
+			let newx=17;
+			let newy=8;
+			let newtype=1;}
+			if(index = 72){
+			let newx=17;
+			let newy=14;
+			let newtype=1;}
+			if(index = 73){
+			let newx=9;
+			let newy=11;
+			let newtype=1;}
+			if(index = 74){
+			let newx=10;
+			let newy=12;
+			let newtype=1;}
+			if(index = 75){
+			let newx=54;
+			let newy=17;
+			let newtype=1;}
+			if(index = 76){
+			let newx=1;
+			let newy=42;
+			let newtype=1;}
+			if(index = 77){
+			let newx=35;
+			let newy=30;
+			let newtype=1;}
+			if(index = 78){
+			let newx=63;
+			let newy=5;
+			let newtype=1;}
+			if(index = 79){
+			let newx=27;
+			let newy=45;
+			let newtype=1;}
+			if(index = 80){
+			let newx=7;
+			let newy=3;
+			let newtype=1;}
+			if(index = 81){
+			let newx=83;
+			let newy=27;
+			let newtype=1;}
+			if(index = 82){
+			let newx=75;
+			let newy=3;
+			let newtype=1;}
+			if(index = 83){
+			let newx=14;
+			let newy=28;
+			let newtype=1;}
+			if(index = 84){
+			let newx=16;
+			let newy=1;
+			let newtype=1;}
+			if(index = 85){
+			let newx=38;
+			let newy=2;
+			let newtype=1;}
+			if(index = 86){
+			let newx=18;
+			let newy=10;
+			let newtype=1;}
+			if(index = 87){
+			let newx=26;
+			let newy=16;
+			let newtype=1;}
+			if(index = 88){
+			let newx=85;
+			let newy=22;
+			let newtype=1;}
+			if(index = 89){
+			let newx=84;
+			let newy=1;
+			let newtype=1;}
+			if(index = 90){
+			let newx=76;
+			let newy=21;
+			let newtype=1;}
+			if(index = 91){
+			let newx=39;
+			let newy=46;
+			let newtype=1;}
+			if(index = 92){
+			let newx=40;
+			let newy=5;
+			let newtype=1;}
+			if(index = 93){
+			let newx=85;
+			let newy=23;
+			let newtype=1;}
+			if(index = 94){
+			let newx=76;
+			let newy=4;
+			let newtype=1;}
+			if(index = 95){
+			let newx=38;
+			let newy=15;
+			let newtype=1;}
+			if(index = 96){
+			let newx=81;
+			let newy=9;
+			let newtype=1;}
+			if(index = 97){
+			let newx=64;
+			let newy=31;
+			let newtype=1;}
+			if(index = 98){
+			let newx=36;
+			let newy=24;
+			let newtype=1;}
+			if(index = 99){
+			let newx=36;
+			let newy=23;
+			let newtype=1;}
+			if(index = 100){
+			let newx=26;
+			let newy=45;
+			let newtype=1;}
+			if(index = 101){
+			let newx=14;
+			let newy=34;
+			let newtype=1;}
+			if(index = 102){
+			let newx=68;
+			let newy=48;
+			let newtype=1;}
+			if(index = 103){
+			let newx=4;
+			let newy=1;
+			let newtype=1;}
+			if(index = 104){
+			let newx=11;
+			let newy=45;
+			let newtype=1;}
+			if(index = 105){
+			let newx=5;
+			let newy=33;
+			let newtype=1;}
+			if(index = 106){
+			let newx=6;
+			let newy=20;
+			let newtype=1;}
+			if(index = 107){
+			let newx=36;
+			let newy=34;
+			let newtype=1;}
+			if(index = 108){
+			let newx=24;
+			let newy=31;
+			let newtype=1;}
+			if(index = 109){
+			let newx=19;
+			let newy=40;
+			let newtype=1;}
+			if(index = 110){
+			let newx=18;
+			let newy=40;
+			let newtype=1;}
+			if(index = 111){
+			let newx=60;
+			let newy=23;
+			let newtype=1;}
+			if(index = 112){
+			let newx=91;
+			let newy=41;
+			let newtype=1;}
+			if(index = 113){
+			let newx=57;
+			let newy=40;
+			let newtype=1;}
+			if(index = 114){
+			let newx=55;
+			let newy=39;
+			let newtype=1;}
+			if(index = 115){
+			let newx=79;
+			let newy=6;
+			let newtype=1;}
+			if(index = 116){
+			let newx=1;
+			let newy=43;
+			let newtype=1;}
+			if(index = 117){
+			let newx=23;
+			let newy=7;
+			let newtype=1;}
+			if(index = 118){
+			let newx=7;
+			let newy=27;
+			let newtype=1;}
+			if(index = 119){
+			let newx=11;
+			let newy=28;
+			let newtype=1;}
+			if(index = 120){
+			let newx=75;
+			let newy=12;
+			let newtype=1;}
+			if(index = 121){
+			let newx=65;
+			let newy=9;
+			let newtype=1;}
+			if(index = 122){
+			let newx=10;
+			let newy=7;
+			let newtype=1;}
+			if(index = 123){
+			let newx=88;
+			let newy=23;
+			let newtype=1;}
+			if(index = 124){
+			let newx=42;
+			let newy=6;
+			let newtype=1;}
+			if(index = 125){
+			let newx=63;
+			let newy=42;
+			let newtype=1;}
+			if(index = 126){
+			let newx=52;
+			let newy=44;
+			let newtype=1;}
+			if(index = 127){
+			let newx=43;
+			let newy=23;
+			let newtype=1;}
+			if(index = 128){
+			let newx=85;
+			let newy=2;
+			let newtype=1;}
+			if(index = 129){
+			let newx=76;
+			let newy=48;
+			let newtype=1;}
+			if(index = 130){
+			let newx=96;
+			let newy=20;
+			let newtype=1;}
+			if(index = 131){
+			let newx=22;
+			let newy=30;
+			let newtype=1;}
+			if(index = 132){
+			let newx=23;
+			let newy=12;
+			let newtype=1;}
+			if(index = 133){
+			let newx=9;
+			let newy=20;
+			let newtype=1;}
+			if(index = 134){
+			let newx=8;
+			let newy=42;
+			let newtype=1;}
+			if(index = 135){
+			let newx=83;
+			let newy=9;
+			let newtype=1;}
+			if(index = 136){
+			let newx=84;
+			let newy=35;
+			let newtype=1;}
+			if(index = 137){
+			let newx=30;
+			let newy=25;
+			let newtype=1;}
+			if(index = 138){
+			let newx=42;
+			let newy=40;
+			let newtype=1;}
+			if(index = 139){
+			let newx=71;
+			let newy=22;
+			let newtype=1;}
+			if(index = 140){
+			let newx=41;
+			let newy=22;
+			let newtype=1;}
+			if(index = 141){
+			let newx=57;
+			let newy=26;
+			let newtype=1;}
+			if(index = 142){
+			let newx=74;
+			let newy=20;
+			let newtype=1;}
+			if(index = 143){
+			let newx=72;
+			let newy=26;
+			let newtype=1;}
+			if(index = 144){
+			let newx=1;
+			let newy=23;
+			let newtype=1;}
+			if(index = 145){
+			let newx=46;
+			let newy=42;
+			let newtype=1;}
+			if(index = 146){
+			let newx=36;
+			let newy=18;
+			let newtype=1;}
+			if(index = 147){
+			let newx=84;
+			let newy=43;
+			let newtype=1;}
+			if(index = 148){
+			let newx=63;
+			let newy=19;
+			let newtype=1;}
+			if(index = 149){
+			let newx=42;
+			let newy=38;
+			let newtype=1;}
+			if(index = 150){
+			let newx=53;
+			let newy=33;
+			let newtype=1;}
+			if(index = 151){
+			let newx=95;
+			let newy=3;
+			let newtype=1;}
+			if(index = 152){
+			let newx=30;
+			let newy=34;
+			let newtype=1;}
+			if(index = 153){
+			let newx=38;
+			let newy=32;
+			let newtype=1;}
+			if(index = 154){
+			let newx=53;
+			let newy=9;
+			let newtype=1;}
+			if(index = 155){
+			let newx=85;
+			let newy=4;
+			let newtype=1;}
+			if(index = 156){
+			let newx=76;
+			let newy=40;
+			let newtype=1;}
+			if(index = 157){
+			let newx=46;
+			let newy=20;
+			let newtype=1;}
+			if(index = 158){
+			let newx=29;
+			let newy=16;
+			let newtype=1;}
+			if(index = 159){
+			let newx=34;
+			let newy=20;
+			let newtype=1;}
+			if(index = 160){
+			let newx=98;
+			let newy=40;
+			let newtype=1;}
+			if(index = 161){
+			let newx=37;
+			let newy=17;
+			let newtype=1;}
+			if(index = 162){
+			let newx=75;
+			let newy=26;
+			let newtype=1;}
+			if(index = 163){
+			let newx=50;
+			let newy=15;
+			let newtype=1;}
+			if(index = 164){
+			let newx=89;
+			let newy=9;
+			let newtype=1;}
+			if(index = 165){
+			let newx=72;
+			let newy=5;
+			let newtype=1;}
+			if(index = 166){
+			let newx=43;
+			let newy=37;
+			let newtype=1;}
+			if(index = 167){
+			let newx=56;
+			let newy=38;
+			let newtype=1;}
+			if(index = 168){
+			let newx=17;
+			let newy=19;
+			let newtype=1;}
+			if(index = 169){
+			let newx=36;
+			let newy=36;
+			let newtype=1;}
+			if(index = 170){
+			let newx=8;
+			let newy=37;
+			let newtype=1;}
+			if(index = 171){
+			let newx=38;
+			let newy=19;
+			let newtype=1;}
+			if(index = 172){
+			let newx=57;
+			let newy=39;
+			let newtype=1;}
+			if(index = 173){
+			let newx=25;
+			let newy=18;
+			let newtype=1;}
+			if(index = 174){
+			let newx=41;
+			let newy=31;
+			let newtype=1;}
+			if(index = 175){
+			let newx=48;
+			let newy=1;
+			let newtype=1;}
+			if(index = 176){
+			let newx=64;
+			let newy=9;
+			let newtype=1;}
+			if(index = 177){
+			let newx=37;
+			let newy=5;
+			let newtype=1;}
+			if(index = 178){
+			let newx=91;
+			let newy=16;
+			let newtype=1;}
+			if(index = 179){
+			let newx=26;
+			let newy=43;
+			let newtype=1;}
+			if(index = 180){
+			let newx=83;
+			let newy=42;
+			let newtype=1;}
+			if(index = 181){
+			let newx=93;
+			let newy=22;
+			let newtype=1;}
+			if(index = 182){
+			let newx=13;
+			let newy=31;
+			let newtype=1;}
+			if(index = 183){
+			let newx=4;
+			let newy=14;
+			let newtype=1;}
+			if(index = 184){
+			let newx=75;
+			let newy=16;
+			let newtype=1;}
+			if(index = 185){
+			let newx=34;
+			let newy=7;
+			let newtype=1;}
+			if(index = 186){
+			let newx=45;
+			let newy=33;
+			let newtype=1;}
+			if(index = 187){
+			let newx=80;
+			let newy=32;
+			let newtype=1;}
+			if(index = 188){
+			let newx=61;
+			let newy=21;
+			let newtype=1;}
+			if(index = 189){
+			let newx=37;
+			let newy=35;
+			let newtype=1;}
+			if(index = 190){
+			let newx=17;
+			let newy=30;
+			let newtype=1;}
+			if(index = 191){
+			let newx=54;
+			let newy=18;
+			let newtype=1;}
+			if(index = 192){
+			let newx=98;
+			let newy=27;
+			let newtype=1;}
+			if(index = 193){
+			let newx=83;
+			let newy=35;
+			let newtype=1;}
+			if(index = 194){
+			let newx=4;
+			let newy=10;
+			let newtype=1;}
+			if(index = 195){
+			let newx=89;
+			let newy=1;
+			let newtype=1;}
+			if(index = 196){
+			let newx=70;
+			let newy=43;
+			let newtype=1;}
+			if(index = 197){
+			let newx=37;
+			let newy=27;
+			let newtype=1;}
+			if(index = 198){
+			let newx=26;
+			let newy=6;
+			let newtype=1;}
+			if(index = 199){
+			let newx=24;
+			let newy=46;
+			let newtype=1;}
+			if(index = 200){
+			let newx=77;
+			let newy=26;
+			let newtype=1;}
+			if(index = 201){
+			let newx=91;
+			let newy=36;
+			let newtype=1;}
+			if(index = 202){
+			let newx=47;
+			let newy=21;
+			let newtype=1;}
+			if(index = 203){
+			let newx=58;
+			let newy=21;
+			let newtype=1;}
+			if(index = 204){
+			let newx=84;
+			let newy=14;
+			let newtype=1;}
+			if(index = 205){
+			let newx=46;
+			let newy=32;
+			let newtype=1;}
+			if(index = 206){
+			let newx=86;
+			let newy=21;
+			let newtype=1;}
+			if(index = 207){
+			let newx=21;
+			let newy=6;
+			let newtype=1;}
+			if(index = 208){
+			let newx=31;
+			let newy=27;
+			let newtype=1;}
+			if(index = 209){
+			let newx=45;
+			let newy=33;
+			let newtype=1;}
+			if(index = 210){
+			let newx=61;
+			let newy=22;
+			let newtype=1;}
+			if(index = 211){
+			let newx=88;
+			let newy=39;
+			let newtype=1;}
+			if(index = 212){
+			let newx=58;
+			let newy=19;
+			let newtype=1;}
+			if(index = 213){
+			let newx=59;
+			let newy=44;
+			let newtype=1;}
+			if(index = 214){
+			let newx=76;
+			let newy=26;
+			let newtype=1;}
+			if(index = 215){
+			let newx=89;
+			let newy=16;
+			let newtype=1;}
+			if(index = 216){
+			let newx=31;
+			let newy=27;
+			let newtype=1;}
+			if(index = 217){
+			let newx=76;
+			let newy=14;
+			let newtype=1;}
+			if(index = 218){
+			let newx=55;
+			let newy=47;
+			let newtype=1;}
+			if(index = 219){
+			let newx=63;
+			let newy=16;
+			let newtype=1;}
+			if(index = 220){
+			let newx=93;
+			let newy=29;
+			let newtype=1;}
+			if(index = 221){
+			let newx=66;
+			let newy=35;
+			let newtype=1;}
+			if(index = 222){
+			let newx=74;
+			let newy=34;
+			let newtype=1;}
+			if(index = 223){
+			let newx=59;
+			let newy=21;
+			let newtype=1;}
+			if(index = 224){
+			let newx=0;
+			let newy=43;
+			let newtype=1;}
+			if(index = 225){
+			let newx=1;
+			let newy=40;
+			let newtype=1;}
+			if(index = 226){
+			let newx=15;
+			let newy=7;
+			let newtype=1;}
+			if(index = 227){
+			let newx=17;
+			let newy=11;
+			let newtype=1;}
+			if(index = 228){
+			let newx=57;
+			let newy=34;
+			let newtype=1;}
+			if(index = 229){
+			let newx=7;
+			let newy=22;
+			let newtype=1;}
+			if(index = 230){
+			let newx=54;
+			let newy=25;
+			let newtype=1;}
+			if(index = 231){
+			let newx=43;
+			let newy=15;
+			let newtype=1;}
+			if(index = 232){
+			let newx=84;
+			let newy=42;
+			let newtype=1;}
+			if(index = 233){
+			let newx=64;
+			let newy=35;
+			let newtype=1;}
+			if(index = 234){
+			let newx=10;
+			let newy=9;
+			let newtype=1;}
+			if(index = 235){
+			let newx=45;
+			let newy=39;
+			let newtype=1;}
+			if(index = 236){
+			let newx=53;
+			let newy=40;
+			let newtype=1;}
+			if(index = 237){
+			let newx=69;
+			let newy=18;
+			let newtype=1;}
+			if(index = 238){
+			let newx=62;
+			let newy=26;
+			let newtype=1;}
+			if(index = 239){
+			let newx=64;
+			let newy=11;
+			let newtype=1;}
+			if(index = 240){
+			let newx=85;
+			let newy=20;
+			let newtype=1;}
+			if(index = 241){
+			let newx=0;
+			let newy=0;
+			let newtype=1;}
+			if(index = 242){
+			let newx=93;
+			let newy=4;
+			let newtype=1;}
+			if(index = 243){
+			let newx=34;
+			let newy=27;
+			let newtype=1;}
+			if(index = 244){
+			let newx=90;
+			let newy=8;
+			let newtype=1;}
+			if(index = 245){
+			let newx=15;
+			let newy=22;
+			let newtype=1;}
+			if(index = 246){
+			let newx=31;
+			let newy=5;
+			let newtype=1;}
+			if(index = 247){
+			let newx=23;
+			let newy=32;
+			let newtype=1;}
+			if(index = 248){
+			let newx=34;
+			let newy=40;
+			let newtype=1;}
+			if(index = 249){
+			let newx=74;
+			let newy=3;
+			let newtype=1;}
+			if(index = 250){
+			let newx=72;
+			let newy=19;
+			let newtype=1;}
+			if(index = 251){
+			let newx=71;
+			let newy=9;
+			let newtype=1;}
+			if(index = 252){
+			let newx=96;
+			let newy=25;
+			let newtype=1;}
+			if(index = 253){
+			let newx=51;
+			let newy=28;
+			let newtype=1;}
+			if(index = 254){
+			let newx=15;
+			let newy=11;
+			let newtype=1;}
+			if(index = 255){
+			let newx=92;
+			let newy=15;
+			let newtype=1;}
+			if(index = 256){
+			let newx=3;
+			let newy=5;
+			let newtype=1;}
+			if(index = 257){
+			let newx=43;
+			let newy=24;
+			let newtype=1;}
+			if(index = 258){
+			let newx=23;
+			let newy=34;
+			let newtype=1;}
+			if(index = 259){
+			let newx=40;
+			let newy=23;
+			let newtype=1;}
+			if(index = 260){
+			let newx=95;
+			let newy=43;
+			let newtype=1;}
+			if(index = 261){
+			let newx=68;
+			let newy=25;
+			let newtype=1;}
+			if(index = 262){
+			let newx=1;
+			let newy=21;
+			let newtype=1;}
+			if(index = 263){
+			let newx=46;
+			let newy=26;
+			let newtype=1;}
+			if(index = 264){
+			let newx=44;
+			let newy=15;
+			let newtype=1;}
+			if(index = 265){
+			let newx=9;
+			let newy=43;
+			let newtype=1;}
+			if(index = 266){
+			let newx=7;
+			let newy=39;
+			let newtype=1;}
+			if(index = 267){
+			let newx=74;
+			let newy=18;
+			let newtype=1;}
+			if(index = 268){
+			let newx=95;
+			let newy=9;
+			let newtype=1;}
+			if(index = 269){
+			let newx=79;
+			let newy=18;
+			let newtype=1;}
+			if(index = 270){
+			let newx=64;
+			let newy=31;
+			let newtype=1;}
+			if(index = 271){
+			let newx=47;
+			let newy=5;
+			let newtype=1;}
+			if(index = 272){
+			let newx=0;
+			let newy=31;
+			let newtype=1;}
+			if(index = 273){
+			let newx=86;
+			let newy=1;
+			let newtype=1;}
+			if(index = 274){
+			let newx=32;
+			let newy=12;
+			let newtype=1;}
+			if(index = 275){
+			let newx=7;
+			let newy=44;
+			let newtype=1;}
+			if(index = 276){
+			let newx=82;
+			let newy=3;
+			let newtype=1;}
+			if(index = 277){
+			let newx=28;
+			let newy=16;
+			let newtype=1;}
+			if(index = 278){
+			let newx=33;
+			let newy=31;
+			let newtype=1;}
+			if(index = 279){
+			let newx=41;
+			let newy=39;
+			let newtype=1;}
+			if(index = 280){
+			let newx=81;
+			let newy=30;
+			let newtype=1;}
+			if(index = 281){
+			let newx=48;
+			let newy=42;
+			let newtype=1;}
+			if(index = 282){
+			let newx=51;
+			let newy=25;
+			let newtype=1;}
+			if(index = 283){
+			let newx=96;
+			let newy=13;
+			let newtype=1;}
+			if(index = 284){
+			let newx=14;
+			let newy=19;
+			let newtype=1;}
+			if(index = 285){
+			let newx=18;
+			let newy=15;
+			let newtype=1;}
+			if(index = 286){
+			let newx=85;
+			let newy=43;
+			let newtype=1;}
+			if(index = 287){
+			let newx=77;
+			let newy=35;
+			let newtype=1;}
+			if(index = 288){
+			let newx=56;
+			let newy=7;
+			let newtype=1;}
+			if(index = 289){
+			let newx=78;
+			let newy=24;
+			let newtype=1;}
+			if(index = 290){
+			let newx=69;
+			let newy=29;
+			let newtype=1;}
+			if(index = 291){
+			let newx=46;
+			let newy=46;
+			let newtype=1;}
+			if(index = 292){
+			let newx=74;
+			let newy=34;
+			let newtype=1;}
+			if(index = 293){
+			let newx=71;
+			let newy=20;
+			let newtype=1;}
+			if(index = 294){
+			let newx=96;
+			let newy=29;
+			let newtype=1;}
+			if(index = 295){
+			let newx=66;
+			let newy=14;
+			let newtype=1;}
+			if(index = 296){
+			let newx=69;
+			let newy=2;
+			let newtype=1;}
+			if(index = 297){
+			let newx=3;
+			let newy=43;
+			let newtype=1;}
+			if(index = 298){
+			let newx=61;
+			let newy=6;
+			let newtype=1;}
+			if(index = 299){
+			let newx=74;
+			let newy=5;
+			let newtype=1;}
+
+			let index=index+1;
+			if(index=300){
+				let index=0;
+			}
+			let passtest=worm.isCollision(newx,newy);
+			
+		}
+		
+		if(selection=0){
+			let xfood=newx;
+			let yfood=newy;
+			return;
+		}
+		do Screen.setColor(false);
+		do Screen.drawRectangle(xspec*5, yspec*5, xspec*5+10, yspec*5+10);
+		let xspec=newx;
+		let yspec=newy;
+		let typespec=newtype;
+		return;
+	}
+}

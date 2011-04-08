@@ -1,0 +1,56 @@
+/**
+ * The line class implement a graphic line
+ * it has a location on the screen and a length and an orientation.
+ *It also has methods for drawing and erasing
+ */
+class Line {
+
+    // Location on the screen. This indicates the vertex on the bottom edge of a verticle lines or the left edge of a horizontal line
+    field int x, y;
+
+    // The length of the line
+    field int length;
+
+    //Used to indicate if the line is verticle or horizontal. 1 is verticle, 0 is horizontal
+    field int verticle;
+
+    /** Constructs a new square with a given location and size. */
+    constructor Line new(int Ax, int Ay, int Alength, int Avert) {
+        let x = Ax;
+        let y = Ay;
+        let length = Alength;
+	let verticle = Avert;
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Draws the line on the screen. */
+    method void draw() {
+        do Screen.setColor(true);
+	   if(verticle = 1){
+        	do Screen.drawRectangle(x,y,x,y+length);
+	   }
+	   else{
+		do Screen.drawRectangle(x,y,x+length,y);
+	   }
+        return;
+    }
+
+    /** Erases the line from the screen. */
+    method void erase() {
+        do Screen.setColor(false);
+        if(verticle = 1){
+		
+        	do Screen.drawRectangle(x,y,x,y+length);
+	   }
+	   else{
+		do Screen.drawRectangle(x,y,x+length,y);
+	   }
+        return;
+    }
+}

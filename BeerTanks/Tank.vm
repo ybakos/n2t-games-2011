@@ -1,0 +1,1534 @@
+function Tank.new 0
+push constant 27
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push constant 245
+pop this 1
+push constant 242
+pop this 2
+push constant 28
+pop this 3
+push constant 12
+pop this 4
+push constant 255
+pop this 5
+push constant 235
+pop this 6
+push constant 8
+pop this 7
+push constant 7
+pop this 8
+push constant 1
+pop this 9
+push constant 1
+pop this 10
+push this 1
+push this 2
+push this 1
+push this 3
+add
+push this 2
+push this 4
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 5
+push this 6
+push this 5
+push this 7
+add
+push this 6
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push pointer 0
+call Tank.drawCups 1
+pop temp 0
+push pointer 0
+return
+function Tank.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Tank.drawCups 0
+push argument 0
+pop pointer 0
+push constant 166
+push constant 31
+push constant 20
+call Pong.new 3
+pop this 17
+push this 17
+call Pong.drawCup 1
+pop temp 0
+push constant 216
+push constant 31
+push constant 20
+call Pong.new 3
+pop this 18
+push this 18
+call Pong.drawCup 1
+pop temp 0
+push constant 266
+push constant 31
+push constant 20
+call Pong.new 3
+pop this 19
+push this 19
+call Pong.drawCup 1
+pop temp 0
+push constant 316
+push constant 31
+push constant 20
+call Pong.new 3
+pop this 20
+push this 20
+call Pong.drawCup 1
+pop temp 0
+push constant 191
+push constant 71
+push constant 20
+call Pong.new 3
+pop this 21
+push this 21
+call Pong.drawCup 1
+pop temp 0
+push constant 241
+push constant 71
+push constant 20
+call Pong.new 3
+pop this 22
+push this 22
+call Pong.drawCup 1
+pop temp 0
+push constant 291
+push constant 71
+push constant 20
+call Pong.new 3
+pop this 23
+push this 23
+call Pong.drawCup 1
+pop temp 0
+push constant 216
+push constant 111
+push constant 20
+call Pong.new 3
+pop this 24
+push this 24
+call Pong.drawCup 1
+pop temp 0
+push constant 266
+push constant 111
+push constant 20
+call Pong.new 3
+pop this 25
+push this 25
+call Pong.drawCup 1
+pop temp 0
+push constant 241
+push constant 151
+push constant 20
+call Pong.new 3
+pop this 26
+push this 26
+call Pong.drawCup 1
+pop temp 0
+push constant 0
+return
+function Tank.moveRight 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 453
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 1
+push this 2
+push this 1
+push this 3
+add
+push this 2
+push this 4
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 5
+push this 6
+push this 5
+push this 7
+add
+push this 6
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 1
+push this 9
+add
+push this 2
+push this 1
+push this 3
+add
+push this 9
+add
+push this 2
+push this 4
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 5
+push this 9
+add
+push this 6
+push this 5
+push this 7
+add
+push this 9
+add
+push this 6
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 1
+push this 9
+add
+pop this 1
+push this 5
+push this 9
+add
+pop this 5
+label IF_FALSE0
+push constant 0
+return
+function Tank.moveLeft 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 30
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 1
+push this 2
+push this 1
+push this 3
+add
+push this 2
+push this 4
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 5
+push this 6
+push this 5
+push this 7
+add
+push this 6
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 1
+push this 9
+sub
+push this 2
+push this 1
+push this 3
+add
+push this 9
+sub
+push this 2
+push this 4
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 5
+push this 9
+sub
+push this 6
+push this 5
+push this 7
+add
+push this 9
+sub
+push this 6
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 1
+push this 9
+sub
+pop this 1
+push this 5
+push this 9
+sub
+pop this 5
+label IF_FALSE0
+push constant 0
+return
+function Tank.moveUp 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 192
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 1
+push this 2
+push this 1
+push this 3
+add
+push this 2
+push this 4
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 5
+push this 6
+push this 5
+push this 7
+add
+push this 6
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 1
+push this 2
+push this 10
+sub
+push this 1
+push this 3
+add
+push this 2
+push this 4
+add
+push this 10
+sub
+call Screen.drawRectangle 4
+pop temp 0
+push this 5
+push this 6
+push this 10
+sub
+push this 5
+push this 7
+add
+push this 6
+push this 8
+add
+push this 10
+sub
+call Screen.drawRectangle 4
+pop temp 0
+push this 2
+push this 10
+sub
+pop this 2
+push this 6
+push this 10
+sub
+pop this 6
+label IF_FALSE0
+push constant 0
+return
+function Tank.moveDown 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 242
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 1
+push this 2
+push this 1
+push this 3
+add
+push this 2
+push this 4
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 5
+push this 6
+push this 5
+push this 7
+add
+push this 6
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 1
+push this 2
+push this 10
+add
+push this 1
+push this 3
+add
+push this 2
+push this 4
+add
+push this 10
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 5
+push this 6
+push this 10
+add
+push this 5
+push this 7
+add
+push this 6
+push this 8
+add
+push this 10
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 2
+push this 10
+add
+pop this 2
+push this 6
+push this 10
+add
+pop this 6
+label IF_FALSE0
+push constant 0
+return
+function Tank.run 0
+push argument 0
+pop pointer 0
+push constant 0
+pop this 13
+push constant 200
+pop this 14
+label WHILE_EXP0
+push this 13
+not
+not
+if-goto WHILE_END0
+call Keyboard.keyPressed 0
+pop this 12
+push this 12
+push constant 81
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop this 13
+label IF_FALSE0
+push this 12
+push constant 131
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 1
+pop this 11
+label IF_FALSE1
+push this 12
+push constant 133
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 2
+pop this 11
+label IF_FALSE2
+push this 12
+push constant 130
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 3
+pop this 11
+label IF_FALSE3
+push this 12
+push constant 132
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 4
+pop this 11
+label IF_FALSE4
+push this 12
+push constant 82
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push constant 5
+pop this 11
+label IF_FALSE5
+push this 12
+push constant 0
+eq
+not
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+call Tank.move 1
+pop temp 0
+label IF_FALSE6
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Tank.move 0
+push argument 0
+pop pointer 0
+push this 11
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Tank.moveUp 1
+pop temp 0
+label IF_FALSE0
+push this 11
+push constant 2
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+call Tank.moveDown 1
+pop temp 0
+label IF_FALSE1
+push this 11
+push constant 3
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push pointer 0
+call Tank.moveLeft 1
+pop temp 0
+label IF_FALSE2
+push this 11
+push constant 4
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push pointer 0
+call Tank.moveRight 1
+pop temp 0
+label IF_FALSE3
+push this 11
+push constant 5
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push pointer 0
+call Tank.shoot 1
+pop temp 0
+label IF_FALSE4
+push constant 15
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function Tank.shoot 0
+push argument 0
+pop pointer 0
+push this 5
+pop this 15
+push this 6
+push constant 8
+sub
+pop this 16
+push this 14
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push this 14
+push constant 0
+gt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 14
+push constant 1
+sub
+pop this 14
+label IF_FALSE1
+push this 2
+push constant 200
+lt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 1
+push constant 376
+gt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push pointer 0
+call Tank.misfire 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE3
+push this 1
+push constant 136
+lt
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push pointer 0
+call Tank.misfire 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE4
+label IF_FALSE2
+push this 2
+push constant 242
+gt
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 1
+push constant 376
+gt
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+call Tank.misfire 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE6
+push this 1
+push constant 136
+lt
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push pointer 0
+call Tank.misfire 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE7
+label IF_FALSE5
+push this 1
+push constant 376
+gt
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push pointer 0
+call Tank.misfire 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE8
+push this 1
+push constant 136
+lt
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push pointer 0
+call Tank.misfire 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE9
+push this 2
+push constant 206
+lt
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push this 1
+push constant 146
+gt
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push this 1
+push constant 186
+lt
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push pointer 0
+push constant 0
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE12
+label IF_FALSE11
+push this 1
+push constant 196
+gt
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
+push this 1
+push constant 236
+lt
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
+push pointer 0
+push constant 1
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE14
+label IF_FALSE13
+push this 1
+push constant 246
+gt
+if-goto IF_TRUE15
+goto IF_FALSE15
+label IF_TRUE15
+push this 1
+push constant 286
+lt
+if-goto IF_TRUE16
+goto IF_FALSE16
+label IF_TRUE16
+push pointer 0
+push constant 2
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE16
+label IF_FALSE15
+push this 1
+push constant 296
+gt
+if-goto IF_TRUE17
+goto IF_FALSE17
+label IF_TRUE17
+push this 1
+push constant 336
+lt
+if-goto IF_TRUE18
+goto IF_FALSE18
+label IF_TRUE18
+push pointer 0
+push constant 3
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE18
+label IF_FALSE17
+push pointer 0
+call Tank.misfire 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE10
+push this 2
+push constant 218
+lt
+if-goto IF_TRUE19
+goto IF_FALSE19
+label IF_TRUE19
+push this 1
+push constant 171
+gt
+if-goto IF_TRUE20
+goto IF_FALSE20
+label IF_TRUE20
+push this 1
+push constant 211
+lt
+if-goto IF_TRUE21
+goto IF_FALSE21
+label IF_TRUE21
+push pointer 0
+push constant 4
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE21
+label IF_FALSE20
+push this 1
+push constant 221
+gt
+if-goto IF_TRUE22
+goto IF_FALSE22
+label IF_TRUE22
+push this 1
+push constant 261
+lt
+if-goto IF_TRUE23
+goto IF_FALSE23
+label IF_TRUE23
+push pointer 0
+push constant 5
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE23
+label IF_FALSE22
+push this 1
+push constant 271
+gt
+if-goto IF_TRUE24
+goto IF_FALSE24
+label IF_TRUE24
+push this 1
+push constant 311
+lt
+if-goto IF_TRUE25
+goto IF_FALSE25
+label IF_TRUE25
+push pointer 0
+push constant 6
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE25
+label IF_FALSE24
+push pointer 0
+call Tank.misfire 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE19
+push this 2
+push constant 229
+lt
+if-goto IF_TRUE26
+goto IF_FALSE26
+label IF_TRUE26
+push this 1
+push constant 196
+gt
+if-goto IF_TRUE27
+goto IF_FALSE27
+label IF_TRUE27
+push this 1
+push constant 236
+lt
+if-goto IF_TRUE28
+goto IF_FALSE28
+label IF_TRUE28
+push pointer 0
+push constant 7
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE28
+label IF_FALSE27
+push this 1
+push constant 246
+gt
+if-goto IF_TRUE29
+goto IF_FALSE29
+label IF_TRUE29
+push this 1
+push constant 286
+lt
+if-goto IF_TRUE30
+goto IF_FALSE30
+label IF_TRUE30
+push pointer 0
+push constant 8
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE30
+label IF_FALSE29
+push pointer 0
+call Tank.misfire 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE26
+push this 2
+push constant 242
+lt
+if-goto IF_TRUE31
+goto IF_FALSE31
+label IF_TRUE31
+push this 1
+push constant 221
+gt
+if-goto IF_TRUE32
+goto IF_FALSE32
+label IF_TRUE32
+push this 1
+push constant 261
+lt
+if-goto IF_TRUE33
+goto IF_FALSE33
+label IF_TRUE33
+push pointer 0
+push constant 9
+call Tank.madeShot 2
+pop temp 0
+push constant 0
+return
+label IF_FALSE33
+label IF_FALSE32
+push constant 0
+return
+label IF_FALSE31
+push constant 0
+return
+function Tank.misfire 0
+push argument 0
+pop pointer 0
+label WHILE_EXP0
+push this 16
+push constant 0
+gt
+not
+if-goto WHILE_END0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Tank.madeShot 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 17
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP0
+push this 16
+push this 17
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP0
+label WHILE_END0
+label IF_FALSE0
+push argument 1
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 18
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP1
+push this 16
+push this 18
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP1
+label WHILE_END1
+label IF_FALSE1
+push argument 1
+push constant 2
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 19
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP2
+push this 16
+push this 19
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END2
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP2
+label WHILE_END2
+label IF_FALSE2
+push argument 1
+push constant 3
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 20
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP3
+push this 16
+push this 20
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END3
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP3
+label WHILE_END3
+label IF_FALSE3
+push argument 1
+push constant 4
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 21
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP4
+push this 16
+push this 21
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END4
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP4
+label WHILE_END4
+label IF_FALSE4
+push argument 1
+push constant 5
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 22
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP5
+push this 16
+push this 22
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END5
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP5
+label WHILE_END5
+label IF_FALSE5
+push argument 1
+push constant 6
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 23
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP6
+push this 16
+push this 23
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END6
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP6
+label WHILE_END6
+label IF_FALSE6
+push argument 1
+push constant 7
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 24
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP7
+push this 16
+push this 24
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END7
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP7
+label WHILE_END7
+label IF_FALSE7
+push argument 1
+push constant 8
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push this 25
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP8
+push this 16
+push this 25
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END8
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP8
+label WHILE_END8
+label IF_FALSE8
+push argument 1
+push constant 9
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push this 26
+call Pong.dispose 1
+pop temp 0
+label WHILE_EXP9
+push this 16
+push this 26
+call Pong.getY 1
+gt
+not
+if-goto WHILE_END9
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 15
+push this 16
+push this 15
+push this 7
+add
+push this 16
+push this 8
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 16
+push constant 5
+sub
+pop this 16
+goto WHILE_EXP9
+label WHILE_END9
+label IF_FALSE9
+push constant 0
+return

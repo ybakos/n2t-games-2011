@@ -1,0 +1,31 @@
+class Simon{
+	method void drawSimon(){
+		do Screen.drawCircle(75,75,25);  //head
+		
+		do Screen.drawLine(75,100,75,150); //body
+		
+		do Screen.drawLine(75,150,60,170); //legs
+		do Screen.drawLine(75,150,90,170);
+		
+		do Screen.drawLine(75,125,60,115);  //arms
+		do Screen.drawLine(75,125,90,115);
+
+		do drawThought();
+		return;
+	}
+	
+	method void drawThought(){
+		do Screen.drawCircle(105,50,5);
+		do Screen.drawCircle(115,40,5);
+		
+		
+		do Screen.drawLine(130, 10, 210, 10);
+		do Screen.drawLine(130, 40, 210, 40);
+		do Screen.drawLine(130, 10, 130, 40);
+		do Screen.drawLine(210, 10, 210, 40);
+		
+		//do Screen.drawRectangle(130, 10, 210, 40);
+		return;
+	}
+	
+}

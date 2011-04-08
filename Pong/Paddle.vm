@@ -1,0 +1,234 @@
+function Paddle.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push argument 2
+pop this 3
+push argument 2
+push constant 5
+call Math.multiply 2
+pop this 4
+push argument 2
+pop this 2
+push pointer 0
+call Paddle.draw 1
+pop temp 0
+push pointer 0
+return
+function Paddle.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Paddle.draw 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 3
+add
+push this 1
+push this 4
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Paddle.erase 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 3
+add
+push this 1
+push this 4
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Paddle.incSize 0
+push argument 0
+pop pointer 0
+push this 1
+push this 4
+add
+push constant 254
+lt
+push this 0
+push this 3
+add
+push constant 510
+lt
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Paddle.erase 1
+pop temp 0
+push this 3
+push constant 2
+add
+pop this 3
+push this 4
+push constant 10
+add
+pop this 4
+push pointer 0
+call Paddle.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Paddle.decSize 0
+push argument 0
+pop pointer 0
+push this 3
+push constant 2
+gt
+push this 4
+push constant 10
+gt
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Paddle.erase 1
+pop temp 0
+push this 3
+push constant 2
+sub
+pop this 3
+push this 4
+push constant 10
+sub
+pop this 4
+push pointer 0
+call Paddle.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Paddle.moveUp 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 12
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Paddle.erase 1
+pop temp 0
+push this 1
+push constant 2
+sub
+pop this 1
+push pointer 0
+call Paddle.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Paddle.moveDown 0
+push argument 0
+pop pointer 0
+push this 1
+push this 4
+add
+push constant 254
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Paddle.erase 1
+pop temp 0
+push this 1
+push constant 2
+add
+pop this 1
+push pointer 0
+call Paddle.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Paddle.moveLeft 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 1
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Paddle.erase 1
+pop temp 0
+push this 0
+push constant 2
+sub
+pop this 0
+push pointer 0
+call Paddle.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Paddle.moveRight 0
+push argument 0
+pop pointer 0
+push this 0
+push this 3
+add
+push constant 510
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Paddle.erase 1
+pop temp 0
+push this 0
+push constant 2
+add
+pop this 0
+push pointer 0
+call Paddle.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Paddle.Topx 0
+push argument 0
+pop pointer 0
+push this 0
+push this 3
+add
+return
+function Paddle.Topy 0
+push argument 0
+pop pointer 0
+push this 1
+return

@@ -1,0 +1,32 @@
+class StartScreen {
+	field int control;
+
+	constructor StartScreen new(){
+		let control = 15;
+		return this;
+	}
+
+	//shows screen then returns and waits for an apropriate key press returns 1 for continue and 0 for exit
+	method int displayStart(){
+		var char key;
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.printString("Welcome to the Worm Game!");
+		do Output.println();
+		do Output.println();
+		do Output.printString("Press n to start or q to exit.");
+		while (~((key=78)|(key=81))){
+			let key=Keyboard.keyPressed();
+			if (key=78){
+				do Screen.setColor(false);
+				do Screen.drawRectangle(0,0,510,255);
+				return 1;
+			}
+			if (key=81){
+				return 0;
+			}
+		}
+		return 0;
+	}
+}

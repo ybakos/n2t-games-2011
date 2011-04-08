@@ -1,0 +1,22 @@
+class Wall {
+	field int x1, y1, x2, y2;
+	
+	constructor Wall new(int xIn1, int yIn1, int xIn2, int yIn2) {
+		let x1 = xIn1;
+		let y1 = yIn1;
+		let x2 = xIn2;
+		let y2 = yIn2;
+		return this;
+	}
+	
+	method void draw() {
+		do Screen.setColor(true);
+		do Screen.drawLine(x1,y1,x2,y2);
+		return;
+	}
+	
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+}

@@ -1,0 +1,212 @@
+/**
+ * The Cross class implements a graphic cross. A graphic cross 
+ * has a location on the screen and a size. It also has methods 
+ * for drawing, erasing, moving on the screen, and changing its size.
+ */
+class Cross {
+
+    // Location on the screen
+    field int x, y;
+
+    // The size of the cross
+    field int size;
+	
+	// The random spot
+	field int rand;
+	
+	// The difficulty level
+	field int difficulty;
+	
+    /** Constructs a new cross with a given location and size. */
+    constructor Cross new(int Ax, int Ay, int Asize) {
+        let x = Ax;
+        let y = Ay;
+        let size = Asize;
+		let rand = 0;
+		let difficulty = 20;
+
+        do draw();
+
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Draws the square on the screen. */
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawLine(x, y, x+size, y+size);
+		do Screen.drawLine(x, y+size, x+size, y);
+        return;
+    }
+
+    /** Erases the square from the screen. */
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawLine(x, y, x+size, y+size);
+		do Screen.drawLine(x, y+size, x+size, y);
+        return;
+    }
+
+    /** Increments the size by 2. */
+    /*method void incSize() {
+        if (((y + size) < 254) & ((x + size) < 510)) {
+            do erase();
+            let size = size + 2;
+            do draw();
+        }
+        return;
+    }*/
+
+    /** Decrements the size by 2. */
+    /*method void decSize() {
+        if (size > 2) {
+            do erase();
+            let size = size - 2;
+            do draw();
+        }
+        return;
+	}*/
+
+    /** Moves up by 2. */
+    method void moveUp() {
+        if (y > 1) {
+            do Screen.setColor(false);
+            do Screen.drawLine(x, y, x+size, y+size);
+			do Screen.drawLine(x, y+size, x+size, y);
+            let y = y - 2;
+            do Screen.setColor(true);
+			do Screen.drawLine(x, y, x+size, y+size);
+			do Screen.drawLine(x, y+size, x+size, y);
+        }
+		let rand = rand + 1;
+		do runRandom();
+        return;
+    }
+
+    /** Moves down by 2. */
+    method void moveDown() {
+        if ((y + size) < 254) {
+            do Screen.setColor(false);
+			do Screen.drawLine(x, y, x+size, y+size);
+			do Screen.drawLine(x, y+size, x+size, y);
+            let y = y + 2;
+            do Screen.setColor(true);
+			do Screen.drawLine(x, y, x+size, y+size);
+			do Screen.drawLine(x, y+size, x+size, y);
+        }
+		let rand = rand + 1;
+		do runRandom();
+        return;
+    }
+
+    /** Moves left by 2. */
+    method void moveLeft() {
+        if (x > 1) {
+            do Screen.setColor(false);
+			do Screen.drawLine(x, y, x+size, y+size);
+			do Screen.drawLine(x, y+size, x+size, y);
+            let x = x - 2;
+            do Screen.setColor(true);
+			do Screen.drawLine(x, y, x+size, y+size);
+			do Screen.drawLine(x, y+size, x+size, y);
+        }
+		let rand = rand + 1;
+		do runRandom();
+        return;
+    }
+
+    /** Moves right by 2. */
+    method void moveRight() {
+        if ((x + size) < 510) {
+            do Screen.setColor(false);
+			do Screen.drawLine(x, y, x+size, y+size);
+			do Screen.drawLine(x, y+size, x+size, y);
+            let x = x + 2;
+            do Screen.setColor(true);
+			do Screen.drawLine(x, y, x+size, y+size);
+			do Screen.drawLine(x, y+size, x+size, y);
+        }
+		let rand = rand + 1;
+		do runRandom();
+        return;
+    }
+	
+	/** Random movement. */
+	method void runRandom() {
+		if (rand = 4){
+			let rand = 0;
+		}
+		if (rand = 0){
+			if (y > (1 + difficulty)) {
+				do Screen.setColor(false);
+				do Screen.drawLine(x, y, x+size, y+size);
+				do Screen.drawLine(x, y+size, x+size, y);
+				let y = (y - 2) - difficulty;
+				do Screen.setColor(true);
+				do Screen.drawLine(x, y, x+size, y+size);
+				do Screen.drawLine(x, y+size, x+size, y);
+			}
+		}
+		if (rand = 1){
+			if ((y + size) < (254 - difficulty)) {
+				do Screen.setColor(false);
+				do Screen.drawLine(x, y, x+size, y+size);
+				do Screen.drawLine(x, y+size, x+size, y);
+				let y = (y + 2) + difficulty;
+				do Screen.setColor(true);
+				do Screen.drawLine(x, y, x+size, y+size);
+				do Screen.drawLine(x, y+size, x+size, y);
+			}
+		}
+		if (rand = 2){
+			if (x > (1 + difficulty)) {
+				do Screen.setColor(false);
+				do Screen.drawLine(x, y, x+size, y+size);
+				do Screen.drawLine(x, y+size, x+size, y);
+				let x = (x - 2) - difficulty;
+				do Screen.setColor(true);
+				do Screen.drawLine(x, y, x+size, y+size);
+				do Screen.drawLine(x, y+size, x+size, y);
+			}
+		}
+		if (rand = 3){
+			if ((x + size) < (510 - difficulty)) {
+				do Screen.setColor(false);
+				do Screen.drawLine(x, y, x+size, y+size);
+				do Screen.drawLine(x, y+size, x+size, y);
+				let x = (x + 2) + difficulty;
+				do Screen.setColor(true);
+				do Screen.drawLine(x, y, x+size, y+size);
+				do Screen.drawLine(x, y+size, x+size, y);
+			}
+		}
+		return;
+	}
+	
+	/** Places x where dart hit. */
+	method void throwDart() {
+		let x = 0;
+		let y = 0;
+		return;
+	}
+	/** Places x where darts are. */
+	method void drawDart(int dartX, int dartY) {
+		do Screen.setColor(true);
+		do Screen.drawLine(dartX, dartY, dartX+size, dartY+size);
+		do Screen.drawLine(dartX, dartY+size, dartX+size, dartY);
+		return;
+	}
+	/** Returns x value. */
+	method int getX() {
+		return x;
+	}
+	/** Returns y value. */
+	method int getY() {
+		return y;
+	}
+}

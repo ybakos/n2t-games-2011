@@ -1,0 +1,158 @@
+class Main{
+	function void main(){
+		var int random;
+		var Game sequence1, sequence2, sequence3;
+		var Simon character;
+		var int arraySize;
+		var int i;
+		var int input;
+		var int seed;
+		
+		
+		let arraySize = sequence1.getArraySize();
+		let random = 0;
+		let i = 0;
+		do Output.printString("Welcome to Simon Didn't Say!");
+		do Output.println();
+		do Output.printString("Enter a key to continue...");
+		do Output.println();
+		while(~(Keyboard.keyPressed())){
+			let random = random + 1;
+		}
+		
+		do Screen.clearScreen();
+		do Sys.wait(100);
+		
+		do Output.printString("This game will consist of three rounds.");
+		do Output.println();
+		do Output.printString("For each round, a sequence of numbers will be printed to the screen");
+		do Output.println();
+		do Output.printString("After the sequence is complete, you must reenter the sequence exactly in order to progress to the next round.");
+		do Output.println();
+		do Output.printString("Lets get started!");
+		do Output.println();
+		do Output.printString("Enter a key to continue...");
+		do Output.println();
+		while(~(Keyboard.keyPressed())){
+			let random = random + 1;
+		}
+		do Screen.clearScreen();
+		do character.drawSimon();
+		let sequence1 = Game.new(random,0);
+		while (i < arraySize){
+			do Screen.clearScreen();
+			do character.drawSimon();
+			do sequence1.displayElement();
+			let i = i + 1;
+			do Output.moveCursor(20,6);
+			do Sys.wait(1000);
+		}
+		
+		let i = 0;
+		while (i < arraySize){
+			do Screen.clearScreen();
+			do character.drawSimon();
+			do Output.moveCursor(16,16);
+			let input = Keyboard.readInt("Enter Guess: ");
+			
+			if (input = sequence1.getElement(i)){
+				let i = i + 1;
+				let seed = input;
+			}
+			else {
+				let i = i + sequence1.getArraySize();
+				do Screen.clearScreen();
+				do character.drawSimon();
+				do Output.moveCursor(2,17);
+				do Output.printString("Failure!!");
+				do Sys.halt();
+			}
+	
+		}
+		
+		let i = 0;
+		
+		let sequence2 = Game.new(seed*17,1);
+		
+		while (i < arraySize){
+			do Screen.clearScreen();
+			do character.drawSimon();
+			do sequence2.displayElement();
+			let i = i + 1;
+			do Output.moveCursor(20,6);
+			do Sys.wait(1000);
+		}
+		
+		let i = 0;
+		while (i < arraySize){
+			do Screen.clearScreen();
+			do character.drawSimon();
+			do Output.moveCursor(16,16);
+			let input = Keyboard.readInt("Enter Guess: ");
+			
+			if (input = sequence2.getElement(i)){
+				let i = i + 1;
+				let seed = input;
+			}
+			else {
+				let i = i + sequence2.getArraySize();
+				do Screen.clearScreen();
+				do character.drawSimon();
+				do Output.moveCursor(2,17);
+				do Output.printString("Failure!!");
+				do Sys.halt();
+			}
+	
+		}
+		
+		
+		let i = 0;
+		
+		let sequence3 = Game.new(seed*23,1);
+		
+		while (i < arraySize){
+			do Screen.clearScreen();
+			do character.drawSimon();
+			do sequence3.displayElement();
+			let i = i + 1;
+			do Output.moveCursor(20,6);
+			do Sys.wait(1000);
+		}
+		
+		let i = 0;
+		while (i < arraySize){
+			do Screen.clearScreen();
+			do character.drawSimon();
+			do Output.moveCursor(16,16);
+			let input = Keyboard.readInt("Enter Guess: ");
+			
+			if (input = sequence3.getElement(i)){
+				let i = i + 1;
+				let seed = input;
+			}
+			else {
+				let i = i + sequence3.getArraySize();
+				do Screen.clearScreen();
+				do character.drawSimon();
+				do Output.moveCursor(2,17);
+				do Output.printString("Failure!!");		
+				do Sys.halt();
+			}
+	
+		}
+		
+		do Screen.clearScreen();
+		do character.drawSimon();
+		do Output.moveCursor(2,17);
+		do Output.printString("Success!!");		
+		
+		do sequence1.eraseArray();
+		do sequence2.eraseArray();
+		do sequence3.eraseArray();
+		return;
+		
+		
+	}
+	
+
+}

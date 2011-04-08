@@ -1,0 +1,228 @@
+class SnakeGame{
+	//screen is 256 rows by 512 columns
+	// (COLUMN, ROW)
+	
+	field Array blobArray;
+	field MovingSquare movingSquare;
+	field int trackerIndex;
+	field Blob curBlob;
+	field int speed;
+	// The square's movement direction
+	field int direction; // 0=none,1=up,2=down,3=left,4=right
+	
+	constructor SnakeGame new() {
+		do gameInit();
+		let movingSquare = MovingSquare.new(256,128,30);
+		let trackerIndex = 0;
+		let blobArray = Array.new(15);
+		do initializeBlobArray();
+		let curBlob = blobArray[trackerIndex];
+		do curBlob.draw();
+		return this;
+	}
+	
+	method void dispose() {
+        do movingSquare.dispose();
+		do blobArray.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+	/** Moves the square by 2 in the current direction. */
+    method void moveSquare() {
+        if (direction = 1) {
+            do movingSquare.moveUp();
+        }
+        if (direction = 2) {
+            do movingSquare.moveDown();
+        }
+        if (direction = 3) {
+            do movingSquare.moveLeft();
+        }
+        if (direction = 4) {
+            do movingSquare.moveRight();
+        }
+
+        do Sys.wait(speed); // Delays the next movement.
+        return;
+    }
+
+	method boolean checkIfCollisionWithBlob (int direction) {
+		var int i, col1, col2, row1, row2;
+		let i=0;
+		let row1 = curBlob.getY();
+		let row2 = curBlob.getY() + curBlob.getSize();
+		let col1 = curBlob.getX();
+		let col2 = curBlob.getX() + curBlob.getSize();
+		
+		if( (direction=1) & (movingSquare.getY() = row2)){
+				while(i<movingSquare.getSize()){
+					if(((movingSquare.getX() + i) = col1) | ((movingSquare.getX() + i) = col2)) {
+						return true;
+					}
+					let i = i + 1;
+				}
+		}
+		let i = 0;
+		if( (direction=2) & ((movingSquare.getY() + movingSquare.getSize())=row1)) {
+				while(i<movingSquare.getSize()){
+					if(((movingSquare.getX() + i) = col1) | ((movingSquare.getX() + i) = col2)) {
+						return true;
+					}
+					let i = i + 1;
+				}
+		}
+		let i = 0;
+		
+		if( (direction=3) & ((movingSquare.getX())=col2)) {
+				while(i<movingSquare.getSize()){
+					if(((movingSquare.getY() + i) = row1) | ((movingSquare.getY() + i) = row2)) {
+						return true;
+					}
+					let i = i + 1;
+				}
+		}
+		let i = 0;
+		
+		if( (direction=4) & ((movingSquare.getX() + movingSquare.getSize())=col1)) {
+				while(i<movingSquare.getSize()){
+					if(((movingSquare.getY() + i) = row1) | ((movingSquare.getY() + i) = row2)) {
+						return true;
+					}
+					let i = i + 1;
+				}
+		}
+		let i = 0;
+		
+		return false;
+	}
+
+	method void gameInit(){
+		var int temp ;
+		var String input;
+		do Output.printString("Enter the difficulty/speed for the game (1 is fastest/hardest to 10 is the easiest/easiest): ");
+		do Output.println();
+		let input = Keyboard.readLine("Enter difficulty now :");
+		let temp = String.intValue(input);
+		if(temp > 10)
+		{ let temp = 10;}
+		if(temp < 1)
+		{ let temp = 1;}
+		let speed = temp;
+		do Screen.clearScreen();
+		return;
+	}
+	
+	/** Starts the game. Handles inputs from the user that controls
+    *  the square movement direction and size. */
+    method void run() {
+        var char key;
+        var boolean exit;
+        let exit = false;
+
+        while (~exit) {
+            // waits for a key to be pressed.
+			
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+                do moveSquare();
+				do curBlob.draw();
+				if(checkForWallCollision())
+				{
+					do Screen.clearScreen();
+					do Output.printString("You suck, and therefore lose!");
+					return;
+				}
+				if( checkIfCollisionWithBlob(direction) ) {
+					do curBlob.erase();
+					do curBlob.dispose();
+					do movingSquare.decSize();
+					let trackerIndex = trackerIndex + 1;
+					if(trackerIndex = 15){
+						do Screen.clearScreen();
+						do Output.printString("Congrats!!! You Won!");
+						return;
+					}
+					let curBlob = blobArray[trackerIndex];
+					do curBlob.draw();
+				}
+            }
+
+            if (key = 81) {
+                let exit = true;
+            }
+            if (key = 131) {
+                let direction = 1;
+            }
+            if (key = 133) {
+                let direction = 2;
+            }
+            if (key = 130) {
+                let direction = 3;
+            }
+            if (key = 132) {
+                let direction = 4;
+            }
+            
+            // waits for the key to be released.
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+                do moveSquare();
+				do curBlob.draw();
+
+				if(checkForWallCollision())
+				{
+					do Screen.clearScreen();
+					do Output.printString("You suck, and therefore lose!");
+					return;
+				}
+				if( checkIfCollisionWithBlob(direction) ) {
+					do curBlob.erase();
+					do curBlob.dispose();
+					do movingSquare.decSize();
+					let trackerIndex = trackerIndex + 1;
+					if(trackerIndex = 15){
+						do Screen.clearScreen();
+						do Output.printString("Congrats!!! You Won!");
+						return;
+					}
+					let curBlob = blobArray[trackerIndex];
+					do curBlob.draw();
+				}
+            }
+        }  
+        return;
+}
+
+method boolean checkForWallCollision() {
+	var boolean lose;
+	let lose = false;
+	if( (movingSquare.getY() = 1) | ((movingSquare.getY() + movingSquare.getSize())= 255))
+	{	let lose = true; }
+	if( (movingSquare.getX() = 1) | ((movingSquare.getX() + movingSquare.getSize())= 511))
+	{	let lose = true; }
+	return lose;
+	
+}	
+method void initializeBlobArray() {
+	let blobArray[0] = Blob.new(51,65);
+	let blobArray[1] = Blob.new(256,164);
+	let blobArray[2] = Blob.new(377,200);
+	let blobArray[3] = Blob.new(35,125);
+	let blobArray[4] = Blob.new(435,215);
+	let blobArray[5] = Blob.new(399,11);
+	let blobArray[6] = Blob.new(500,162);
+	let blobArray[7] = Blob.new(101,75);
+	let blobArray[8] = Blob.new(279,111);
+	let blobArray[9] = Blob.new(135,223);
+	let blobArray[10] = Blob.new(470,194);
+	let blobArray[11] = Blob.new(239,50);
+	let blobArray[12] = Blob.new(85,200);
+	let blobArray[13] = Blob.new(335,154);
+	let blobArray[14] = Blob.new(130,25);
+	return;	
+}
+	
+}
+
+

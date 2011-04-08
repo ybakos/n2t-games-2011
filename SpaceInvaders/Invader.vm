@@ -1,0 +1,243 @@
+function Invader.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push argument 2
+pop this 2
+push constant 0
+not
+pop this 3
+push pointer 0
+push argument 0
+push argument 1
+call Invader.moveTo 3
+pop temp 0
+push pointer 0
+return
+function Invader.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Invader.clear 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Invader.moveTo 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push argument 2
+push argument 1
+push this 2
+add
+push argument 2
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Invader.moveDown 0
+push argument 0
+pop pointer 0
+push this 1
+push this 2
+add
+push constant 220
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 1
+push this 2
+add
+pop this 1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push this 3
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 1
+push this 2
+add
+pop this 1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+label IF_FALSE1
+label IF_END0
+push constant 0
+not
+return
+function Invader.moveUp 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 1
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 1
+push this 2
+sub
+pop this 1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Invader.moveLeft 0
+push argument 0
+pop pointer 0
+push this 0
+push this 2
+sub
+pop this 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Invader.moveRight 0
+push argument 0
+pop pointer 0
+push this 0
+push this 2
+add
+push constant 510
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+push this 2
+add
+pop this 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Invader.clear 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Invader.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Invader.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Invader.kill 0
+push argument 0
+pop pointer 0
+push constant 0
+pop this 3
+push pointer 0
+call Invader.clear 1
+pop temp 0
+push constant 0
+return
+function Invader.getAlive 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Invader.die 0
+push argument 0
+pop pointer 0
+push constant 0
+return

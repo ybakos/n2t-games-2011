@@ -1,0 +1,74 @@
+class Game{
+	field int maSeed;
+	field int index;
+	field Array elements;
+	field int arraySize;
+	field int difficulty;
+	
+	constructor Game new(int seed,int dif){
+		let arraySize = 5;
+		let maSeed = seed;
+		let index = 0;
+		let difficulty = 1000;
+		let elements = Array.new(arraySize);
+		if(dif = 1){
+			do increaseDifficulty();
+		}
+		while(index < arraySize){
+			let elements[index] = calcNextElement();
+			let index = index + 1;
+		}
+		let index = 0;
+		return this;
+	}
+	method int calcNextElement(){
+		var int next;
+		let next = maSeed;
+		let next = maSeed * 23;
+		let maSeed = next + 3 ;
+		if (maSeed < 0){
+			let maSeed = maSeed * -1 - 1;
+		}
+		
+		while ( maSeed > difficulty) {
+			let maSeed = maSeed / difficulty;
+			let maSeed = maSeed + 1;
+		}
+		
+		return maSeed;
+	}
+	
+	method void increaseDifficulty(){
+		let difficulty = difficulty * 31 + 5;
+		return;	}
+	
+	method int getElement(int ind){
+		return elements[ind];
+	}
+	method int getNextElement(){
+		var int ele;
+		let ele = elements[index];
+		let index = index + 1;
+		return ele;
+	}
+	method int getIndex(){
+		return index;
+	}
+	method void setIndex(int newIndex){
+		let index = newIndex;
+		return;
+	}
+	method int getArraySize(){
+		return 5;
+	}
+	method void eraseArray(){
+		do elements.dispose();
+		return;
+	}
+	method void displayElement(){
+		do Output.moveCursor(2,17);
+		do Output.printInt(getNextElement());
+		do Output.println();
+		return;
+	}
+}

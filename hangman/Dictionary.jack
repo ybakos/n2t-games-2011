@@ -1,0 +1,28 @@
+class Dictionary {
+  field Array wordList;
+
+  constructor Dictionary new() {
+    let wordList = Array.new(10);
+    let wordList[0] = "HANGMAN";
+    let wordList[1] = "ELEMENTS";
+    let wordList[2] = "VIRTUAL";
+    let wordList[3] = "MACHINE";
+    let wordList[4] = "PIAZZZA";
+    let wordList[5] = "COMPUTING";
+    let wordList[6] = "JACK";
+    let wordList[7] = "HARDWARE";
+    let wordList[8] = "OPERATING";
+    let wordList[9] = "SYSTEMS";
+    return this;
+  }
+  
+  method String getWord(int number) {
+    return wordList[number];
+  }
+  
+  method void dispose() {
+    do wordList.dispose();
+    do Memory.deAlloc(this);
+    return;
+  }
+}

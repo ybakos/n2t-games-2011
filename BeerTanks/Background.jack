@@ -1,0 +1,22 @@
+class Background {
+	field int hold;
+	constructor Background new(int holder) {
+		let hold = holder;
+		do Screen.clearScreen();
+		return this;
+	}
+
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method void drawTable() {
+		do Screen.setColor(true);
+		do Screen.drawLine(25, 0, 25, 255);
+		do Screen.drawLine(487, 0, 487, 255);
+		do Screen.drawLine(25, 0, 487, 0);
+		do Screen.drawLine(25, 255, 487, 255);
+		return;
+	}
+}

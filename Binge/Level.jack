@@ -1,0 +1,380 @@
+class Level{
+	
+	field int levelNum;
+	field int numCards;
+	field int score;
+	field Array consequences;
+	
+	constructor Level new(int number){
+		let levelNum = number;
+		let numCards = 9;
+		do initArray();	
+		return this;	
+	}
+	
+	method void incrementLevel(){
+		var boolean bossLevel;
+		let bossLevel = isBossLevel();
+		
+		if (~(bossLevel)) {
+			let numCards = numCards - 1;
+		}
+		
+		let levelNum = levelNum + 1;
+		let score = score + 1;
+		do Output.printInt(levelNum);
+		
+		return;
+	}
+	
+	method boolean isBossLevel() {
+		if (levelNum = 3) {
+			return true;
+		}
+		if (levelNum = 7) {
+			return true;
+		}
+		if (levelNum = 11) {
+			return true;
+		}
+		return false;
+	}
+	
+	method void bossLevel() {
+		var int choice;
+		if (levelNum = 3) {
+			do Screen.clearScreen();
+			do Output.moveCursor(0, 0);
+			do Output.printString("Question: ");
+			do Output.println();
+			do Output.printString("Does a bear shit in the woods?");
+			do Output.println();
+			do Output.println();
+			do Output.printString("(1) Yes");
+			do Output.println();
+			do Output.printString("(2) No");
+			do Output.println();
+			let choice = Keyboard.readInt("Make your selection: ");
+			do Output.println();
+			do Output.printString("You chose choice ");
+			do Output.printInt(choice);
+			
+			if (choice = 1) {
+				do Output.println();
+				do Output.printString("You chose correctly, you get 5 points");
+				let score = score + 5;
+				do Output.println();
+				do Keyboard.readInt("Press Enter to continue.");
+				return;
+			} 
+			if (choice = 2){
+				do Output.println();
+				do Output.printString("FALSE! Take 2 shots!");
+				do Output.println();
+				do Keyboard.readInt("Press Enter to continue.");
+				return;
+			}
+			else {
+				do Output.println();
+				do Output.printString("That wasn't even an option dumbass!! Take 3 shots! That'll learn ya");
+				let score = score - 5;
+				do Output.println();
+				do Keyboard.readInt("Press Enter to continue.");
+				return;
+			}
+			
+		}
+		if (levelNum = 7) {
+			do Screen.clearScreen();
+			do Output.moveCursor(0, 0);
+			do Output.printString("Question: ");
+			do Output.println();
+			do Output.printString("What unladden swallow has a higher terminal air speed velocity?");
+			do Output.println();
+			do Output.println();
+			do Output.printString("(1) African");
+			do Output.println();
+			do Output.printString("(2) European");
+			do Output.println();
+			let choice = Keyboard.readInt("Make your selection: ");
+			do Output.println();
+			do Output.printString("You chose choice ");
+			do Output.printInt(choice);
+			
+			if (choice = 1) {
+				do Output.println();
+				do Output.printString("You chose correctly, you get 5 points");
+				let score = score + 5;
+				do Output.println();
+				do Keyboard.readInt("Press Enter to continue.");
+				return;
+			}
+			if (choice = 2){
+				do Output.println();
+				do Output.printString("FALSE! Take 2 shots!");
+				do Output.println();
+				do Keyboard.readInt("Press Enter to continue.");
+				return;
+			}
+			else {
+				do Output.println();
+				do Output.printString("That wasn't even an option dumbass!! Take 3 shots! That'll learn ya");
+				let score = score - 5;
+				do Output.println();
+				do Keyboard.readInt("Press Enter to continue.");
+				return;
+			}
+			
+		}
+		if (levelNum = 11) {
+			do Screen.clearScreen();
+			do Output.moveCursor(0, 0);
+			do Output.printString("Question: ");
+			do Output.println();
+			do Output.printString("What's the best way to scam your way onto welfare?");
+			do Output.println();
+			do Output.println();
+			do Output.printString("(1) Act like a recovering drug attic taking care of your 'retarded' sister");
+			do Output.println();
+			do Output.printString("(2) Become a recovering drug attic");
+			do Output.println();
+			let choice = Keyboard.readInt("Make your selection: ");
+			do Output.println();
+			do Output.printString("You chose choice ");
+			do Output.printInt(choice);
+			
+			if (choice = 1) {
+				do Output.println();
+				do Output.printString("You chose correctly, you get 5 points");
+				let score = score + 5;
+				do Output.println();
+				do Keyboard.readInt("Press Enter to continue.");
+				return;
+			}
+			if (choice = 2){
+				do Output.println();
+				do Output.printString("FALSE! Take 2 shots!");
+				do Output.println();
+				do Keyboard.readInt("Press Enter to continue.");
+				return;
+			}
+			else {
+				do Output.println();
+				do Output.printString("That wasn't even an option dumbass!! Take 3 shots! That'll learn ya");
+				let score = score - 5;
+				do Output.println();
+				do Keyboard.readInt("Press Enter to continue.");
+				return;
+			}
+
+		}
+		
+		return;
+	}
+	
+	//Create the pool of consequences for the game to chose from
+	method void initArray(){
+		let consequences = Array.new(21);
+		let consequences[0] = "Take an extra shot";
+		let consequences[1] = "Do 10 push-ups and shotgun a beer";
+		let consequences[2] = "Shotgun a beer while doing a handstand";
+		let consequences[3] = "Develop a beer n sammich machine";
+		let consequences[4] = "Sip on your beer";
+		let consequences[5] = "Take 2 shots of whiskey.";
+		let consequences[6] = "Don't drink. You're being punished.";
+		let consequences[7] = "Run around your place of residence while chugging a beer.";
+		let consequences[8] = "Make a frozen pizza and eat it.";
+		let consequences[9] = "Take a shot of whiskey and chase it with beer.";
+		let consequences[10] = "Take 3 shots of wheat grass.";
+		let consequences[11] = "Call your mother.";
+		let consequences[12] = "Get in a bar fight.";
+		let consequences[13] = "Chug a beer and crush the empty can on your forehead.";
+		let consequences[14] = "Sip gingerly on your brew.";
+		let consequences[15] = "Wrestle an alligator.";
+		let consequences[16] = "Drink up, ya a**hole!";
+		let consequences[17] = "Take a shot and hug a friend.";
+		let consequences[18] = "Climb the nearest tree.";
+		let consequences[19] = "Chug a gallon of milk.";
+		let consequences[20] = "Take a shot (of anything).";
+		return;
+	}
+	
+	method void dispose(){
+		do consequences.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+	method void startLevel(){
+		var int choice;
+		var int bossLevel;
+		var int i;
+		var int j;
+		
+		do Screen.clearScreen();
+
+		let bossLevel = isBossLevel();
+		
+		if (bossLevel) {
+			do bossLevel();
+		} else {		
+			do drawCards(numCards);
+			do drawWizard();
+			do Output.moveCursor(20, 0);
+		
+	
+			do Output.printString("Current level: ");
+			do Output.printInt(levelNum);
+			do Output.println();
+			do Output.printString("Please select the number of your choice.");
+			
+			//Generate a psuedo random number based on the amount of time between a keystroke
+			while(Keyboard.keyPressed() = 0){
+				let i = i+1;
+			}
+			//Keep the number within the bounds of the array of consequences
+			while(Math.abs(i)>20){
+				let i = Math.divide(i,20);
+			}
+		
+			//Display the consequence and continue the game on keypress
+			do Screen.clearScreen();
+			do Output.moveCursor(0,0);
+			do Output.printString(getConsequence(Math.abs(i)));
+			do Output.println();
+		
+			do Keyboard.readInt("Press Enter to continue.");
+			do Screen.clearScreen();
+		}
+		
+		return;
+	}
+	
+	method void drawCards(int numCards){
+		var int i, iter;
+		var int x1, x2, y1, y2;
+		var int cursePos, j;
+		let i = 0;
+		let iter = 0;
+		
+		while (i < numCards) {
+			//Draw top row of cards	
+			let x1 = i * 80;
+			let x2 = ((i + 1) * 80) - 10;
+			
+			if (i > 3) {
+				let x1 = (i - 4) * 80;
+				let x2 = (((i - 4) + 1) * 80) - 10;
+				let y1 = 110;
+				let y2 = 210;
+			} else {
+				let x1 = i * 80;
+				let x2 = ((i + 1) * 80) - 10;
+				let y1 = 0;
+				let y2 = 100;
+			}
+	
+			do Screen.drawRectangle(x1, y1, x2, y2);
+		
+			do Screen.setColor(false);
+			
+			let x1 = x1 + 20;
+			let x2 = x2 - 20;
+			
+			if (i > 3) {
+				let y1 = 140; 
+				let y2 = 180;
+			} else {
+				let y1 = 30;
+				let y2 = 70;
+			}
+		
+			do Screen.drawRectangle(x1, y1, x2, y2);
+			
+			do Screen.setColor(true);
+		
+			//var int cursePos, j;
+			let j = i + 1;
+			
+			//Number the top row of cards
+			if (i > 3) {
+				let cursePos = ((i - 4) * 10) + 4;
+				do Output.moveCursor(14, cursePos);
+			} else {
+				let cursePos = (i * 10) + 4;
+				do Output.moveCursor(4, cursePos);
+			}
+			do Output.printInt(j);
+			
+			let i = i + 1;
+		}
+		
+		return;
+	}
+
+	method string getConsequence(int num){
+		return consequences[num];
+	}
+	
+	method boolean isGameOver() {
+		if (levelNum = 11) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	//Displays the conclusion screen
+	method void gameOver(String name) {
+		do Screen.clearScreen();
+		do Output.moveCursor(0, 0);
+		do Output.printString(name);
+		do Output.printString(", you have reached the end, my wise wizard.");
+		do Output.printString("Many great things have you accomplished and you have earned a score of : ");
+		do Output.printInt(score);
+		do Output.println();
+		do Output.println();
+		do Output.printString("How neat is that? Now quit being such a drunk and do something productive with your life.");
+		
+		do Output.println();
+	
+		do Keyboard.readInt("Press Enter to continue.");
+		do Screen.clearScreen();
+		
+		return;
+	}
+	
+	method void drawWizard(){
+		//Draw Head
+		do Screen.drawCircle(410,50,30);
+		do Screen.setColor(false);
+		do Screen.drawCircle(410,50,25);
+		do Screen.setColor(true);
+		
+		//Draw Body
+		do Screen.drawRectangle(409,80,411,190);
+		
+		//Left Leg
+		do Screen.drawLine(409, 190, 380, 230);
+		do Screen.drawLine(410, 190, 381, 230);
+		do Screen.drawLine(411, 190, 382, 230);
+		
+		//Right Leg
+		do Screen.drawLine(409, 190, 440, 230);
+		do Screen.drawLine(410, 190, 441, 230);
+		do Screen.drawLine(411, 190, 442, 230);
+		
+		//Left Arm
+		do Screen.drawLine(409, 130, 370, 100);
+		do Screen.drawLine(410, 130, 371, 100);
+		do Screen.drawLine(411, 130, 372, 100);
+		
+		//Right Arm
+		do Screen.drawLine(409, 130, 450, 100);
+		do Screen.drawLine(410, 130, 451, 100);
+		do Screen.drawLine(411, 130, 452, 100);
+		
+		return;
+	}
+
+}

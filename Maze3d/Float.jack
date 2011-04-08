@@ -1,0 +1,555 @@
+//Floating Point - 9 decimal accuracy
+/*TODO:
+ADD IN ROUNDING BEFORE TRUNCATION
+CHECK FOR 0 AFTER CALCULATIONS
+*/
+class Float{
+/*------------------STATIC VARIABLES--------------*/
+	static int sig_dig;
+	static int max_int;
+	static int neg;
+	static int pos;
+/*------------------PRIVATE VARIABLES--------------*/
+	field int sign, mant, expo;// (-1)^sign * mant * 10^expo
+/*------------------PRIVATE METHODS--------------*/
+	constructor Float new(int s, int m, int e){
+		do set(s,m,e);
+		return this;
+	}
+	method void set(int s, int m, int e){
+		let sign = s;
+		let mant = m;
+		let expo = e;
+		do Float.setToHighestMant(this, false);
+		return;
+	}
+	method int getSign(){
+		return sign;
+	}
+	method int getMant(){
+		return mant;
+	}
+	method int getExpo(){
+		return expo;
+	}
+	method void setSign(int s){
+		let sign = s;
+		return;
+	}
+	method void setMant(int m){
+		let mant = m;
+		return;
+	}
+	method void setExpo(int e){
+		let expo = e;
+		return;
+	}
+	method void print(){
+		do Float.printF(this);
+		return;
+	}
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+/*------------------INIT--------------*/
+	function void init(){
+		let sig_dig = 4;
+		let max_int = 9999;
+		let neg = 1;
+		let pos = 0;
+		return;
+	}
+/*------------------STATIC FUNCTIONS--------------*/
+	function int getPos(){
+		return pos;
+	}
+	function int getNeg(){
+		return neg;
+	}
+	function int getMaxInt(){
+		return max_int;
+	}
+	function int getSigDig(){
+		return sig_dig;
+	}
+	function void getPi(Float f){// f = 3.141E0
+		do f.set(Float.getPos(), 3141,0);
+		return;
+	}
+	function void get2Pi(Float f){// f = 6.283E0
+		do f.set(Float.getPos(), 6283,0);
+		return;
+	}
+	function void getOne(Float f){// f = 1E0
+		do f.set(Float.getPos(), 1,0);
+		return;
+	}
+	function void getZero(Float f){// f = 0E0
+		do f.set(Float.getPos(), 0,0);
+		return;
+	}
+/*------------------MATH--------------*/
+	function void sin(Float res, Float rad){// res = sin(rad) rad = [-PI,PI]
+		var Float s, f0, xp3, xp5, xp7;
+		let s = Float.new(0,0,0);
+		let xp3 = Float.new(0,0,0);
+		let xp5 = Float.new(0,0,0);
+		let xp7 = Float.new(0,0,0);
+		let f0 = Float.new(0,0,0);
+		
+		do Float.copy(s,rad);
+		do Float.mul(xp3,rad,rad);//x^2
+		do Float.mul(xp5,xp3,xp3);//x^4
+		do Float.mul(xp7,xp5,xp3);//x^6
+		do Float.mul(xp3,xp3,rad);//x^3
+		do Float.mul(xp5,xp5,rad);//x^5
+		do Float.mul(xp7,xp7,rad);//x^7
+		
+		do f0.set(Float.getPos(),6000,0);//3! = 6
+		do Float.div(f0,xp3,f0);
+		do Float.sub(s,s,f0);
+		do f0.set(Float.getPos(),1200,2);//5! = 120
+		do Float.div(f0,xp5,f0);
+		do Float.add(s,s,f0);
+		do f0.set(Float.getPos(),5040,3);//7! = 5040
+		do Float.div(f0,xp7,f0);
+		do Float.sub(s,s,f0);
+		do Float.copy(res,s);
+		
+		do s.dispose();
+		do f0.dispose();
+		do xp3.dispose();
+		do xp5.dispose();
+		do xp7.dispose();
+		return;//sin = x - (x^3/3!) + (x^5/5!) - (x^7/7!) + ...
+	}
+	function void cos(Float res, Float rad){// res = cos(rad) rad = [-PI,PI]
+		var Float s, f0, xp2, xp4, xp6;
+		let s = Float.new(Float.getPos(),1,0);// 1
+		let f0 = Float.new(0,0,0);
+		let xp2 = Float.new(0,0,0);
+		let xp4 = Float.new(0,0,0);
+		let xp6 = Float.new(0,0,0);
+		
+		do Float.mul(xp2,rad,rad);//x^2
+		do Float.mul(xp4,xp2,xp2);//x^4
+		do Float.mul(xp6,xp4,xp2);//x^6
+		
+		do f0.set(Float.getPos(),2000,0);//2! = 2
+		do Float.div(f0,xp2,f0);
+		do Float.sub(s,s,f0);
+		do f0.set(Float.getPos(),2400,1);//4! = 24
+		do Float.div(f0,xp4,f0);
+		do Float.add(s,s,f0);
+		do f0.set(Float.getPos(),720,2);//6! = 720
+		do Float.div(f0,xp6,f0);
+		do Float.sub(s,s,f0);
+		do Float.copy(res,s);
+		
+		do s.dispose();
+		do f0.dispose();
+		do xp2.dispose();
+		do xp4.dispose();
+		do xp6.dispose();
+		return;//cos = 1 - (x^2/2!) + (x^4/4!) - (x^6/6!) + ...
+	}
+	function void tan(Float res, Float rad){// res = tan(rad) rad = [-PI,PI]
+		do Output.printString("tan not implemented");
+		do Output.println();
+		return;//tan = x + (x^3/3!) + 2*(x^3/3) + 17*(x^7/315) + ...
+	}
+	function void radianAlias(Float res, Float rad){// res = rad moved to between [-PI,PI]
+		var Float pi, pi2, piN, r;
+		let r = Float.new(0,0,0);
+		let pi2 = Float.new(0,0,0);
+		let pi = Float.new(0,0,0);
+		let piN = Float.new(0,0,0);
+		do Float.getPi(pi);
+		do Float.get2Pi(pi2);
+		do Float.negate(piN,pi);
+		do Float.copy(r,rad);
+		while( Float.gt(r,pi) ){
+			do Float.sub(r,r,pi2);
+		}
+		while( Float.lt(r,piN) ){
+			do Float.add(r,r,pi2);
+		}
+		do Float.copy(res,r);
+		do pi.dispose();
+		do pi2.dispose();
+		do piN.dispose();
+		do r.dispose();
+		return;
+	}
+	function void sqrt(Float res, Float num){// res = sqrt(num)
+		var int count;
+		var Float tempR, tempN, half, t;
+		let tempR = Float.new(0,0,0);
+		let tempN = Float.new(0,0,0);
+		let t = Float.new(0,0,0);
+		let half = Float.new(Float.getPos(),5,-1);
+		do tempN.set( Float.getPos(), num.getMant(), num.getExpo() );
+		do Float.copy(tempR,tempN);
+		do Float.mul(tempR,tempR,half);// /2
+		let count = 5;
+		while(count>0){
+			do Float.div(t,tempN,tempR);
+			do Float.add(t,t,tempR);
+			do Float.mul(tempR,t,half);
+			let count = count - 1;
+		}
+		do Float.copy(res,tempR);
+		do tempR.dispose();
+		do tempN.dispose();
+		do half.dispose();
+		do t.dispose();
+		return;
+	}
+	function void pow(Float res, Float a, Float b){// res = a^b
+		var int count;
+		var Float tempR;
+		let tempR = Float.new(Float.getPos(),1,0);
+		let count = Float.toInt(b,false);
+		while(count>0){
+			do Float.mul(tempR,a,tempR);
+			let count = count - 1;
+		}
+		do Float.copy(res,tempR);
+		do tempR.dispose();
+		return;
+	}
+	function void exc(Float res, Float num){// res = num!
+		var int countInt;
+		var Float tempR, count, zero, one;
+		let one = Float.new(Float.getPos(),1,0);
+		let tempR = Float.new(Float.getPos(),1,0);
+		let count = Float.new(0,0,0);
+		if( Float.gt(num,one) ){
+			do Float.copy(count,one);
+			let countInt = Float.toInt(num,true);
+			while( countInt>0 ){
+				do Float.mul(tempR,count,tempR);
+				do Float.add(count,count,one);
+				let countInt = countInt - 1;
+			}
+		}
+		do Float.copy(res,tempR);
+		do tempR.dispose();
+		do count.dispose();
+		do zero.dispose();
+		do one.dispose();
+		return;
+	}
+	function void min(Float res, Float a, Float b){// res = min(a,b)
+		if( Float.gt(a,b) ){
+			do Float.copy(res,b);
+		}else{
+			do Float.copy(res,a);
+		}
+		return;
+	}
+	function void max(Float res, Float a, Float b){// res = max(a,b)
+		if( Float.gt(a,b) ){
+			do Float.copy(res,a);
+		}else{
+			do Float.copy(res,b);
+		}
+		return;
+	}
+	function boolean gt(Float a, Float b){// a > b
+		if( a.getSign() = b.getSign() ){// -- / ++
+			if( a.getSign() = Float.getPos() ){// ++
+				if( (a.getMant()=0) | (b.getMant()=0) ){//special case of zero
+					if( (a.getMant()=0) & (b.getMant()=0) ){// both equal to zero
+						return false;
+					}
+					if(a.getMant() = 0){
+						return false;
+					}else{
+						return true;
+					}
+				}else{
+					if( a.getExpo() = b.getExpo() ){// a.e = b.e
+						if( a.getMant() > b.getMant() ){// a.m > b.m
+							return true;
+						}else{// a.m <= b.m
+							return false;
+						}
+					}else{// a.e != b.e
+						if(a.getExpo() > b.getExpo()){// a.e > b.e
+							return true;
+						}else{// a.e <= b.e
+							return false;
+						}
+					}
+				}
+			}else{// --
+				if( a.getExpo() = b.getExpo() ){// a.e = b.e
+					if( a.getMant() < b.getMant() ){// a.m < b.m
+						return true;
+					}else{// a.m >= b.m
+						return false;
+					}
+				}else{// a.e != b.e
+					if(a.getExpo() < b.getExpo()){// a.e < b.e
+						return true;
+					}else{// a.e >= b.e
+						return false;
+					}
+				}
+			}
+		}else{// -+ / +-
+			if( a.getSign() = Float.getPos() ){// a.s = +
+				return true;
+			}else{// a.s = -
+				return false;
+			}
+		}
+	}
+	function boolean lt(Float a, Float b){// a < b
+		return ~Float.gt(a,b) & ~Float.eq(a,b);
+	}
+	function boolean eq(Float a, Float b){// a == b
+		if( ( a.getSign()=b.getSign() ) & ( a.getMant()=b.getMant() ) & ( a.getExpo()=b.getExpo() ) ){
+			return true;
+		}
+		return false;
+	}
+	function boolean ge(Float a, Float b){// a >= b
+		return Float.gt(a,b) | Float.eq(a,b);
+	}
+	function boolean le(Float a, Float b){// a <= b
+		return ~Float.gt(a,b);
+	}
+	function void abs(Float res, Float num){// res = abs(num)
+		do Float.copy(res,num);
+		do res.setSign(Float.getPos());
+		return;
+	}
+	function void negate(Float res, Float num){// res = -num
+		do Float.copy(res,num);
+		if(res.getSign()=Float.getPos()){
+			do res.setSign(Float.getNeg());
+		}else{
+			do res.setSign(Float.getPos());
+		}
+		return;
+	}
+	function void copy(Float res, Float num){// res = num
+		do res.setSign(num.getSign());
+		do res.setMant(num.getMant());
+		do res.setExpo(num.getExpo());
+		return;
+	}
+	function void add(Float res, Float a, Float b){// res = a + b
+		var Float high, low;
+		var int temp, temp1;
+		let high = Float.new(0,0,0);
+		let low = Float.new(0,0,0);
+		do Float.abs(high,a);
+		do Float.abs(low,b);
+		if( Float.gt(high,low) ){
+			do Float.copy(high,a);
+			do Float.copy(low,b);
+		}else{
+			do Float.copy(high,b);
+			do Float.copy(low,a);
+		}
+		while(low.getExpo()<high.getExpo() & low.getMant()>0){// bring low up to high
+			do low.setMant(low.getMant()/10);
+			do low.setExpo(low.getExpo()+1);
+		}
+		if(low.getMant()=0){// not enough precision
+			do low.set( high.getSign(), high.getMant(), high.getExpo() );// return high
+		}else{
+			if(low.getSign()=high.getSign()){// ++ / --
+
+				let temp = low.getMant() + high.getMant();
+				if(temp<high.getMant() | temp>Float.getMaxInt()){//overflow
+					let temp = low.getMant()/10;
+					let temp1 = high.getMant()/10;
+					let temp = temp + temp1;
+					do low.setExpo(low.getExpo()+1);
+				}
+				do low.setMant(temp);
+			}else{
+				if(low.getSign()=Float.getNeg()){// -low
+					let temp = 0;
+					do low.setMant( high.getMant() - low.getMant() );
+				}else{// -high
+					let temp = 1;
+					do low.setMant( low.getMant() - high.getMant() );
+				}
+				do low.setSign(high.getSign());
+				// bigger number's  wins
+				if(low.getMant()<0){// negative
+					do low.setMant( Math.abs(low.getMant()) );
+				}
+			}
+			do Float.setToHighestMant(low,true);
+		}
+		do Float.copy(res,low);
+		do high.dispose();
+		do low.dispose();
+		return;
+	}
+	function void sub(Float res, Float a, Float b){// res = a - b
+		var Float nB;
+		let nB = Float.new(0,0,0);
+		do Float.negate(nB,b);// flip sign
+		do Float.add(res,a,nB);
+		do nB.dispose();
+		return;
+	}
+	function void mul(Float res, Float a, Float b){// res = a * b
+		var Float temp;
+		var int t1,t2;
+		let temp = Float.new(0,0,0);
+		if(a.getSign()=b.getSign()){// -- / ++
+			do temp.setSign( Float.getPos() );
+		}else{// +- / -+
+			do temp.setSign( Float.getNeg() );
+		}
+		let t1 = (a.getMant()/100);
+		let t2 = (b.getMant()/100);
+		let t1 = t1*t2;
+		do temp.setMant( t1 );
+		let t1 = a.getExpo() + b.getExpo();// +2 +2 -1[for decimal 0.000]
+		let t1 = t1 + 1;
+		do temp.setExpo( t1 );
+		do Float.setToHighestMant(temp,true);
+		do Float.copy(res,temp);
+		do temp.dispose();
+		return;
+	}
+	function void div(Float res, Float a, Float b){// res = a / b
+		var Float temp;
+		let temp = Float.new(0,0,0);
+		if(a.getSign()=b.getSign()){// -- / ++
+			do temp.setSign( Float.getPos() );
+		}else{// +- / -+
+			do temp.setSign( Float.getNeg() );
+		}
+		do temp.setMant( a.getMant() / (b.getMant()/100) );
+		do temp.setExpo( a.getExpo() - b.getExpo() + 1);
+		do Float.setToHighestMant(temp,true);
+		do Float.copy(res,temp);
+		do temp.dispose();
+		return;
+	}
+	function void toFloat(Float res, int num){// res = (int)num
+		var int i, exp;
+		let i = num;
+		if(i<0){// -
+			do res.setSign( Float.getNeg() );
+			let i = -i;
+		}else{// +
+			do res.setSign( Float.getPos() );
+		}
+		let exp = -1;
+		while(i>0){//loop to get exponent
+			let exp = exp + 1;
+			let i = i/10;
+		}
+		let num = Math.abs(num);
+		if(num>Float.getMaxInt()){
+			let num = Float.getMaxInt();
+		}
+		do res.setMant(num);
+		do Float.setToHighestMant(res,false);
+		do res.setExpo(exp);
+		return;
+	}
+	function int toInt(Float res, boolean rnd){// return (int)res, [rounded if rnd]
+		var int intVal, digits;
+		var Float t, half;
+		let t = Float.new(0,0,0);
+		if(rnd){
+			let half = Float.new(Float.getPos(),5,-1);
+			if( res.getSign()=Float.getPos() ){// t = res + .5 : 'round' before truncate	
+				do Float.add(t,res,half);
+			}else{
+				do Float.sub(t,res,half);//-.5
+			}
+			do half.dispose();
+		}else{
+			do Float.copy(t,res);
+		}
+		if(t.getExpo() > Float.getSigDig()){// too big, return maximum
+			let intVal = Float.getMaxInt();
+		}else{
+			if(t.getExpo()<0){// too small, return 0
+				let intVal = 0;
+			}else{// just right, return portion of mantissa
+				let digits = Float.getSigDig() - t.getExpo();// digits = 4 - exponent
+				let intVal = 1;
+				while(digits>1){// increase divisor [intVal]
+					let digits = digits - 1;
+					let intVal = intVal*10;
+				}
+				let intVal = t.getMant()/intVal;
+				if(t.getSign()=Float.getNeg()){// correct for negative sign
+					let intVal = -intVal;
+				}
+			}
+		}
+		do t.dispose();
+		//half already disposed
+		return intVal;
+	}
+	function void setToHighestMant(Float res, boolean b){// maximize bits usage, b=shift exponent also
+		var int val, valPrev, compare;
+		let valPrev = res.getMant();
+		if(valPrev=0){// return +0E0
+			do res.setSign(Float.getPos());
+			do res.setExpo(0);
+			return;
+		}
+		let val = valPrev*10;//shift left
+		let compare = val/10;
+		while( (val>valPrev) & (val<Float.getMaxInt()) & (compare=valPrev) ){//val>res.getMant() &
+			let valPrev = val;
+			do res.setMant(val);
+			if( b ){
+				do res.setExpo(res.getExpo()-1);
+			}
+			let val = val*10;//shift left
+			let compare = val/10;
+		}
+		return;
+	}
+/*------------------PRINT--------------*/
+	function void printF(Float res){// sign|mant|E|expo
+		var int num1, num2;
+		if(res.getSign()=pos){
+			do Output.printString("+");
+		}else{
+			do Output.printString("-");
+		}
+		let num1 = res.getMant();//9876
+		let num2 = num1/1000;//9
+		do Output.printInt(num2);
+		do Output.printString(".");
+		let num2 = num2*1000;
+		let num1 = num1 - num2;//9876-9000
+		if(num1<100){
+			do Output.printString("0");
+			if(num1<10){
+				do Output.printString("0");
+			}
+		}
+		do Output.printInt(num1);
+		do Output.printString("E");
+		do Output.printInt( res.getExpo() );
+		return;
+	}
+
+}
+
+
+
+
+
+
+

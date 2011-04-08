@@ -1,0 +1,120 @@
+//Cam3D
+class Cam3D{
+/*------------------STATIC VARIABLES--------------*/
+	//
+/*------------------PRIVATE VARIABLES--------------*/
+	field Float posX, posY, posZ;
+	field Float rotY;
+	field Float scale;
+	field Float lens;
+	field Float cut;
+/*------------------PRIVATE METHODS--------------*/
+	constructor Cam3D new(){
+		let posX = Float.new(Float.getPos(),0,0);// 0
+		let posY = Float.new(Float.getPos(),0,0);// 0
+		let posZ = Float.new(Float.getPos(),0,0);// 0
+		let rotY = Float.new(Float.getPos(),0,0);// 0
+		let lens = Float.new(Float.getPos(),1,2);// 100
+		let scale = Float.new(Float.getPos(),1,1);// 10x
+		let cut = Float.new(Float.getNeg(),20,1);// -1
+		return this;
+	}
+	method void set(Float pX, Float pY, Float pZ, Float rY, Float l, Float s, Float c){
+		do Float.copy(posX,pX);
+		do Float.copy(posY,pY);
+		do Float.copy(posZ,pZ);
+		do Float.copy(rotY,rY);
+		do Float.copy(lens,l);
+		do Float.copy(scale,s);
+		do Float.copy(cut,c);
+		return;
+	}
+	method void getNorm(V3D norm){
+		var Float fl0;
+		let fl0 = Float.new(Float.getPos(),0,0);
+		do norm.setY(fl0);//no rotation x or z
+		do Float.sin(fl0,rotY);
+		do norm.setX(fl0);
+		do Float.cos(fl0,rotY);
+		do norm.setZ(fl0);
+		do fl0.dispose();
+		return;
+	}
+	method int getPosXInt(){
+		return Float.toInt(posX, true);
+	}
+	method int getPosYInt(){
+		return Float.toInt(posY, true);
+	}
+	method int getPosZInt(){
+		return Float.toInt(posZ, true);
+	}
+	method Float getPosX(){
+		return posX;
+	}
+	method Float getPosY(){
+		return posY;
+	}
+	method Float getPosZ(){
+		return posZ;
+	}
+	method Float getRotY(){
+		return rotY;
+	}
+	method Float getScale(){
+		return scale;
+	}
+	method Float getLens(){
+		return lens;
+	}
+	method Float getCut(){
+		return cut;
+	}
+	method void setPosX(Float pX){
+		do Float.copy(posX,pX);
+		return;
+	}
+	method void setPosY(Float pY){
+		do Float.copy(posY,pY);
+		return;
+	}
+	method void setPosZ(Float pZ){
+		do Float.copy(posZ,pZ);
+		return;
+	}
+	method void setRotY(Float rY){
+		do Float.copy(rotY,rY);
+		return;
+	}
+	method void setLens(Float l){
+		do Float.copy(lens,l);
+		return;
+	}
+	method void setScale(Float s){
+		do Float.copy(scale,s);
+		return;
+	}
+	method void setCut(Float c){
+		do Float.copy(cut,c);
+		return;
+	}
+	method void dispose(){
+		do posX.dispose();
+		do posY.dispose();
+		do posZ.dispose();
+		do rotY.dispose();
+		do lens.dispose();
+		do scale.dispose();
+		do cut.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+/*------------------INIT--------------*/
+	function void init(){
+		//
+		return;
+	}
+/*------------------STATIC FUNCTIONS--------------*/
+	//
+}
+

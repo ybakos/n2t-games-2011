@@ -1,0 +1,117 @@
+function LanderGame.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push pointer 0
+call LanderGame.initScreen 1
+pop temp 0
+push constant 200
+push constant 5
+push constant 0
+not
+call Lander.new 3
+pop this 0
+call Terrain.new 0
+pop this 1
+push pointer 0
+return
+function LanderGame.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Lander.dispose 1
+pop temp 0
+push this 1
+call Terrain.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function LanderGame.initScreen 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push constant 0
+push constant 0
+push constant 510
+push constant 255
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function LanderGame.run 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+not
+not
+if-goto WHILE_END0
+call Keyboard.keyPressed 0
+pop local 0
+push local 0
+push constant 81
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 1
+label IF_FALSE0
+push local 0
+push constant 131
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 0
+call Lander.mainThruster 1
+pop temp 0
+label IF_FALSE1
+push local 0
+push constant 133
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 0
+call Lander.negThruster 1
+pop temp 0
+label IF_FALSE2
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 0
+call Lander.leftThruster 1
+pop temp 0
+label IF_FALSE3
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 0
+call Lander.rightThruster 1
+pop temp 0
+goto IF_END4
+label IF_FALSE4
+push this 0
+call Lander.noThruster 1
+pop temp 0
+label IF_END4
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

@@ -1,0 +1,13 @@
+//Main class. Currently only runs hello world program.
+
+class Main {
+
+    /** Runs the maze game */ 
+    function void main() {
+	var Game g;
+	let g = Game.new();
+	do g.run();
+        do g.dispose();
+	return;
+    }
+}

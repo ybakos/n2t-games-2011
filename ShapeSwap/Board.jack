@@ -1,0 +1,438 @@
+class Board{
+	field Prng rng;
+	field Array shapes;
+	field int score;
+	field int boardSize;
+	field int shapeSize;
+	
+	constructor Board new(){
+		var int i;
+		var char zero;
+		let rng = Prng.new();
+		let boardSize = 8;
+		let shapeSize = 30;
+		let score = 0;
+		let shapes = Array.new(64);
+		let i = 0;
+		while (i < 64){
+			let shapes[i] = rng.next();
+			let i = i + 1;
+		}
+		return this;
+	}
+	
+	method void scoreBoard(){
+		var int i;
+		var int j;
+		var int scoreInc;
+		var boolean oneMoreTime;
+		var boolean firstPass;
+		let firstPass = true;
+		let oneMoreTime = true;
+		let i = 0;
+		let scoreInc = 0;
+		
+		while(~(scoreInc = -1)){
+			let scoreInc = 0;
+ 			while(i < boardSize){
+				let j = 0;
+				while( j < boardSize ){
+					//Checks for five in a row
+					if( j < boardSize-4 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+1] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+2] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+3] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+4] ){
+						let scoreInc = scoreInc + 5;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+1] = rng.next();
+						let shapes[i*boardSize+j+2] = rng.next();
+						let shapes[i*boardSize+j+3] = rng.next();
+						let shapes[i*boardSize+j+4] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+1);
+						do drawShapeAt(i*boardSize+j+2);
+						do drawShapeAt(i*boardSize+j+3);
+						do drawShapeAt(i*boardSize+j+4);
+					}}}}}
+					if( i < boardSize-4 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+8] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+16] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+24] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+32] ){
+						let scoreInc = scoreInc + 5;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+8] = rng.next();
+						let shapes[i*boardSize+j+16] = rng.next();
+						let shapes[i*boardSize+j+24] = rng.next();
+						let shapes[i*boardSize+j+32] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+8);
+						do drawShapeAt(i*boardSize+j+16);
+						do drawShapeAt(i*boardSize+j+24);
+						do drawShapeAt(i*boardSize+j+32);
+					}}}}}
+					
+					//Checks for four in a row
+					if( j < boardSize-3 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+1] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+2] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+3] ){
+						let scoreInc = scoreInc + 3;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+1] = rng.next();
+						let shapes[i*boardSize+j+2] = rng.next();
+						let shapes[i*boardSize+j+3] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+1);
+						do drawShapeAt(i*boardSize+j+2);
+						do drawShapeAt(i*boardSize+j+3);
+					}}}}
+					if( i < boardSize-3 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+8] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+16] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+24] ){
+						let scoreInc = scoreInc + 3;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+8] = rng.next();
+						let shapes[i*boardSize+j+16] = rng.next();
+						let shapes[i*boardSize+j+24] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+8);
+						do drawShapeAt(i*boardSize+j+16);
+						do drawShapeAt(i*boardSize+j+24);
+					}}}}
+					
+					//Checks for three in a row
+					if( j < boardSize-2 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+1] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+2] ){
+						let scoreInc = scoreInc + 1;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+1] = rng.next();
+						let shapes[i*boardSize+j+2] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+1);
+						do drawShapeAt(i*boardSize+j+2);
+					}}}
+					if( i < boardSize-2 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+8] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+16] ){
+						let scoreInc = scoreInc + 1;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+8] = rng.next();
+						let shapes[i*boardSize+j+16] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+8);
+						do drawShapeAt(i*boardSize+j+16);
+					}}}
+					
+					let j = j + 1;
+				}
+				let i = i + 1;
+			}
+			if(scoreInc = 0){
+				let scoreInc = -1;
+			}
+			if(firstPass){
+				let firstPass = false;
+				let score = score + scoreInc;
+			}
+			else{
+				if(~(scoreInc = -1)){
+					let score = score + scoreInc;
+				}
+				else{
+					do freeScoreBoard();
+					do freeScoreBoard();
+				}
+			}
+		}
+		do Screen.setColor(false);
+		do Screen.drawRectangle(440, 165, 500, 200);
+		do Screen.setColor(true);
+		
+		do Output.moveCursor(15, 47);
+		do Output.printInt(score);
+		
+		return;
+	}
+	
+	method void drawShapeAt(int pos){
+		var int x;
+		var int y;
+		let y = (pos/8) * 30;
+		let x = (pos - (8*(pos/8))) * 30;
+		
+		if( shapes[pos] = 48 ){
+			do drawSquare(x, y, 30);
+		}
+		else{
+			if( shapes[pos] = 49 ){
+				do drawDot(x, y, 30);
+			}
+			else{
+				if( shapes[pos] = 50 ){
+					do drawPlus(x, y, 30);
+				}
+				else{
+					do drawClover(x, y, 30);
+				}
+			}
+		}
+		return;
+	}
+	
+	method void freeScoreBoard(){
+		var int i;
+		var int j;
+		var int scoreInc;
+		var boolean oneMoreTime;
+		var boolean firstPass;
+		let firstPass = true;
+		let oneMoreTime = true;
+		let i = 0;
+		let scoreInc = 0;
+		
+		while(~(scoreInc = -1)){
+			let scoreInc = 0;
+ 			while(i < boardSize){
+				let j = 0;
+				while( j < boardSize ){
+					//Checks for five in a row
+					if( j < boardSize-4 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+1] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+2] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+3] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+4] ){
+						let scoreInc = scoreInc + 5;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+1] = rng.next();
+						let shapes[i*boardSize+j+2] = rng.next();
+						let shapes[i*boardSize+j+3] = rng.next();
+						let shapes[i*boardSize+j+4] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+1);
+						do drawShapeAt(i*boardSize+j+2);
+						do drawShapeAt(i*boardSize+j+3);
+						do drawShapeAt(i*boardSize+j+4);
+					}}}}}
+					if( i < boardSize-4 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+8] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+16] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+24] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+32] ){
+						let scoreInc = scoreInc + 5;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+8] = rng.next();
+						let shapes[i*boardSize+j+16] = rng.next();
+						let shapes[i*boardSize+j+24] = rng.next();
+						let shapes[i*boardSize+j+32] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+8);
+						do drawShapeAt(i*boardSize+j+16);
+						do drawShapeAt(i*boardSize+j+24);
+						do drawShapeAt(i*boardSize+j+32);
+					}}}}}
+					
+					//Checks for four in a row
+					if( j < boardSize-3 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+1] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+2] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+3] ){
+						let scoreInc = scoreInc + 3;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+1] = rng.next();
+						let shapes[i*boardSize+j+2] = rng.next();
+						let shapes[i*boardSize+j+3] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+1);
+						do drawShapeAt(i*boardSize+j+2);
+						do drawShapeAt(i*boardSize+j+3);
+					}}}}
+					if( i < boardSize-3 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+8] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+16] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+24] ){
+						let scoreInc = scoreInc + 3;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+8] = rng.next();
+						let shapes[i*boardSize+j+16] = rng.next();
+						let shapes[i*boardSize+j+24] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+8);
+						do drawShapeAt(i*boardSize+j+16);
+						do drawShapeAt(i*boardSize+j+24);
+					}}}}
+					
+					//Checks for three in a row
+					if( j < boardSize-2 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+1] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+2] ){
+						let scoreInc = scoreInc + 1;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+1] = rng.next();
+						let shapes[i*boardSize+j+2] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+1);
+						do drawShapeAt(i*boardSize+j+2);
+					}}}
+					if( i < boardSize-2 ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+8] ){
+					if( shapes[i*boardSize+j] = shapes[i*boardSize+j+16] ){
+						let scoreInc = scoreInc + 1;
+						let shapes[i*boardSize+j] = rng.next();
+						let shapes[i*boardSize+j+8] = rng.next();
+						let shapes[i*boardSize+j+16] = rng.next();
+						do drawShapeAt(i*boardSize+j);
+						do drawShapeAt(i*boardSize+j+8);
+						do drawShapeAt(i*boardSize+j+16);
+					}}}
+					
+					let j = j + 1;
+				}
+				let i = i + 1;
+			}
+			if(scoreInc = 0){
+				let scoreInc = -1;
+			}
+			if(~(scoreInc = -1)){
+				let score = score + scoreInc;
+			}
+		}
+		do Screen.setColor(false);
+		do Screen.drawRectangle(440, 165, 500, 200);
+		do Screen.setColor(true);
+		
+		do Output.moveCursor(15, 47);
+		do Output.printInt(score);
+		
+		return;
+	}
+	
+	method void drawBoard(){
+		var int i;
+		var int j;
+		var int x;
+		var int y;
+		var int count;
+		let count = 0;
+		let i = 0;
+		do Output.moveCursor(0, 40);
+		do Output.printString("SHAPE SWAP!");
+		do Output.moveCursor(15, 40);
+		do Output.printString("Score: ");
+		do Output.printInt(score);
+		do drawMoveInstructions();
+		while( i < 8 ){
+			let j = 0;
+			while( j < 8 ){
+				let y = i * 30;
+				let x = j * 30;
+				
+				if( shapes[count] = 48 ){
+					do drawSquare(x, y, 30);
+				}
+				else{
+					if( shapes[count] = 49 ){
+						do drawDot(x, y, 30);
+					}
+					else{
+						if( shapes[count] = 50 ){
+							do drawPlus(x, y, 30);
+						}
+						else{
+							do drawClover(x, y, 30);
+						}
+					}
+				}
+				let count = count + 1;
+				let j = j + 1;
+			}
+			let i = i + 1;
+		}
+		return;
+	}
+	
+	method void swap(int pos1, int pos2){
+		var char temp;
+		let temp = shapes[pos1];
+		let shapes[pos1] = shapes[pos2];
+		let shapes[pos2] = temp;
+		do drawShapeAt(pos1);
+		do drawShapeAt(pos2);
+		do scoreBoard();
+		return;
+	}
+	
+	method void dispose() {
+		do shapes.dispose();
+		do rng.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+	
+	method void drawSquare(int x, int y, int size) {
+		do Screen.setColor(false);
+		do Screen.drawRectangle(x+5, y+5, x+size-5, y+size-5);
+		do Screen.setColor(true);
+		do Screen.drawRectangle(x+5, y+5, x+size-5, y+size-5);
+		return;
+	}
+	
+	method void drawDot(int x, int y, int size){
+		do Screen.setColor(false);
+		do Screen.drawRectangle(x+5, y+5, x+size-5, y+size-5);
+		do Screen.setColor(true);
+		do Screen.drawCircle(x+(size/2), y+(size/2), (size-10)/2);
+		return;
+	}
+	
+	method void drawPlus(int x, int y, int size) {
+		do Screen.setColor(false);
+		do Screen.drawRectangle(x+5, y+5, x+size-5, y+size-5);
+		do Screen.setColor(true);
+		do Screen.drawRectangle(x+5, y+12, x+size-5, y+size-12);
+		do Screen.drawRectangle(x+12, y+5, x+size-12, y+size-5);
+		return;
+	}
+	
+	method void drawClover(int x, int y, int size) {
+		do Screen.setColor(false);
+		do Screen.drawRectangle(x+5, y+5, x+size-5, y+size-5);
+		do Screen.setColor(true);
+		do Screen.drawCircle(x+11, y+11, (size-20)/2);
+		do Screen.drawCircle(x+11, y+19, (size-20)/2);
+		do Screen.drawCircle(x+19, y+11, (size-20)/2);
+		do Screen.drawCircle(x+19, y+19, (size-20)/2);
+		return;
+	}
+
+	method void drawSwapInstructions(){
+		do Output.moveCursor(5, 40);
+		do Output.printString("                ");
+		do Output.moveCursor(6,40);
+		do Output.printString("              ");
+		
+		do Output.moveCursor(10, 40);
+		do Output.printString("Arrow keys swaps.");
+		do Output.moveCursor(11, 40);
+		do Output.printString("Anything else cancels.");
+		
+		return;
+	}
+	
+	method void drawMoveInstructions(){
+		do Output.moveCursor(10, 40);
+		do Output.printString("                 ");
+		do Output.moveCursor(11, 40);
+		do Output.printString("                      ");
+		
+		do Output.moveCursor(5, 40);
+		do Output.printString("Arrow Keys move.");
+		do Output.moveCursor(6,40);
+		do Output.printString("Space selects.");
+		
+		return;
+	}
+}

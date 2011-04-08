@@ -1,0 +1,71 @@
+class List{
+	field int x,y;
+	field List next;
+	
+	constructor List new(int newx, int newy, List follow){
+		let x=newx;
+		let y=newy;
+		let next=follow;
+		return this;
+	}
+	
+	method List getTail(){
+		if (next.getNext() = null){
+			return next;
+		}
+		else{
+			return next.getTail();
+		}
+	}
+
+	method int deleteTail(){
+		var int tempvar;
+		let tempvar = 0;
+		if(next = null){
+			return 1;
+		}
+		else {
+			let tempvar = next.deleteTail();
+			if(tempvar = 1){
+				do next.dispose();
+				let next = null;
+			}
+			return 0;
+		}
+	}
+
+	method int isCollision(int chx,int chy){
+		var int tempvar;
+		if(chx=x & chy=y){
+			return 1;
+		}
+
+		if(next = null){
+			return 0;
+		}
+		let tempvar=next.isCollision(chx,chy);
+		return tempvar;
+	}
+
+	method int getX(){
+		return x;
+	}
+
+
+	method int getY(){
+		return y;
+	}		
+
+	method void dispose(){
+	
+		if(~(next = null)){
+			do next.dispose();
+		}
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method List getNext(){
+		return next;
+	}
+}

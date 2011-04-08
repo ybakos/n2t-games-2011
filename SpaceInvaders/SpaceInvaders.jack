@@ -1,0 +1,276 @@
+class SpaceInvaders {
+	field int direction;
+	field Defender defender;
+	field Invader invader;
+	field Array invaders;
+	field Bullet bullet;
+	field int numInvaders;
+	field boolean liveBullet;
+	field int invaderSize;
+	field int bulletSize;
+	field int defenderSize;
+
+	constructor SpaceInvaders new() {		
+		var int i;
+		var int j;
+		var int x;
+		var int y;
+		var int spaceBetween;
+
+		let invaderSize = 20;
+		let defenderSize = 20;
+		let bulletSize = 4;
+
+		//create defender
+		let defender = Defender.new(defenderSize);
+		//Creating Invaders
+		let numInvaders = 30;
+		let invaders = Array.new(30);
+
+		let liveBullet = false;
+		let i = 0;
+		let x = 10;
+		let y = 10;
+		let spaceBetween = 6;
+		
+		while (i < (numInvaders - 1)){
+			let j = 0;
+			let x = 10;
+			while(j < 5){
+				let invaders[i] = Invader.new(x, y, invaderSize);
+				let x = x + spaceBetween + invaderSize;
+				let i = i + 1;
+				let j = j + 1;
+			}
+			let y =y + spaceBetween + invaderSize;
+		}
+		let direction = 0;
+		return this;
+	}	
+	method void dispose() {
+		var int i;
+		var Invader tempInvader;
+
+		let i = 0;
+		while (i < (numInvaders - 1)){
+			let tempInvader = invaders[i];
+			if (~(tempInvader = null)){
+				do tempInvader.dispose();
+			}
+		}
+		do invaders.dispose();
+		do defender.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+	method void run() {
+		var char key;
+		var boolean bulletMove;
+		var boolean exit;
+		var boolean right;
+		var int count;
+		var int count2;
+		var int i;
+		var Invader tempInvader;
+		var int invaderX;
+		var int invaderY;
+		var int bulletX;
+		var int bulletY;
+		var boolean win;
+
+		let win = true;
+		let exit = false;
+		let count = 0;
+		let right = true;
+		let count2 = 0;
+		let bulletMove = false;
+
+		while(~exit) {
+			do Sys.wait(250);
+
+			//-------------------- START CONTROL INVADERS --------------------------
+			let count = count + 1;
+			if (count = 10){
+				let count = 0;
+				let i = 0;
+				//clear the invaders first
+				while (i < numInvaders){
+					
+					let tempInvader = invaders[i];
+					if(tempInvader.getAlive()){
+						do tempInvader.clear();
+					}
+						let i = i + 1;
+				}
+				let i = 0;
+				if (count2 = 6){
+					while (i < numInvaders){
+						let tempInvader = invaders[i];
+						if(tempInvader.getAlive()){
+							if(~ tempInvader.moveDown()){
+								let win = false;
+								let exit = true;
+							}
+						}
+						let i = i + 1;
+					}
+					let count2 = 0;
+					if (right){
+						let right = false;
+					}
+					else{
+						let right = true;
+					}
+				}  
+				else{				
+					//move right or left
+					if (right){
+						while (i < numInvaders){
+							let tempInvader = invaders[i];
+							if(tempInvader.getAlive()){
+								do tempInvader.moveRight();
+							}
+							let i = i + 1;
+						}
+					}
+					else{
+						while (i < numInvaders){
+							let tempInvader = invaders[i];
+							if(tempInvader.getAlive()){
+								do tempInvader.moveLeft();
+							}
+							let i = i + 1;
+						}
+					}
+				
+					let count = 0; 
+					let count2 = count2 + 1;
+				}			
+			}
+			//-------------------- END CONTROL INVADERS --------------------------
+
+			//-------------------- START control of bullets --------------------------
+			//move bullet up one			
+			if(liveBullet){
+				let bulletMove = bullet.moveUp();
+				if (~bulletMove){
+					do bullet.dispose();
+					let liveBullet = false;
+				}
+				else{
+					//check if bullet hit
+					let bulletX = bullet.getX();
+					let bulletY = bullet.getY();
+					
+					let i = 0;
+					while (i < numInvaders){
+						let tempInvader = invaders[i];
+						if(tempInvader.getAlive()){
+							let invaderX = tempInvader.getX();
+							let invaderY = tempInvader.getY();
+				
+							//check x					
+							if ((bulletX) > (invaderX-1)){ 
+							  if (bulletX < (invaderX + invaderSize -1)){
+								//check y					
+								if (bulletY > (invaderY-1)){
+								  if (bulletY < (invaderY + invaderSize -1)){
+									do bullet.dispose();
+									let liveBullet = false;
+									do tempInvader.kill();
+									let i = numInvaders + 1;
+								  }
+								}
+							  }
+							}
+						}
+						let i = i + 1;
+					}
+					
+					//check if invaders are left
+					let exit = checkInvaders();
+					
+					
+				}
+			}
+			//-------------------- END control of bullets --------------------------
+
+
+
+			let key = Keyboard.keyPressed();
+			if(key = 0) {
+				let direction = 0; 
+			} else {
+				if(key = 130) {
+					let direction = 1;
+				} else {
+					if (key = 132) {
+						let direction = 2;
+					} else {
+						if(key = 32){
+							do shoot();
+						} else {
+							if(key = 81){
+								let exit = true;
+							}
+						}
+					}
+				}
+			}
+
+			do moveDefender();
+			
+		}//end while
+		if(win){
+			do Output.printString("CONGRATULATIONS! You win");
+		}else{
+			do Output.printString("GAME OVER YOU LOSE!");
+		}
+
+
+		return;
+
+	}//end RUN
+
+	method void shoot(){
+		var int x;
+		if (~liveBullet){
+			let liveBullet = true;
+			let x = defender.getX();
+			let x = x+(defenderSize/2) - (bulletSize /2 );
+			let bullet = Bullet.new(x,bulletSize);
+		}
+		return;
+	}
+	method boolean checkInvaders(){
+		var boolean invadersLeft;
+		var int i;
+		var Invader tempInvader;
+
+		let invadersLeft = false;
+		let i = 0;
+		while (i < numInvaders){
+			let tempInvader = invaders[i];
+			if(tempInvader.getAlive()){
+				let invadersLeft = true;
+				let i = numInvaders;
+			}
+			let i = i + 1;
+		}
+		return (~invadersLeft);
+	}
+	method void moveDefender() {
+		if(direction=0){
+			return;	
+		}
+		if(direction=1){
+			do defender.moveLeft();
+		}
+		if(direction=2){
+			do defender.moveRight();
+		} 
+		return;
+	}		
+
+
+}

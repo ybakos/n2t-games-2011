@@ -1,0 +1,248 @@
+/* Pong by Levente Sipeki and Andy Niccolai
+ * For Elements of Computing Systems at the Colorado School of Mines
+ * 4/3/11
+ */
+
+class PongGame {
+    
+    // The square
+    field Paddle paddle1;
+	field Paddle paddle2;
+	field Circle ball;
+	field int score1, score2; 
+	field String scoreboard;
+	
+	field int ballx, bally, paddle1x, paddle1y, paddle2x, paddle2y;
+	field int current_slope, new_slope, radius;
+	field int size, recent;
+
+    /** Constructs a new Square Game. */
+    constructor PongGame new() {
+		let radius = 5; 
+		let scoreboard = String.new(9);
+		let score1 = 0; 
+		let score2 = 0; 
+        let paddle1 = Paddle.new(0, 0, 12);
+		let paddle2 = Paddle.new(450, 0, 12);
+		let ball = Circle.new(50, 50, 5);
+		let size = 12;
+		let recent = 10; 
+		do ball.set_slope(2);
+		do updateScoreboard();
+		
+		do displayInstructions();
+		
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do paddle1.dispose();
+		do paddle2.dispose();
+		do ball.dispose();
+		do scoreboard.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Starts the game. Handles inputs from the user that controls
+     *  the square movement direction and size. */
+    method void run() {
+        var char key;
+        var boolean exit;
+
+        let exit = false;
+
+        while (~exit) {
+
+            let key = Keyboard.keyPressed();
+            // Q key
+            if (key = 81) {
+                let exit = true;
+            }
+            // Z key
+            if (key = 90) {
+                do paddle2.moveUp();
+            }
+            // X key
+            if (key = 88) {
+                do paddle2.moveDown();
+            }
+            // Up arrow
+            if (key = 131) {
+                do paddle1.moveUp();
+            }
+            // Down arrow
+            if (key = 133) { 
+                do paddle1.moveDown();
+            }
+            // Left arrow
+            if (key = 130) { 
+                do paddle1.moveLeft();
+            }
+            // Right arrow
+            if (key = 132) { 
+                do paddle1.moveRight();
+            }
+
+            do test_collision();
+    		do ball.move();
+    		do printScoreboard();
+            
+            do Sys.wait(15);
+        }
+            
+        return;
+	}
+	
+	method void test_collision(){
+		let ballx = ball.centerx();
+		let bally = ball.centery();
+
+		let paddle1x = paddle1.Topx();
+		let paddle1y = paddle1.Topy();
+		let paddle2x = paddle2.Topx();
+		let paddle2y = paddle2.Topy();
+		
+		if (((ballx-radius) - 1) < 5){
+			do score(2);
+		}
+		if((510 - (ballx + radius)) < 5){
+			do score(1);
+		}
+		
+		if ((254 - (bally + radius)) < 13) {
+			let current_slope = ball.getslope();
+			let new_slope = current_slope * (-1);  
+			do ball.set_slope(new_slope);
+		}
+		if((bally - radius - 1 )< 13){
+			let current_slope = ball.getslope();
+			let new_slope = current_slope * (-1);
+			do ball.set_slope(new_slope);
+		}	
+		if((ballx - paddle1x) < 5){
+			if((ballx - paddle1x) > -5){
+				if(bally > paddle1y){
+					if(bally < (paddle1y + (5 * size))){
+							do ball.switch_direction();
+							do paddle1.draw();
+					}
+				}
+			}
+		}
+		
+		if(((ballx +radius) - (paddle2x - size)) < 5){
+			if(((ballx + radius) - (paddle2x - size)) > -5){
+				if(bally > paddle2y){
+					if(bally < (paddle2y + (5 * size))){
+						do ball.switch_direction();
+						do paddle2.draw();
+					}
+				}
+			}
+		}
+		return; 
+
+	}
+	
+	method void score(int side){
+	    do ball.erase(); 
+	    do ball.dispose();
+	    do redraw();
+		if(side = 1){
+			let score1 = score1 + 1; 	
+			let ball = Circle.new(300, 50, 5);
+			do ball.set_slope(2);
+			do ball.switch_direction();	
+			do printCentered("Player 1 Scored!", 1);
+		}
+		if(side = 2){
+			let score2 = score2 + 1;
+			let ball = Circle.new(50, 50, 5);
+			do ball.set_slope(2);
+			do printCentered("Player 2 Scored!", 1);
+		}
+		do Sys.wait(500);
+		do updateScoreboard();
+		do redraw();
+		do printScoreboard();
+		
+		return; 
+	}
+	
+	method void updateScoreboard() {
+	    var int index;
+	    var String temp;
+	    
+	    let index = 0;
+	    let temp = String.new(3);
+	    
+	    // Format: score1 | score2
+	    do scoreboard.setInt(score1); 
+	    do scoreboard.appendChar(32); // 32 = space
+	    do scoreboard.appendChar(124); // 124 = pipe "|"
+	    do scoreboard.appendChar(32);
+	    
+	    // convert score2 to a string
+	    do temp.setInt(score2);
+	    
+	    // append it to the scoreboard, char by char
+	    while(~(index = temp.length() )) {
+	        do scoreboard.appendChar( temp.charAt(index) );
+	        let index = index + 1;
+	    }
+	    
+	    do temp.dispose();
+        
+	    return;
+	}
+	
+	method void printScoreboard() {
+    	do Output.moveCursor(1, 28);	    
+        do Output.printString(scoreboard);
+        
+        return;
+	}
+	
+	/** Prints line centered text */
+    method void printCentered(String text, int line) {
+        var int offset;
+
+        let offset = 30 - Math.divide(text.length(), 2);
+        
+        do Output.moveCursor(line, offset);
+        do Output.printString(text);
+        
+        return;
+    }
+    
+    method void displayInstructions() {
+        do printCentered("Directions:", 5);
+        
+        do printCentered("Make your opponent miss the ball to score.", 7);
+        
+        do printCentered("UP and DOWN arrows control player 1", 9);
+        do printCentered("Z and X control player 2", 10);
+        
+        
+        do printCentered("Press any key to play!", 13);
+        
+        while( ~(Keyboard.keyPressed()) ) {        
+            // Infinite loop until a key is pressed
+        }
+        
+        do Screen.clearScreen();
+        do redraw();
+        
+        return;
+    }
+    
+    method void redraw() {
+	    do Screen.clearScreen();
+	    do paddle1.draw();
+	    do paddle2.draw();
+	    do ball.draw();
+	    return;
+	}
+}

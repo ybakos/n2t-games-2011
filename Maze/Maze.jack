@@ -1,0 +1,170 @@
+/**
+ * The Maze class draws a maze by starting with a grid of a given size and removing lines from that grid. It then marks a finishing location
+ */
+class Maze {
+
+    //Indicates what lines to remove, using a location (x,y) and orientation
+    field Array xLinesToRemove;
+    field Array yLinesToRemove;
+    field Array vLinesToRemove;
+
+    /** Constructs a new square with a given location and size. */
+    constructor Maze new(Array xlines, Array ylines, Array vlines) {
+        var int i;
+	//Create the arrays
+	let xLinesToRemove = Array.new(100);
+	let yLinesToRemove = Array.new(100);
+	let vLinesToRemove = Array.new(100);
+	let i = 0;
+	//Store the values from the passed arrays to the field arrays
+	while(i < 100){
+	   let xLinesToRemove[i] = xlines[i];
+	   let yLinesToRemove[i] = ylines[i];
+	   let vLinesToRemove[i] = vlines[i];
+           let i = i + 1;
+        }
+	do xlines.dispose();
+	do ylines.dispose();
+	do vlines.dispose();
+        do draw();
+
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+	do xLinesToRemove.dispose();
+	do yLinesToRemove.dispose();
+	do vLinesToRemove.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Draws the maze on the screen. */
+    method void draw() {
+        var Square s; // Used to blank out squares in the grid.
+        var Line l; //Used to blank out lines in the grid
+        var int i,j; //Used as counting variables
+
+	//Draw the big rectangle the maze will be cut out of
+        do Screen.setColor(true);
+	do Screen.drawRectangle(0,0,242,242);
+
+	//Create a grid like pattern by whiting out squares
+	let i = 0;
+        while(i < 10){
+          let j = 0;
+          while(j < 10){
+	    let s = Square.new(1+(i*24), 1+(j*24),22);
+            do s.erase();
+            let j = j + 1;
+          }
+          let i = i + 1;
+        }
+
+	//Remove the lines that define this maze
+        let i = 0;
+        while(i < 100){
+	    if(vLinesToRemove[i]=1){
+		let l = Line.new((xLinesToRemove[i]*24),1+(yLinesToRemove[i]*24),22,1);
+	    }
+	    else{
+		let l = Line.new(1+(xLinesToRemove[i]*24),(yLinesToRemove[i]*24),22,0);
+	    } 
+	    do l.erase();
+	    let i = i + 1;
+	}
+	do s.dispose();
+	do l.dispose();
+        return;
+    }
+
+    /** Erases the maze from the screen. */
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(0,0,242,242);
+        return;
+    }
+
+    /**Accepts 4 ints representing the location and size of the marker
+     * Returns true if the location and size are valid
+     * Returns false if they are not (i.e, if they are inside a wall).*/
+    method bool validate(int x, int y, int xSize, int ySize){
+	var int i, j, k;		//Counting variables
+	var int xLine, yLine, vLine; 	//Represents the line the marker is occupying
+	var bool check;			//Indicates whether or not the line has been removed
+
+	let i = x;
+	//Go through each pixel in the square. If that pixel exists on the intersection of two lines, return false. 
+	//All intersections are walls.
+	while(i < (x + xSize + 1)){
+	    if((i - ((i/24) * 24))=0){
+		let j = y;
+		while(j < (y + ySize + 1)){
+		    if((j - ((j/24) * 24)) = 0){
+			return false;
+		    }
+		    let j = j + 1;
+		}
+	    }
+	    let i = i + 1;
+	}
+	let i = x;
+	//Check only the first and last pixel in each direction to save time. If both of them are valid, the entire square is valid.
+	while(i < (x + xSize + 1)){
+	    let j = y;
+	    while(j < (y + ySize + 1)){
+
+		//If the marker lies on a horizontal line
+		if((i - ((i/24) * 24)) = 0){
+		    //Determine which line it is
+		    let vLine = 1;
+		    let xLine = i/24;
+		    let yLine = j/24;
+		    let k = 0;
+		    let check = false;
+
+		    //Check to see if this line has been removed.
+		    while(k < 100){
+			if((xLine = xLinesToRemove[k]) & (yLine = yLinesToRemove[k]) & (vLine = vLinesToRemove[k])){
+			    let check = true;
+			}
+			let k = k+1;
+		    }
+
+		    //If it has not, return false.
+		    if(~check){
+			return false;
+		    }
+		}
+
+		//If the marker lies on a verticle line
+		if((j-((j/24) * 24))=0){
+		    //Determine which line it is
+		    let vLine = 0;
+		    let xLine = i/24;
+		    let yLine = j/24;
+		    let k = 0;
+		    let check = false;
+
+		    //Check to see if this line has been removed
+		    while(k < 100){
+		        if((xLine = xLinesToRemove[k]) & (yLine = yLinesToRemove[k]) & (vLine = vLinesToRemove[k])){
+			    let check = true;
+			}
+			let k = k+1;
+		    }
+
+		    //If it has not, return false
+		    if(~check){
+			return false;
+		    }
+		}
+		let j=j+ySize;
+	    }
+	    let i = i+xSize;
+	}
+	//The marker either doesn't exist on a line, or the line has been removed. Return true.
+	return true;
+    }			
+}

@@ -1,0 +1,90 @@
+class Invader{
+	field int x, y;
+	field int size;
+	field boolean alive;
+
+	constructor Invader new(int xX, int yY, int sSize){
+		let x = xX;	
+		let y = yY;
+		let size = sSize;
+		let alive = true;
+		do moveTo(xX, yY);
+		return this;
+	}
+	
+	method void dispose() {
+		do clear();
+		do Memory.deAlloc(this);
+		return;
+	}
+	method void moveTo(int xX, int yY){
+			do Screen.setColor(true);
+			do Screen.drawRectangle(xX, yY, xX+size, yY+size);
+			return;
+	}
+	method boolean moveDown(){
+		if((y + size < 220)){
+			let y = y + size;	
+			do Screen.setColor(true);
+			do Screen.drawRectangle(x, y, x+size, y+size);
+		}
+		else{
+			if(alive){
+				let y = y + size;		
+				do Screen.setColor(true);	
+				do Screen.drawRectangle(x, y, x+size, y+size);
+				return false;
+			}	
+		}
+			return true;
+	}
+	method void moveUp(){
+		if(y>1){
+			let y = y - size;
+			do Screen.setColor(true);
+			do Screen.drawRectangle(x, y, x+size, y+size );
+		}
+		return;
+	}
+	method void moveLeft(){
+		//if( x > 1) {
+			let x = x - size;
+			do Screen.setColor(true);
+			do Screen.drawRectangle(x, y, x+size, y+size);
+		//}
+		return;
+	}
+	method void moveRight(){
+		if((x+size) < 510){
+			let x = x + size;
+			do Screen.setColor(true);	
+			do Screen.drawRectangle(x, y, x+size, y+size);
+		}
+		return;
+	}
+	method void clear(){
+		do Screen.setColor(false);
+		do Screen.drawRectangle(x, y, x+size, y+size);
+		return;
+	}
+	method int getX(){
+		return x;
+	}
+	method int getY(){
+		return y;
+	}
+	method void kill(){
+		let alive = false;
+		do clear();
+		return;
+	}	
+	method boolean getAlive(){
+		return alive;
+	}
+	method void die(){
+		//TODO
+		return;
+	}
+
+}
+

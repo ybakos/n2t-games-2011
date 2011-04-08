@@ -1,0 +1,68 @@
+//LineBuffer
+class LineBuffer{
+/*------------------STATIC VARIABLES--------------*/
+	//
+/*------------------PRIVATE VARIABLES--------------*/
+	field Array a;
+	field int maxLen;
+	field int curr;
+	field boolean write;
+/*------------------PRIVATE METHODS--------------*/
+	constructor LineBuffer new(int len){// # of lines
+		let maxLen = len*4;
+		let a = Array.new(maxLen);
+		do begin();
+		return this;
+	}
+	method void begin(){
+		let curr = 0;
+		let write = true;
+		return;
+	}
+	method void addLine(int p1x, int p1y, int p2x, int p2y){
+		if( (curr<maxLen) & write ){
+			let a[curr] = p1x;
+			let a[curr+1] = p1y;
+			let a[curr+2] = p2x;
+			let a[curr+3] = p2y;
+			let curr = curr+4;
+		}
+		return;
+	}
+	method void drawLines(col c){
+		var int i;
+		let i = 0;
+		if(c=1){
+			while(i<curr){
+				do Screen.drawLine(a[i],a[i+1],a[i+2],a[i+3]);
+				let i = i + 4;
+			}
+		}else{
+			while(i<curr){
+				do Display.singleLine(a[i],a[i+1],a[i+2],a[i+3],0);
+				let i = i + 4;
+			}
+		}
+		return;
+	}
+	method void end(){
+		if( (curr<maxLen) & write ){
+			let a[curr] = -1;
+		}
+		let write = false;
+		return;
+	}
+	method void dispose() {
+		do a.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+/*------------------INIT--------------*/
+	function void init(){
+		//
+		return;
+	}
+/*------------------STATIC FUNCTIONS--------------*/
+	//
+}
+

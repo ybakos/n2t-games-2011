@@ -1,0 +1,16 @@
+/**
+ * The Main class initializes a new Lunar Lander game and starts it.
+ */
+class Main {
+
+    /** Initializes a new game and starts it. */    
+    function void main() {
+        var LanderGame game;
+
+        let game = LanderGame.new();
+        do game.run();
+	do game.dispose();
+
+        return;
+    }
+}

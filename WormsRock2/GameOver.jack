@@ -1,0 +1,35 @@
+class GameOver {
+	field int yourScore;
+	constructor GameOver new(){
+		let yourScore = 0;
+		return this;
+	}
+
+	//displays screen until any key is pressed
+	method void display(int highScore){
+		
+		do Screen.setColor(false);
+		do Screen.drawRectangle(0,0,510,255);
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.printString("Your score is ");
+		do Output.printInt(highScore);
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		do Output.println();
+		return;
+	}
+}

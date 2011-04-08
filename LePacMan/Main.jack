@@ -1,0 +1,36 @@
+class Main {
+	
+	function void main() {
+        var PacmanGame game;
+
+        let game = PacmanGame.new();
+
+        do game.run();
+
+        do game.dispose();
+		
+		return;
+	}
+	
+	/** Prints herro! to the screen */
+	function void helloWorld() {	
+		var int i, j;
+		let i = 0;
+		let j = 0;
+		while (i<3) {
+			do Output.printString("i is : ");
+			do Output.printInt(i);
+			do Output.println();
+			while (j<3) {
+				do Output.printString("j is : ");
+				do Output.printInt(j);
+				do Output.println();
+				let j = j + 1;
+			}
+			let i = i + 1;
+		}
+		do Output.printString("herro!");
+		do Output.println();
+		return;
+	}
+}

@@ -1,0 +1,493 @@
+//Display
+class Display{
+/*------------------STATIC VARIABLES--------------*/
+	static int screen_width;
+	static int screen_height;
+	static int screen_address;
+	static int screen_addrLen;
+/*------------------PRIVATE VARIABLES--------------*/
+	field int posX, posY;
+	field int tlX, tlY, xLen, yLen;
+/*------------------PRIVATE METHODS--------------*/
+	constructor Display new(int cX, int cY, int xL, int yL){
+		let posX = cX;
+		let posY = cY;
+		let xLen = xL/2;//no odd numbers
+		let yLen = yL/2;//no odd numbers
+		let tlX = posX - xLen;
+		let tlY = posY - yLen;
+		let xLen = xLen*2;
+		let yLen = yLen*2;
+		return this;
+	}
+	method void drawBounding(int c){
+		if(c=1){
+			do Screen.drawLine(tlX,tlY,tlX+xLen,tlY);//top
+			do Screen.drawLine(tlX+xLen,tlY,tlX+xLen,tlY+yLen);//right
+			do Screen.drawLine(tlX+xLen,tlY+yLen,tlX,tlY+yLen);//bot
+			do Screen.drawLine(tlX,tlY+yLen,tlX,tlY);//left
+		}else{
+			do Display.singleLine(tlX,tlY,tlX+xLen,tlY,c);//top
+			do Display.singleLine(tlX+xLen,tlY,tlX+xLen,tlY+yLen,c);//right
+			do Display.singleLine(tlX+xLen,tlY+yLen,tlX,tlY+yLen,c);//bot
+			do Display.singleLine(tlX,tlY+yLen,tlX,tlY,c);//left
+		}
+		//crosshair:
+		//do Screen.drawLine(posX-2,posY,posX+2,posY);
+		//do Screen.drawLine(posX,posY+2,posX,posY-2);
+		return;
+	}
+	method boolean inRange(int inX, int inY){
+		if( (inX>tlX) & (inX<(tlX+xLen)) & (inY>tlY) & (inY<(tlY+yLen)) ){
+			return true;
+		}
+		return false;
+	}
+	method void clearScreen(int c){
+		if(c=1){//black
+			do Display.fillScreen(c);
+			//do Display.fillRect(tlX+1,tlY+1,tlX+xLen-1,tlY+yLen-1,0);
+		}else{//white
+			do Screen.clearScreen();
+		}
+		return;
+	}
+	method void clear(){
+		//do Screen.drawRectangle(tlX+1,tlY+1,tlX+xLen-1,tlY+yLen-1);
+		do Display.fillRect(tlX+1,tlY+1,tlX+xLen-1,tlY+yLen-1,0);
+		return;
+	}
+	method boolean getRender2DPoint(Point p, V3D v, Cam3D cam){// place location into point
+		if( Float.lt(v.getZ(), cam.getCut()) ){//don't render if too far back
+			return false;
+		}
+		do p.set( Float.toInt(v.getX(),true) , Float.toInt(v.getY(),true) );
+		do offsetPoint(p);
+		return true;
+	}
+	method void offsetPoint(Point p){
+		do p.setX( p.getX() + tlX + (xLen/2) );// offset to center location
+		do p.setY( p.getY() + tlY + (yLen/2) );// SHOULD be -p.getY()
+		return;
+	}
+	method void renderLine(LineBuffer buffer, Point a, Point b){// put projected line onto screen, with clipping
+		var Point p1, p2;
+		var bool inside1, inside2;
+		
+		let p1 = Point.new(a.getX(),a.getY());
+		let p2 = Point.new(b.getX(),b.getY());
+		
+		let inside1 = isInterrior(p1);
+		let inside2 = isInterrior(p2);
+		if(inside1 & inside2){// both interrior - usual
+			do buffer.addLine(p1.getX(),p1.getY(), p2.getX(),p2.getY());
+			//do Screen.drawLine(p1.getX(),p1.getY(), p2.getX(),p2.getY());
+		}else{
+			if( inside1 | inside2 ){// one interrior, one exterrior
+				if(inside1){
+					let inside1 = getBorderIntersection(p2, p1, p2);// p2 = new point
+				}else{
+					let inside1 = getBorderIntersection(p1, p2, p1);// p1 = new point
+				}
+				if(inside1){
+					do buffer.addLine(p1.getX(),p1.getY(), p2.getX(),p2.getY());
+					//do Screen.drawLine(p1.getX(),p1.getY(), p2.getX(),p2.getY());
+				}else{
+					//do Output.printString("INVALID RETURN - RENDER LINE");
+					//do Output.println();
+				}
+			}
+		}//both exterrior - don't drawl
+		do p1.dispose();
+		do p2.dispose();
+		return;
+	}
+	method boolean isInterrior(Point p1){
+		if( (p1.getX()>tlX) & (p1.getX()<(tlX+xLen))){//HORIZONTAL
+			if( (p1.getY()>tlY) & (p1.getY()<(tlY+yLen))){//VERTICAL
+				return true;
+			}
+		}
+		return false;
+	}
+	method boolean getBorderIntersection(Point ret, Point p1, Point p2){
+		var Float fl0;
+		var V3D v0,v1,v2,v3, i0,i1, temp;
+		var boolean b0;
+		var int i;
+		let fl0 = Float.new(Float.getPos(),0,0);
+		let v0 = V3D.new(fl0,fl0,fl0);
+		let v1 = V3D.new(fl0,fl0,fl0);
+		let v2 = V3D.new(fl0,fl0,fl0);
+		let v3 = V3D.new(fl0,fl0,fl0);
+		let i0 = V3D.new(fl0,fl0,fl0);
+		let i1 = V3D.new(fl0,fl0,fl0);
+		let temp = V3D.new(fl0,fl0,fl0);
+		
+		do Float.toFloat(v0.getX(),tlX);
+		do Float.toFloat(v0.getY(),tlY);
+		let i = tlX+xLen;
+		do Float.toFloat(v1.getX(),i);
+		do Float.toFloat(v1.getY(),tlY);
+		let i = tlX+xLen;
+		do Float.toFloat(v2.getX(),i);
+		let i = tlY+yLen;
+		do Float.toFloat(v2.getY(),i);
+		do Float.toFloat(v3.getX(),tlX);
+		let i = tlY+yLen;
+		do Float.toFloat(v3.getY(),i);
+		
+		do Float.toFloat(i0.getX(),p1.getX());
+		do Float.toFloat(i0.getY(),p1.getY());
+		do Float.toFloat(i1.getX(),p2.getX());
+		do Float.toFloat(i1.getY(),p2.getY());
+		let b0 = Display.getLineInt2DSeg(temp, i0.getX(),i0.getY(),i1.getX(),i1.getY(), v3.getX(),v3.getY(),v0.getX(),v0.getY());//LEFT
+		if( ~b0 ){
+			let b0 = Display.getLineInt2DSeg(temp, i0.getX(),i0.getY(),i1.getX(),i1.getY(), v1.getX(),v1.getY(),v2.getX(),v2.getY());//RIGHT
+			if( ~b0 ){
+				let b0 = Display.getLineInt2DSeg(temp, i0.getX(),i0.getY(),i1.getX(),i1.getY(), v0.getX(),v0.getY(),v1.getX(),v1.getY());//TOP
+				if( ~b0 ){
+					let b0 = Display.getLineInt2DSeg(temp, i0.getX(),i0.getY(),i1.getX(),i1.getY(), v2.getX(),v2.getY(),v3.getX(),v3.getY());//BOT
+				}
+			}
+		}
+		if(b0){
+			do ret.setX( Float.toInt(temp.getX(), true) );
+			do ret.setY( Float.toInt(temp.getY(), true) );
+		}
+		do v0.dispose();
+		do v1.dispose();
+		do v2.dispose();
+		do v3.dispose();
+		do i0.dispose();
+		do i1.dispose();
+		do temp.dispose();
+		do fl0.dispose();
+		return b0;
+	}
+	function boolean getLineInt2DSeg(V3D ret, Float aX, Float aY, Float bX, Float bY,  Float cX, Float cY, Float dX, Float dY){
+		var Float caX, dcX, baX, caY, dcY, baY, num, den, t, zero;
+		var boolean b0;
+		
+		let caX = Float.new(0,0,0);
+		let dcX = Float.new(0,0,0);
+		let baX = Float.new(0,0,0);
+		let caY = Float.new(0,0,0);
+		let dcY = Float.new(0,0,0);
+		let baY = Float.new(0,0,0);
+		let num = Float.new(0,0,0);
+		let den = Float.new(0,0,0);
+		let t = Float.new(0,0,0);
+		let zero = Float.new(Float.getPos(),0,0);
+		
+		do Float.sub(caX,cX,aX);
+		do Float.sub(dcX,dX,cX);
+		do Float.sub(baX,bX,aX);
+		do Float.sub(caY,cY,aY);
+		do Float.sub(dcY,dY,cY);
+		do Float.sub(baY,bY,aY);
+		do Float.mul(num,baY,caX);//num = baY*caX - baX*caY
+		do Float.mul(t,baX,caY);
+		do Float.sub(num,num,t);
+		do Float.mul(den,baX,dcY);//den = baX*dcY - baY*dcX
+		do Float.mul(t,baY,dcX);
+		do Float.sub(den,den,t);
+		
+		if(Float.eq(den,zero)){
+			let b0 = false;
+		}else{//t2 = t, t1 = num, caX = TEMP
+			do Float.div(t,num,den);
+			do Float.mul(num,dcX,caY);//num = dcX*caY - dcY*caX
+			do Float.mul(caX,dcY,caX);
+			do Float.sub(num,num,caX);
+			do Float.mul(den,dcX,baY);//den = dcX*baY - dcY*baX
+			do Float.mul(caX,dcY,baX);
+			do Float.sub(den,den,caX);
+			if(Float.eq(den,zero)){
+				let b0 = false;
+			}else{
+				do Float.div(num,num,den);
+				do caX.set(Float.getPos(),1,0);// 1
+				if( Float.gt(num,zero) & Float.le(num,caX) & Float.gt(t,zero) & Float.le(t,caX) ){
+					do Float.mul(caX,num,baX);
+					do Float.add(caX,caX,aX);
+					do ret.setX(caX);//num*baX+aY
+					do Float.mul(caX,num,baY);
+					do Float.add(caX,caX,aY);
+					do ret.setY(caX);//num*baY+aY
+					let b0 = true;
+				}
+			}
+		}
+		do caX.dispose();
+		do dcX.dispose();
+		do baX.dispose();
+		do caY.dispose();
+		do dcY.dispose();
+		do baY.dispose();
+		do num.dispose();
+		do den.dispose();
+		do t.dispose();
+		do zero.dispose();
+		return b0;
+	}
+	method void print(){
+		do Output.printString("center: ");
+		do Output.printInt(posX);
+		do Output.printString(", ");
+		do Output.printInt(posY);
+		do Output.printString(" : topLeft: ");
+		do Output.printInt(tlX);
+		do Output.printString(", ");
+		do Output.printInt(tlY);
+		do Output.printString(" : dim: ");
+		do Output.printInt(xLen);
+		do Output.printString(", ");
+		do Output.printInt(yLen);
+		do Output.println();
+		return;
+	}
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+/*------------------INIT--------------*/
+	function void init(){
+		let screen_width = 512;
+		let screen_height = 256;
+		let screen_address = 16384;
+		let screen_addrLen = 16;
+		return;
+	}
+/*------------------STATIC FUNCTIONS--------------*/
+	
+	function void V3Dto2D(V3D p, M4D trans, V3D v, Cam3D cam){// p = perspective(trans*v)
+		var V3D newPt;
+		var Float scale, t, zero;
+		let scale = Float.new(0,0,0);
+		let t = Float.new(0,0,0);
+		let zero = Float.new(Float.getPos(),0,0);
+		let newPt = V3D.new(zero,zero,zero);
+		do M4D.mulV3D(newPt, trans, v);
+		do Float.mul(scale,cam.getScale(),cam.getLens());
+		do Float.add(t,cam.getLens(), newPt.getZ());
+		do Float.div(scale,scale,t);
+		if( Float.gt(scale,zero) ){
+			do Float.negate(scale,scale);
+		}
+		do Float.mul(t,scale,newPt.getX());
+		do newPt.setX(t);
+		do Float.mul(t,scale,newPt.getY());
+		do newPt.setY(t);
+		do V3D.copy(p, newPt);
+		do newPt.dispose();
+		do scale.dispose();
+		do t.dispose();
+		do zero.dispose();
+		return;
+	}
+	function int pixelToAddress(int x,int y){// address to word containing the pixel
+		var int addr, t1;
+		let addr = screen_width/screen_addrLen;
+		let addr = addr * y;
+		let t1 = x/screen_addrLen;
+		let addr =  addr+t1 + screen_address;
+		return addr;
+	}
+	function void colorPixel(int x,int y,int c){
+		var int mem, val, tot, div, rem, mask;
+		let mem = Display.pixelToAddress(x,y);
+		let val = Memory.peek( mem );
+		let tot = screen_width/screen_addrLen;//32
+		let div = Math.abs(x/screen_addrLen);
+		let rem = div*screen_addrLen;
+		let rem = x - rem;
+		let mask = 1;// 0%000...001
+		while(rem>0){
+			let mask = mask+mask;
+			let rem = rem - 1;
+		}
+		if(~(c=0)){//color black [1]
+			let val = val | mask;
+		}else{// color white [0]
+			let mask = ~mask;//0%111...110
+			let val = val & mask;
+		}
+		do Memory.poke( mem, val);
+		return;
+	}
+	function void fillScreen(int c){
+		var int start, stop, col;
+		let start = screen_address;
+		let stop = (screen_width/screen_addrLen);
+		let stop = stop*screen_height;
+		let stop = stop + start;
+		let col = 0;//white
+		if(~(c=0)){//black
+			let col = ~col;
+		}
+		while(start<stop){
+			do Memory.poke(start, col);
+			let start = start + 1;
+		}
+		return;
+	}
+	
+	function void fillCircle(int x0, int y0, int r, int c){// radius greater than ~90 will screw up  (x*x+y*y)
+		var int minX, maxX, minY, maxY, x, y, len, t0, t1;
+		let minX = x0 - r;
+		let minY = y0 - r;
+		let maxX = x0 + r;
+		let maxY = y0 + r;
+		let x = minX;
+		while( ~(x>maxX) ){
+			let y = minY;
+			while( ~(y>maxY) ){
+				let t0 = y-y0;
+				let t0 = t0*t0;
+				let t1 = x-x0;
+				let t1 = t1*t1;
+				let t1 = t0+t1;
+				let len = Math.sqrt(t1);
+				if( len<r ){
+					do Display.colorPixel(x,y,c);
+					//do Screen.drawPixel(x,y);
+				}
+				let y = y + 1;
+			}
+			let x = x + 1;
+		}
+		return;
+	}
+	function void fillRect(int x0, int y0, int x1, int y1, int c){// radius greater than ~90 will screw up  (x*x+y*y)
+		var int minX, maxX, minY, maxY, x, y, len, t0, t1;
+		let minX = Math.min( x0, x1 );
+		let minY = Math.min( y0, y1 );
+		let maxX = Math.max( x0, x1 );
+		let maxY = Math.max( y0, y1 );
+		let x = minX;
+		while( ~(x>maxX) ){
+			let y = minY;
+			while( ~(y>maxY) ){
+				do Display.colorPixel(x,y,c);
+				//do Screen.drawPixel(x,y);
+				let y = y + 1;
+			}
+			let x = x + 1;
+		}
+		return;
+	}
+	function void fillTri(int x0, int y0, int x1, int y1, int x2, int y2, int c){
+		var int minX, maxX, minY, maxY, x, y, c0, c1, c2, uX, vX, wX, uY, vY, wY, t;
+		var int thresh, threshN;
+		var boolean bool1, bool2, bool3, bool4, bool5, bool6;
+		let thresh = 1;
+		let threshN = -thresh;
+		let minX = Math.min( x0, Math.min(x1,x2) );
+		let minY = Math.min( y0, Math.min(y1,y2) );
+		let maxX = Math.max( x0, Math.max(x1,x2) );
+		let maxY = Math.max( y0, Math.max(y1,y2) );
+		let x = minX;
+		while( ~(x>maxX) ){
+			let y = minY;
+			while( ~(y>maxY) ){
+				let uX = x-x0; let uY = y-y0;
+				let vX = x-x1; let vY = y-y1;
+				let wX = x-x2; let wY = y-y2;
+				let c0 = uX*vY/100; let t = uY*vX/100; let c0 = c0 - t;
+				let c1 = vX*wY/100; let t = vY*wX/100; let c1 = c1 - t;
+				let c2 = wX*uY/100; let t = wY*uX/100; let c2 = c2 - t;
+				if( ((c0>threshN) & (c1>threshN) & (c2>threshN)) | ((c0<thresh) & (c1<thresh) & (c2<thresh)) ){
+					do Display.colorPixel(x,y,c);
+				}
+				let y = y + 1;
+			}
+			let x = x + 1;
+		}
+		return;
+	}
+	function void singleLine(int minX, int minY, int maxX, int maxY ,int c){// (x1,y1) -> (x2,y2)
+		var int a, m, num, den, mode, x, y, t, u;
+		let num = (maxY-minY);
+		let den = (maxX-minX);
+		if(den=0){// infinity
+			let m = 2;// vertical lines
+		}else{// #
+			let m = num/den;
+		}
+		let a = Math.abs(m);
+		
+		if(a<1){// more run than rise
+			if(maxX<minX){//start at minimum x
+				let m = maxX;
+				let maxX = minX;
+				let minX = m;
+				let m = maxY;
+				let maxY = minY;
+				let minY = m;
+			}
+			let num = (minY-maxY);
+			let den = (maxX-minX);
+			let m = minX*maxY; let t = maxX*minY; let m = m - t;
+			let y = minY;
+			let x = minX;
+			if(minY>maxY){//start at maximum y
+				while(~(x>maxX)){
+					do Display.colorPixel(x,y,c);
+					let t = num*x; let u = den*y; let t = t + u; let t = t + m;
+					if( t > 0 ){
+						let y = y - 1;
+					}
+					let x = x + 1;
+				}
+			}else{
+				while(~(x>maxX)){
+					do Display.colorPixel(x,y,c);
+					let t = num*x; let u = den*y; let t = t + u; let t = t + m;
+					if( t < 0 ){
+						let y = y + 1;
+					}
+					let x = x + 1;
+				}
+			}
+		}else{// more rise than run
+			if(maxY<minY){//start at minimum y
+				let m = maxX;
+				let maxX = minX;
+				let minX = m;
+				let m = maxY;
+				let maxY = minY;
+				let minY = m;
+			}
+			let num = (minY-maxY);
+			let den = (maxX-minX);
+			let m = minX*maxY; let t = maxX*minY; let m = m;
+			let y = minY;
+			let x = minX;
+			if(minX>maxX){//start at maximum x
+				while(~(y>maxY)){
+					do Display.colorPixel(x,y,c);
+					let t = num*x; let u = den*y; let t = t + u; let t = t + m;
+					if( t < 0 ){
+						let x = x - 1;
+					}
+					let y = y + 1;
+				}
+			}else{
+				while(~(y>maxY)){
+					do Display.colorPixel(x,y,c);
+					let t = num*x; let u = den*y; let t = t + u; let t = t + m;
+					if( t > 0 ){
+						let x = x + 1;
+					}
+					let y = y + 1;
+				}
+			}
+		}
+		return;
+	}
+}
+
+
+
+

@@ -1,0 +1,324 @@
+function Terrain.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push constant 9
+pop this 3
+push this 3
+call Array.new 1
+pop this 0
+push this 3
+call Array.new 1
+pop this 1
+push this 3
+call Array.new 1
+pop this 2
+push constant 0
+push this 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 0
+add
+push constant 100
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 0
+add
+push constant 150
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 0
+add
+push constant 175
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 0
+add
+push constant 250
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 0
+add
+push constant 350
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push this 0
+add
+push constant 450
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push this 0
+add
+push constant 470
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push this 0
+add
+push constant 510
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+push this 1
+add
+push constant 254
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 1
+add
+push constant 150
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 1
+add
+push constant 200
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 1
+add
+push constant 200
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 1
+add
+push constant 240
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 1
+add
+push constant 180
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push this 1
+add
+push constant 240
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push this 1
+add
+push constant 240
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push this 1
+add
+push constant 190
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+push this 2
+add
+push constant 1
+neg
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 2
+add
+push constant 1
+neg
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 2
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 2
+add
+push constant 1
+neg
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 2
+add
+push constant 1
+neg
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 2
+add
+push constant 1
+neg
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push this 2
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push this 2
+add
+push constant 1
+neg
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push this 2
+add
+push constant 1
+neg
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push pointer 0
+call Terrain.draw 1
+pop temp 0
+push pointer 0
+return
+function Terrain.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Array.dispose 1
+pop temp 0
+push this 1
+call Array.dispose 1
+pop temp 0
+push this 2
+call Array.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Terrain.crash 1
+push argument 0
+pop pointer 0
+push constant 1
+pop local 0
+label WHILE_EXP0
+push local 0
+push this 3
+lt
+not
+if-goto WHILE_END0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Terrain.draw 1
+push argument 0
+pop pointer 0
+push constant 1
+pop local 0
+label WHILE_EXP0
+push local 0
+push this 3
+lt
+not
+if-goto WHILE_END0
+push local 0
+push constant 1
+sub
+push this 0
+add
+pop pointer 1
+push that 0
+push local 0
+push constant 1
+sub
+push this 1
+add
+pop pointer 1
+push that 0
+push local 0
+push this 0
+add
+pop pointer 1
+push that 0
+push local 0
+push this 1
+add
+pop pointer 1
+push that 0
+call Screen.drawLine 4
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

@@ -1,0 +1,437 @@
+/*
+ * This class holds an array of Tiles that make up the maze.  This class is how
+ * any other class should access the Tiles.
+ */
+class Grid {
+	/*-------------------- STATIC VARIABLES --------------------*/
+		//
+	/*-------------------- PRIVATE VARIABLES --------------------*/
+	field Array tiles;
+	static int GRID_SIZE, TILE_SIZE;
+	static int VIEW_DISTANCE; //in number of tiles
+	field int goalX, goalY;
+	/*-------------------- PRIVATE METHODS --------------------*/
+	/*
+	 * Constructor for Grid
+	 * int sx: number of tiles in grid east-west
+	 * int sy: number of tiles in grid north-south
+	 * int gx,gy: location of goal spot
+	 */
+	constructor Grid new() {
+		
+		let GRID_SIZE=10;
+		
+		let tiles = Array.new(GRID_SIZE*GRID_SIZE);
+		
+		let TILE_SIZE=100;	//number of 3D units per Tile
+
+		let VIEW_DISTANCE=3;
+		// 10 x 10 Maze
+		/*
+		 * 01234567890
+		 * 1->        
+		 * 2 |        
+		 * 3 |        
+		 * 4 |        
+		 * 5 -------->
+		 * 6         |
+		 * 7      <- |
+		 * 8      |<-|
+		 * 9      | <-
+		 * 0      --->
+		 */
+		if (GRID_SIZE = 10) {
+			// Row 0
+			let tiles[0] = Tile.new(true,true);
+			let tiles[1] = Tile.new(true,false);
+			let tiles[2] = Tile.new(true,false);
+			let tiles[3] = Tile.new(true,false);
+			let tiles[4] = Tile.new(true,false);
+			let tiles[5] = Tile.new(true,true);
+			let tiles[6] = Tile.new(true,false);
+			let tiles[7] = Tile.new(true,false);
+			let tiles[8] = Tile.new(true,false);
+			let tiles[9] = Tile.new(true,false);
+			// Row 1
+			let tiles[10] = Tile.new(true,true);
+			let tiles[11] = Tile.new(false,true);
+			let tiles[12] = Tile.new(true,true);
+			let tiles[13] = Tile.new(true,false);
+			let tiles[14] = Tile.new(false,true);
+			let tiles[15] = Tile.new(false,true);
+			let tiles[16] = Tile.new(true,false);
+			let tiles[17] = Tile.new(true,true);
+			let tiles[18] = Tile.new(true,false);
+			let tiles[19] = Tile.new(false,true);
+			// Row 2
+			let tiles[20] = Tile.new(false,true);
+			let tiles[21] = Tile.new(false,false);
+			let tiles[22] = Tile.new(true,false);
+			let tiles[23] = Tile.new(false,true);
+			let tiles[24] = Tile.new(false,true);
+			let tiles[25] = Tile.new(true,false);
+			let tiles[26] = Tile.new(false,true);
+			let tiles[27] = Tile.new(false,false);
+			let tiles[28] = Tile.new(true,false);
+			let tiles[29] = Tile.new(false,true);
+			// Row 3
+			let tiles[30] = Tile.new(false,true);
+			let tiles[31] = Tile.new(false,true);
+			let tiles[32] = Tile.new(true,true);
+			let tiles[33] = Tile.new(false,false);
+			let tiles[34] = Tile.new(true,false);
+			let tiles[35] = Tile.new(false,true);
+			let tiles[36] = Tile.new(true,false);
+			let tiles[37] = Tile.new(true,false);
+			let tiles[38] = Tile.new(true,false);
+			let tiles[39] = Tile.new(false,true);
+			// Row 4
+			let tiles[40] = Tile.new(false,true);
+			let tiles[41] = Tile.new(false,true);
+			let tiles[42] = Tile.new(true,false);
+			let tiles[43] = Tile.new(false,false);
+			let tiles[44] = Tile.new(true,false);
+			let tiles[45] = Tile.new(true,false);
+			let tiles[46] = Tile.new(true,false);
+			let tiles[47] = Tile.new(true,false);
+			let tiles[48] = Tile.new(true,false);
+			let tiles[49] = Tile.new(false,false);
+			// Row 5
+			let tiles[50] = Tile.new(true,true);
+			let tiles[51] = Tile.new(true,false);
+			let tiles[52] = Tile.new(true,false);
+			let tiles[53] = Tile.new(false,true);
+			let tiles[54] = Tile.new(true,true);
+			let tiles[55] = Tile.new(true,false);
+			let tiles[56] = Tile.new(false,true);
+			let tiles[57] = Tile.new(true,false);
+			let tiles[58] = Tile.new(false,false);
+			let tiles[59] = Tile.new(false,true);
+			// Row 6
+			let tiles[60] = Tile.new(false,true);
+			let tiles[61] = Tile.new(true,false);
+			let tiles[62] = Tile.new(true,false);
+			let tiles[63] = Tile.new(false,false);
+			let tiles[64] = Tile.new(true,false);
+			let tiles[65] = Tile.new(false,false);
+			let tiles[66] = Tile.new(true,true);
+			let tiles[67] = Tile.new(true,false);
+			let tiles[68] = Tile.new(false,true);
+			let tiles[69] = Tile.new(false,true);
+			// Row 7
+			let tiles[70] = Tile.new(true,true);
+			let tiles[71] = Tile.new(false,true);
+			let tiles[72] = Tile.new(true,true);
+			let tiles[73] = Tile.new(false,true);
+			let tiles[74] = Tile.new(true,true);
+			let tiles[75] = Tile.new(true,false);
+			let tiles[76] = Tile.new(false,true);
+			let tiles[77] = Tile.new(false,true);
+			let tiles[78] = Tile.new(true,false);
+			let tiles[79] = Tile.new(false,true);
+			// Row 8
+			let tiles[80] = Tile.new(false,true);
+			let tiles[81] = Tile.new(false,true);
+			let tiles[82] = Tile.new(false,true);
+			let tiles[83] = Tile.new(false,false);
+			let tiles[84] = Tile.new(true,false);
+			let tiles[85] = Tile.new(false,false);
+			let tiles[86] = Tile.new(false,true);
+			let tiles[87] = Tile.new(true,true);
+			let tiles[88] = Tile.new(false,false);
+			let tiles[89] = Tile.new(false,false);
+			// Row 9
+			let tiles[90] = Tile.new(false,true);
+			let tiles[91] = Tile.new(false,false);
+			let tiles[92] = Tile.new(false,false);
+			let tiles[93] = Tile.new(false,true);
+			let tiles[94] = Tile.new(true,true);
+			let tiles[95] = Tile.new(false,false);
+			let tiles[96] = Tile.new(false,true);
+			let tiles[97] = Tile.new(true,false);
+			let tiles[98] = Tile.new(true,false);
+			let tiles[99] = Tile.new(true,false);
+		}
+		// 100 x 100 Maze
+		// On second thought, this may take too long to implement
+		return this;
+	}
+	
+	/*
+	 * Which walls are present at point(x,y)
+	 * Returns a boolean array: [North, South, East, West]
+	 */
+	method void getWalls(Array walls, int x, int y) {
+		let walls[0] = hasNorthWall(x,y);
+		let walls[1] = hasEastWall(x,y);
+		let walls[2] = hasSouthWall(x,y);
+		let walls[3] = hasWestWall(x,y);
+		return;
+	}
+	/*
+	 * Check if tile x,y has a north wall
+	 */
+	method boolean hasNorthWall(int x, int y) {
+		var Tile t;
+		let t = tiles[y * GRID_SIZE + x];
+		return t.isNorthWall();
+	}
+	/*
+	 * Check if tile x,y has a west wall
+	 */
+	method boolean hasWestWall(int x, int y) {
+		var Tile t;
+		let t = tiles[y * GRID_SIZE + x];
+		return t.isWestWall();
+	}
+
+	/*
+	 * Check if tile x,y has a south wall
+	 */
+	method boolean hasSouthWall(int x, int y) {
+		var Tile t;
+		if (y=(GRID_SIZE-1)) {
+			return true;
+		}
+		let t = tiles[(y+1) * GRID_SIZE + x];
+		return t.isNorthWall();
+	}
+	/*
+	 * Check if tile x,y has a east wall
+	 */
+	method boolean hasEastWall(int x, int y) {
+		var Tile t;
+		if (x = (GRID_SIZE-1)) {
+			return true;
+		}
+		let t = tiles[y * GRID_SIZE + x + 1];
+		return t.isWestWall();
+	}
+	
+	/*
+	 * Used to get the array of tiles visible from tile at (x,y)
+	 * Modifies hold to -hold- [numberOfElements, arrayOfVisibles]. Expects hold to be already be an array of size 2.
+	 * Is agnostic about which direction you are facing(for now). Also assumes hallways will always be 1 wide (no rooms)
+	 *
+	 * 
+	 * Uses VIEW_DISTANCE
+	 *
+	 */
+	method void canSeeFrom(Array hold, int x, int y) {
+//		var Tile thisTile;
+		var Array visibles;
+		var int curVisibles;
+		var int numPossibleVisible; //number of  tiles possibly visible, within view distance
+		var int offset; //offset x or y by -VIEW_DISTANCE to VIEW_DISTANCE to check
+		var boolean contin;//true until wall is found or view distance is reached
+		var V2D visSpotToAdd;
+		
+		/*For this, I'm assuming you can only see in the cardinal directions. x is where you're standing, v is possibly visible. in example, view distance is 3.
+		  #########
+		  ####v####
+		  ####v####
+		  ####v####
+		  #vvvxvvv#
+		  ####v####
+		  ####v####
+		  ####v####
+		  #########
+		*/
+		
+		let numPossibleVisible = 4 * VIEW_DISTANCE + 1;
+		
+		
+		let visibles = Array.new(numPossibleVisible);
+		let hold[0] = numPossibleVisible;
+		let hold[1] = visibles;
+		
+		
+		let visSpotToAdd = V2D.empty();
+		
+		do visSpotToAdd.set(x,y);
+		
+		let visibles[0] = V2D.copy(visSpotToAdd);
+		let curVisibles = 1;
+		
+		
+		//check north
+		let offset = 0;
+		let contin = true;
+		
+		while(contin)
+		{
+			if(~hasNorthWall(x,y-offset))
+			{
+				do visSpotToAdd.set(x,y-offset-1);
+				let visibles[curVisibles] = V2D.copy(visSpotToAdd);
+				let curVisibles = curVisibles + 1;
+				let offset = offset + 1;
+				if(~(offset < VIEW_DISTANCE)) //>=
+				{
+					let contin = false;
+				}
+			}
+			else
+			{
+				let contin = false;
+			}
+		}
+		
+		//check south
+		let offset = 0;
+		let contin = true;
+		
+		while(contin){
+			if(~hasSouthWall(x,y+offset))
+			{
+				do visSpotToAdd.set(x,y+offset+1);
+				let visibles[curVisibles] = V2D.copy(visSpotToAdd);
+				let curVisibles = curVisibles + 1;
+				let offset = offset + 1;
+				if(~(offset < VIEW_DISTANCE))
+				{
+					let contin = false;
+				}
+			}
+			else
+			{
+				let contin = false;
+			}
+		}
+		
+		//check east
+		let offset = 0;
+		let contin = true;
+		
+		while(contin)
+		{
+			if(~hasEastWall(x + offset, y))
+			{
+				do visSpotToAdd.set(x+offset+1, y);
+				let visibles[curVisibles] = V2D.copy(visSpotToAdd);
+				let curVisibles = curVisibles + 1;
+				let offset = offset + 1;
+				if(~(offset < VIEW_DISTANCE))
+				{
+					let contin = false;
+				}
+			}
+			else
+			{
+				let contin = false;
+			}
+		}
+		
+		//check west
+		let offset = 0;
+		let contin = true;
+		
+		while(contin)
+		{
+			if(~hasWestWall(x-offset,y))
+			{
+				do visSpotToAdd.set(x-offset-1, y);
+				let visibles[curVisibles] = V2D.copy(visSpotToAdd);
+				let curVisibles = curVisibles + 1;
+				let offset = offset + 1;
+				if(~(offset < VIEW_DISTANCE))
+				{
+					let contin = false;
+				}
+			}
+			else
+			{
+				let contin = false;
+			}
+		}
+		
+		while(curVisibles < numPossibleVisible)
+		{
+			let visibles[curVisibles] = V2D.new(-1,-1);
+			let curVisibles = curVisibles + 1;
+		}
+		do visSpotToAdd.dispose();
+		return;
+	}
+
+	/*
+	 * Checks to see if the next move will place the character in a new
+	 * tile.  If so, check to make sure a wall is not in the way.  If
+	 * nothing is in the way, canMove = true.
+	 */
+	method boolean canMove(int pos1_x, int pos1_y, int pos2_x, int pos2_y){// inputs are grid coords
+		var boolean canMove;
+		var int xmove, ymove;
+		
+		let xmove = pos2_x - pos1_x;
+		let ymove = pos2_y - pos1_y;
+		let canMove = true;// default true
+		if(ymove = -1){// move (North)
+			let canMove = canMove & (~hasNorthWall(pos1_x, pos1_y));
+		}
+		if(ymove = 1){// move (South)
+			let canMove = canMove & (~hasSouthWall(pos1_x, pos1_y));
+		}
+		if(xmove = 1){// move (East)
+			let canMove = canMove & (~hasEastWall(pos1_x, pos1_y));
+		}
+		if(xmove = -1){// move (West)
+			let canMove = canMove & (~hasWestWall(pos1_x, pos1_y));
+		}
+		return canMove;
+	}
+	
+	/*
+	 * Get the tile  you are currently in, as an array of two numbers
+	 * x,y are the world coordinates
+	 * IS A STATIC FUNCTION NOW
+	 */
+	function Array coordTransform(V2D p) {
+		var V2D pos;
+		let pos = V2D.empty();
+		do pos.setX(p.getX() / GRID_SIZE);
+		do pos.setY(p.getY() / GRID_SIZE);
+		return pos;
+	}
+	
+	/*-------------------- GETTERS --------------------*/
+	// No setters for size since it should not change
+	method int getSizeX() {
+		return GRID_SIZE;
+	}
+	method int getSizeY() {
+		return GRID_SIZE;
+	}
+	method int getGoalX() {
+		return goalX;
+	}
+	method int getGoalY() {
+		return goalY;
+	}
+	function int getGridSize() {
+		return GRID_SIZE;
+	}
+
+	/*-------------------- SETTERS --------------------*/
+	method void setGoal(int x, int y) {
+		let goalX = x;
+		let goalY = y;
+		return;
+	}
+	
+	/*-------------------- CLEANUP --------------------*/
+	method void dispose() {
+		var int i;
+		var Tile t;
+		let i = 0;
+		while (i < GRID_SIZE * GRID_SIZE)
+		{
+			let t = tiles[i];
+			do t.dispose();
+			let i = i + 1;
+		}
+		do tiles.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+}

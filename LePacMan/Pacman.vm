@@ -1,0 +1,303 @@
+function Pacman.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push constant 16
+pop this 2
+push constant 8
+pop this 3
+push pointer 0
+return
+function Pacman.draw 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Pacman.drawOpen 1
+pop temp 0
+push pointer 0
+call Pacman.drawClosed 1
+pop temp 0
+push constant 0
+return
+function Pacman.drawOpen 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 2
+call Screen.drawCircle 3
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push constant 10
+sub
+push this 1
+push this 3
+call Screen.drawCircle 3
+pop temp 0
+push constant 0
+return
+function Pacman.drawClosed 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 2
+call Screen.drawCircle 3
+pop temp 0
+push constant 0
+return
+function Pacman.erase 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 2
+call Screen.drawCircle 3
+pop temp 0
+push constant 0
+return
+function Pacman.moveUp 0
+push argument 0
+pop pointer 0
+push this 1
+push this 2
+sub
+push constant 12
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Pacman.erase 1
+pop temp 0
+push this 1
+push constant 10
+sub
+pop this 1
+label IF_FALSE0
+push constant 0
+return
+function Pacman.moveDown 0
+push argument 0
+pop pointer 0
+push this 1
+push this 2
+add
+push constant 244
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Pacman.erase 1
+pop temp 0
+push this 1
+push constant 10
+add
+pop this 1
+label IF_FALSE0
+push constant 0
+return
+function Pacman.moveLeft 0
+push argument 0
+pop pointer 0
+push this 0
+push this 2
+sub
+push constant 2
+sub
+push constant 12
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Pacman.erase 1
+pop temp 0
+push this 0
+push constant 10
+sub
+pop this 0
+label IF_FALSE0
+push constant 0
+return
+function Pacman.moveRight 0
+push argument 0
+pop pointer 0
+push this 0
+push this 2
+add
+push constant 500
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Pacman.erase 1
+pop temp 0
+push this 0
+push constant 10
+add
+pop this 0
+label IF_FALSE0
+push constant 0
+return
+function Pacman.withinX 2
+push argument 0
+pop pointer 0
+push argument 1
+push argument 2
+sub
+pop local 0
+push argument 1
+push argument 2
+add
+pop local 1
+push local 0
+push this 0
+push this 2
+sub
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push this 0
+push this 2
+add
+lt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+return
+label IF_FALSE1
+label IF_FALSE0
+push local 1
+push this 0
+push this 2
+sub
+gt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 1
+push this 0
+push this 2
+add
+lt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+not
+return
+label IF_FALSE3
+label IF_FALSE2
+push constant 0
+return
+function Pacman.withinY 2
+push argument 0
+pop pointer 0
+push argument 1
+push argument 2
+sub
+pop local 0
+push argument 1
+push argument 2
+add
+pop local 1
+push local 0
+push this 1
+push this 2
+sub
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push this 1
+push this 2
+add
+lt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+return
+label IF_FALSE1
+label IF_FALSE0
+push local 1
+push this 1
+push this 2
+sub
+gt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 1
+push this 1
+push this 2
+add
+lt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+not
+return
+label IF_FALSE3
+label IF_FALSE2
+push constant 0
+return
+function Pacman.debug 0
+push argument 0
+pop pointer 0
+push this 0
+call Output.printInt 1
+pop temp 0
+push constant 0
+return
+function Pacman.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Pacman.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Pacman.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Pacman.getRadius 0
+push argument 0
+pop pointer 0
+push this 2
+return

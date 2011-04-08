@@ -1,0 +1,78 @@
+
+class Game{
+
+	field int score;
+	field int levelNum;
+	field String name;
+	
+	constructor Game new() {
+		let score = 0;
+		let levelNum = 0;
+		let name = "";
+		return this;
+    }
+	
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+	method void run(){
+		var Level level;
+		var boolean gameOver;
+		let gameOver = false;
+		
+		do displayIntro();
+		do setName();		
+		do Keyboard.readInt("Press Enter to begin Playing");
+		do Screen.clearScreen();
+		
+		let level = Level.new(levelNum);
+		//do level.startLevel();
+		
+		while(~gameOver){
+			do level.incrementLevel();
+			do level.startLevel();
+			let gameOver = level.isGameOver();
+		}
+		
+		do level.gameOver(name);
+		do level.dispose();
+		return;
+	}
+	
+	//Get users name from input
+	method void setName(){
+		let name = Keyboard.readLine("Please enter your name: ");
+		do Output.println();
+		
+		return;
+	}
+	
+	//Used to check class values
+	method void printValues(){
+		do Output.println();
+		do Output.printInt(score);
+		do Output.printInt(levelNum);
+		do Output.printString(name);
+		do Output.println();
+		return;
+	}
+	
+	method void displayIntro(){
+			do Output.printString("Welcome To Drink Up Ya A**holes");
+			do Output.println();
+			do Output.println();
+			do Output.printString("For this game you'll need some cans of beer and some whiskey and any other liquor you enjoy consuming.");
+			do Output.println();
+			do Output.printString("Rules:");
+			do Output.println();
+			do Output.printString("You are a wizard embarking on a journey to become the wisest wizard of all. You will progess through levels");
+			do Output.printString(" in which you choose an option and preform what ever consequence that option has. After 3 levels you must defeat a 'boss'.");
+			do Output.printString(" The boss levels will consist of a question and set of answers given to you and you must select the correct answer.");
+			do Output.println();
+			return;
+	}
+	
+
+}

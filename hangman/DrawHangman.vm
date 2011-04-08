@@ -1,0 +1,224 @@
+function DrawHangman.new 0
+push constant 1
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+pop this 0
+push pointer 0
+return
+function DrawHangman.drawNextPart 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 4
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+call DrawHangman.drawBottomLine 1
+pop temp 0
+label IF_FALSE1
+push this 0
+push constant 1
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push pointer 0
+call DrawHangman.drawTree 1
+pop temp 0
+label IF_FALSE2
+push this 0
+push constant 2
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push pointer 0
+call DrawHangman.drawNoose 1
+pop temp 0
+label IF_FALSE3
+push this 0
+push constant 3
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push pointer 0
+call DrawHangman.drawHead 1
+pop temp 0
+label IF_FALSE4
+goto IF_END0
+label IF_FALSE0
+push this 0
+push constant 4
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push pointer 0
+call DrawHangman.drawBody 1
+pop temp 0
+label IF_FALSE5
+push this 0
+push constant 5
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+call DrawHangman.drawArms 1
+pop temp 0
+label IF_FALSE6
+push this 0
+push constant 6
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push pointer 0
+call DrawHangman.drawLegs 1
+pop temp 0
+label IF_FALSE7
+label IF_END0
+push this 0
+push constant 1
+add
+pop this 0
+push constant 0
+return
+function DrawHangman.drawWholeMan 0
+push argument 0
+pop pointer 0
+push pointer 0
+call DrawHangman.drawBottomLine 1
+pop temp 0
+push pointer 0
+call DrawHangman.drawTree 1
+pop temp 0
+push pointer 0
+call DrawHangman.drawNoose 1
+pop temp 0
+push pointer 0
+call DrawHangman.drawHead 1
+pop temp 0
+push pointer 0
+call DrawHangman.drawBody 1
+pop temp 0
+push pointer 0
+call DrawHangman.drawArms 1
+pop temp 0
+push pointer 0
+call DrawHangman.drawLegs 1
+pop temp 0
+push constant 0
+return
+function DrawHangman.drawBottomLine 0
+push argument 0
+pop pointer 0
+push constant 300
+push constant 175
+push constant 400
+push constant 175
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function DrawHangman.drawTree 0
+push argument 0
+pop pointer 0
+push constant 350
+push constant 175
+push constant 350
+push constant 50
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function DrawHangman.drawNoose 0
+push argument 0
+pop pointer 0
+push constant 350
+push constant 50
+push constant 450
+push constant 50
+call Screen.drawLine 4
+pop temp 0
+push constant 450
+push constant 50
+push constant 450
+push constant 75
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function DrawHangman.drawHead 0
+push argument 0
+pop pointer 0
+push constant 450
+push constant 85
+push constant 10
+call Screen.drawCircle 3
+pop temp 0
+push constant 0
+return
+function DrawHangman.drawBody 0
+push argument 0
+pop pointer 0
+push constant 450
+push constant 95
+push constant 450
+push constant 150
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function DrawHangman.drawArms 0
+push argument 0
+pop pointer 0
+push constant 450
+push constant 110
+push constant 425
+push constant 120
+call Screen.drawLine 4
+pop temp 0
+push constant 450
+push constant 110
+push constant 475
+push constant 120
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function DrawHangman.drawLegs 0
+push argument 0
+pop pointer 0
+push constant 450
+push constant 150
+push constant 425
+push constant 160
+call Screen.drawLine 4
+pop temp 0
+push constant 450
+push constant 150
+push constant 475
+push constant 160
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function DrawHangman.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
